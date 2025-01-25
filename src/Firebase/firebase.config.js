@@ -22,17 +22,3 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 
-
-
-/*
-
-
-VITE_apiKey=AIzaSyCYYt7E_xaag2K9QEhPuWtVsQBIe_7YDsE
-  VITE_authDomain=blood-donation-applicati-9d609.firebaseapp.com
-  VITE_projectId=blood-donation-applicati-9d609
-  VITE_storageBucket=blood-donation-applicati-9d609.firebasestorage.app
-  VITE_messagingSenderId=557398025947
-  VITE_appId=1:557398025947:web:b5c8aa780e080e5b3e8efe
-
-
-*/
