@@ -9,10 +9,11 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
+    const [passwordMismatch, setPasswordMismatch] = useState(false);
 
     // Fetch districts on component mount
     useEffect(() => {
-        fetch("districts.json")
+        fetch("http://localhost:5000/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
             .catch((error) => {
@@ -28,7 +29,7 @@ const SignUp = () => {
         setUpazilas([]);
 
         // Fetch upazilas and filter by district
-        fetch("upazilas.json")
+        fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter((upazila) => upazila.district_id === selectedDistrictID);
@@ -51,10 +52,12 @@ const SignUp = () => {
     const handleRegister = (e) => {
         e.preventDefault();
 
-        const name = e.target.name.value.trim();
-        const email = e.target.email.value.trim();
-        const photo = e.target.photo.value.trim();
-        const password = e.target.password.value.trim();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const photo = e.target.photo.value;
+        const password = e.target.password.value;
+        const confirmpassword = e.target.confirmpassword.value;
+
         const bloodgroup = e.target.bloodgroup.value;
         const districtID = e.target.districtID.value;
         const upazilaID = e.target.upazilaID.value;
@@ -71,6 +74,14 @@ const SignUp = () => {
             return;
         }
 
+        // Check if passwords match
+        if (password !== confirmpassword) {
+            setPasswordMismatch(true);
+            return;
+        } else {
+            setPasswordMismatch(false);
+        }
+
         // Find the selected district and upazila
         const selectedDistrict = districts.find((d) => d.id === districtID);
         const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
@@ -80,14 +91,16 @@ const SignUp = () => {
             email,
             photo,
             password,
+            confirmpassword,
             bloodgroup,
             districtName: selectedDistrict?.name || "Unknown",
             districtNameBan: selectedDistrict?.bn_name || "Unknown",
-
             upazilaName: selectedUpazila?.name || "Unknown",
             upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
             districtID,
             upazilaID,
+            status:'active',
+            role:' donner'
         };
 
         console.log("User Data:", userData);
@@ -116,7 +129,7 @@ const SignUp = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row-reverse h-screen">
+        <div className="flex flex-col lg:flex-row-reverse">
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
                 <h2 className="text-3xl font-bold">Your Animation Here</h2>
             </div>
@@ -155,7 +168,7 @@ const SignUp = () => {
                                 <option>AB+</option>
                                 <option>AB-</option>
                                 <option>O+</option>
-                                <option>O</option>
+                                <option>O-</option>
                             </select>
                         </div>
                         <div className="form-control mb-4">
@@ -196,6 +209,21 @@ const SignUp = () => {
                                 required
                             />
                         </div>
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Confirm Password</span>
+                            </label>
+                            <input
+                                type="password"
+                                name="confirmpassword"
+                                placeholder="Password"
+                                className="input input-bordered"
+                                required
+                            />
+                        </div>
+                        {passwordMismatch && (
+                            <p className="text-red-500 text-sm">Passwords do not match in password and  confirmpassword !</p>
+                        )}
                         <div className="form-control mt-6">
                             <button className="btn btn-primary w-full">Register</button>
                         </div>
