@@ -18,7 +18,8 @@ const handleLogOut = () => {
     
      <li><NavLink to='/'>Home</NavLink></li>
      <li><NavLink to='/signup'>Sign up</NavLink></li>
-     <li><NavLink to='login'>Loagin</NavLink></li>
+     <li><NavLink to='/login'>Loagin</NavLink></li>
+     <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
 
      
     
