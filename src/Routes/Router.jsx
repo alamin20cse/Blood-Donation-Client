@@ -10,6 +10,7 @@ import Secret from "../Pages/Secret";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../Layout/Dashboard";
 import Ex from "../Pages/Ex";
+import Profile from "../Pages/Profile";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -43,6 +44,11 @@ import Ex from "../Pages/Ex";
                 path:'/dashboard/ex',
                 element:<Ex></Ex>
                
+            },
+            {
+                path:'/dashboard/profile',
+                element:<Profile></Profile>
+
             }
         ]
     }
