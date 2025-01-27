@@ -14,7 +14,7 @@ const Profile = () => {
         <div>
 
 
-<div className="card bg-base-100 w-full shadow-xl">
+<div className="card bg-gray-300 w-full shadow-xl">
   <figure >
     <img
       src={photo}
@@ -22,13 +22,22 @@ const Profile = () => {
   </figure>
   <div className="card-body">
     <h2 className="card-title">
-      Shoes!
-      <div className="badge badge-secondary">NEW</div>
+      {name}
+     
     </h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div className="card-actions justify-end">
-      <div className="badge badge-outline">Fashion</div>
-      <div className="badge badge-outline">Products</div>
+    <p>Email{email}</p>
+    <p>District: {districtName}</p>
+    <p>District: {districtNameBan}</p>
+    <p>Upazila: {upazilaName}</p>
+    <p>Upazila: {upazilaNameBan}</p>
+
+    <div className="card-actions ">
+     <div className="flex flex-col lg:flex-row gap-3 items-center">
+     <div className="text-[16px] font-bold p-4 rounded-3xl bg-lime-100">Blood group:{bloodgroup}</div>
+     <div className="badge badge-outline bg-pink-200">Role:{role}</div>
+     <div className="badge badge-outline bg-pink-200">Status: {status}</div>
+     
+     </div>
     </div>
   </div>
 </div>
