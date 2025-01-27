@@ -11,10 +11,11 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 const Login = () => {
   const navigate=useNavigate();
   const location=useLocation();
+  
 
 
   const {userLogin,setUser,
-    // handelGooglSignIn
+   
 }=useContext(AuthContext);
 
     const handleLogin=e=>{
@@ -42,18 +43,6 @@ const Login = () => {
     }
 
 
-
-    // const handleGoogleLogin = () => {
-     
-    //   handelGooglSignIn()
-    //     .then(() => {
-    //       navigate(location?.state?location.state:'/');
-    //       Swal.fire('Succesfully Login')
-    //     })
-    //     .catch(error => {
-    //      Swal.fire(error.message); // Error notification
-    //     });
-    // };
 
   
 
@@ -105,7 +94,7 @@ const Login = () => {
            <button className="btn btn-primary">Login</button>
          </div>
        </form>
-       {/* <button onClick={handleGoogleLogin} className='btn btn-primary'>Login with Google</button> */}
+    
        <p>Are you New? <Link className='text-red-400' to='/signup'>Sign up</Link> </p>
  
      </div>

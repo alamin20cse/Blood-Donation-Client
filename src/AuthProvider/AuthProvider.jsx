@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
 
-export const AuthContext=createContext(null);
+export const AuthContext=createContext();
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
@@ -98,9 +98,10 @@ const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={authInfo}>
-            {children}
+            {loading ? <div>Loading...</div> : children}
         </AuthContext.Provider>
     );
+    
 };
 
 export default AuthProvider;
