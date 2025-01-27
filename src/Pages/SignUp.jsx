@@ -112,11 +112,41 @@ const SignUp = () => {
                 setUser(user);
                 updateUserProfile({ displayName: name, photoURL: photo })
                     .then(() => {
-                        Swal.fire({
+                       
+
+ //   send data to the server 
+ fetch('http://localhost:5000/users',{
+    method:'POST',
+    headers:{
+        'content-type':'application/json'
+    },
+    body:JSON.stringify(userData),
+
+
+
+})
+.then(res=>res.json())
+.then(data=>{
+    console.log(data);
+
+
+    Swal.fire({
                             icon: "success",
                             title: "Registration Successful",
                             text: "Welcome to the platform!",
                         });
+})
+e.target.reset();
+
+
+
+
+
+
+
+
+
+
                         navigate("/");
                     })
                     .catch((error) => {
@@ -176,7 +206,7 @@ const SignUp = () => {
                                 <span className="label-text">District</span>
                             </label>
                             <select name="districtID" className="select input-bordered" onChange={handleDistrictChange} required>
-                                <option value="" disabled>Select a district</option>
+                                <option value="" >Select a district</option>
                                 {districts.map((district) => (
                                     <option key={district.id} value={district.id}>
                                         {district.name} ({district.bn_name})
