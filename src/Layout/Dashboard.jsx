@@ -11,6 +11,7 @@ const Dashboard = () => {
                     <li><NavLink to='/'>Home</NavLink></li>
                     <li><NavLink to='/dashboard/ex'>cheak</NavLink></li>
                     <li><NavLink to='/dashboard/profile'>Profile</NavLink></li>
+                    <li><NavLink to='/dashboard/donationrequest'>Donation Request</NavLink></li>
                 </ul>
 
             </div>
