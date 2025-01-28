@@ -2,10 +2,6 @@ import { NavLink, Outlet } from "react-router-dom";
 import LoginInfo from "./Shared/LoginInfo";
 
 const Dashboard = () => {
-    
-
-
-
     return (
         <div className="flex   flex-col lg:flex-row min-h-screen">
             {/* Navbar for Mobile */}
@@ -32,7 +28,7 @@ const Dashboard = () => {
                             <li><NavLink to="/">Home</NavLink></li>
                             <li><NavLink to="/dashboard/ex">Check</NavLink></li>
                             <li><NavLink to="/dashboard/profile">Profile</NavLink></li>
-                            <li><NavLink to="/dashboard/donationrequest">Donation Request</NavLink></li>
+                            <li><NavLink to='/allcreateddonor'>Request created</NavLink></li>
                             <li><NavLink to="/dashboard/allusers">All Users</NavLink></li>
                         </ul>
                     </div>
@@ -46,7 +42,7 @@ const Dashboard = () => {
                     <li><NavLink to="/" className="hover:text-white">Home</NavLink></li>
                     <li><NavLink to="/dashboard/ex" className="hover:text-white">Check</NavLink></li>
                     <li><NavLink to="/dashboard/profile" className="hover:text-white">Profile</NavLink></li>
-                    <li><NavLink to="/dashboard/donationrequest" className="hover:text-white">Donation Request</NavLink></li>
+                    <li><NavLink to='/allcreateddonor'>Request created</NavLink></li>
                     <li><NavLink to="/dashboard/allusers" className="hover:text-white">All Users</NavLink></li>
                 </ul>
             </div>
@@ -62,7 +58,7 @@ const Dashboard = () => {
 
             {/* dashboard */}
             <div>
-
+                
             </div>
 
            </div>

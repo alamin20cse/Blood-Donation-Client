@@ -10,7 +10,7 @@ const Profile = () => {
 
     const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,
         // districtID,upazilaID,_id
-    }=users[0];
+    }=users[0]||'';
 
     return (
         <div>
