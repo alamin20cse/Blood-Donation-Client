@@ -12,6 +12,7 @@ import Dashboard from "../Layout/Dashboard";
 import Ex from "../Pages/Ex";
 import Profile from "../Pages/Profile";
 import DonationRequest from "../Pages/DonationRequest";
+import AllUsers from "../Pages/Adminpage/AllUsers";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -53,7 +54,18 @@ import DonationRequest from "../Pages/DonationRequest";
             },
             {
                 path:'/dashboard/donationrequest',
-                element:<DonationRequest></DonationRequest>
+                element:<PrivateRoute><DonationRequest></DonationRequest></PrivateRoute>
+            },
+
+
+
+
+
+
+            // admin
+            {
+                path:'/dashboard/allusers',
+                element:<AllUsers></AllUsers>
             }
         ]
     }

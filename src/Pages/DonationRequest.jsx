@@ -1,15 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import useUsers from "../Hooks/useUsers";
 
 
 const DonationRequest = () => {
     const { user } = useContext(AuthContext);
 
+    
+
 
 
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
+    const [users, loading] = useUsers();
+
+   
 
     // Fetch districts on component mount
     useEffect(() => {
@@ -22,6 +28,12 @@ const DonationRequest = () => {
             });
     }, []);
 
+    if (loading) {
+        return <h1>Loading...</h1>; // Return the loading state early
+    }
+    console.log(users[0].status)
+
+    
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
 
@@ -290,7 +302,12 @@ const DonationRequest = () => {
 
 
                     <div className="form-control mt-6">
-                        <button  className="btn btn-primary">Submit Request</button>
+
+                      {
+                         users?.[0]?.status==='blocked'? <button disabled className="btn btn-primary">Submit Request</button>: <button  className="btn btn-primary">Submit Request</button>
+
+                      } 
+                       
                     </div>
                 </form>
             </div>
