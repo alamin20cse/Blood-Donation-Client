@@ -10,7 +10,7 @@ const PrivateRoute = ({children}) => {
     {
         <h2>Loading...</h2>
     }
-    console.log(user);
+    // console.log(user);
 
     if(user)
     {

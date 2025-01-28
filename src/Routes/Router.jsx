@@ -68,7 +68,7 @@ import UserDetails from "../Pages/UserDetails";
 
             },
             {
-                path:'/dashboard/donationrequest',
+                path:'/dashboard/donationrequest/:id',
                 element:<PrivateRoute><DonationRequest></DonationRequest></PrivateRoute>
             },
             {

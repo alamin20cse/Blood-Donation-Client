@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const UserDetails = () => {
     const { id } = useParams(); // Get the `id` parameter from the route
@@ -27,7 +27,7 @@ const UserDetails = () => {
     }
 
   
-    const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,districtID,upazilaID,status,role}=userDonor;
+    const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,_id}=userDonor;
 
     return (
         <div className="p-4 card card-compact bg-base-100 w-96 mx-auto shadow-xl">
@@ -40,7 +40,10 @@ const UserDetails = () => {
             <p><strong>Upazila:</strong> {upazilaName} ({upazilaNameBan})</p>
             <p><strong>Status:</strong> {status}</p>
             <p><strong>Role:</strong> {role}</p>
-            <button className="btn">Requested for Donation</button>
+           
+          <Link to={`/dashboard/donationrequest/${_id}`}>
+    <button className="btn btn-primary mr-2">Request for donation</button>
+</Link>
 
 
         </div>

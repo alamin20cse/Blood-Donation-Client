@@ -2,22 +2,37 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUsers from "../Hooks/useUsers";
+import { useParams } from "react-router-dom";
 
 
 const DonationRequest = () => {
     const { user } = useContext(AuthContext);
 
-    
-
-
-
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [users, loading] = useUsers();
 
-   
+    const { id } = useParams(); // Get the `id` parameter from the route
+    const [userDonor, setUserDonor] = useState(null); // State to store user data
+    const [error, setError] = useState(null); // State to handle errors
 
-    // Fetch districts on component mount
+    // Fetch donor details
+    useEffect(() => {
+        fetch(`http://localhost:5000/allusers/${id}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Failed to fetch user details");
+                }
+                return res.json();
+            })
+            .then((data) => setUserDonor(data))
+            .catch((err) => {
+                setError(err.message);
+                console.error("Error fetching user details:", err);
+            });
+    }, [id]);
+
+    // Fetch districts on mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
             .then((res) => res.json())
@@ -27,24 +42,19 @@ const DonationRequest = () => {
                 console.error("Error fetching districts:", error);
             });
     }, []);
+    if(loading) return <h1>Loading....</h1>
+    if(!userDonor) return <h1>Loading....</h1>
 
-    if (loading) {
-        return <h1>Loading...</h1>; // Return the loading state early
-    }
-    console.log(users[0].status)
-
-    
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
-
-        // Reset upazilas on district change
         setUpazilas([]);
 
-        // Fetch upazilas and filter by district
         fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
-                const filteredUpazilas = data[2]?.data.filter((upazila) => upazila.district_id === selectedDistrictID);
+                const filteredUpazilas = data[2]?.data.filter(
+                    (upazila) => upazila.district_id === selectedDistrictID
+                );
                 setUpazilas(filteredUpazilas);
             })
             .catch((error) => {
@@ -53,57 +63,52 @@ const DonationRequest = () => {
             });
     };
 
-
-    const handleError = (title, message) => {
-        Swal.fire({
-            icon: "error",
-            title,
-            text: message,
-        });
-    };
-
     
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const bloodgroup = e.target.bloodgroup.value;
-        const districtID = e.target.districtID.value;
-        const upazilaID = e.target.upazilaID.value;
-        const recipientname = e.target.recipientname.value;
-        const hospitalname = e.target.hospitalname.value;
-        const fulladdress = e.target.fulladdress.value;
-        const donationdate = e.target.donationdate.value;
-        const donationtime = e.target.donationtime.value;
-        const requestmessage = e.target.requestmessage.value;
-
-        // Find the selected district and upazila
-        const selectedDistrict = districts.find((d) => d.id === districtID);
-        const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
-
-        const recipientData = {
+        const {
             name,
             email,
             bloodgroup,
-            districtName: selectedDistrict?.name || "Unknown",
-            districtNameBan: selectedDistrict?.bn_name || "Unknown",
-            upazilaName: selectedUpazila?.name || "Unknown",
-            upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
+            districtID,
+            upazilaID,
             recipientname,
             hospitalname,
             fulladdress,
             donationdate,
             donationtime,
             requestmessage,
-            districtID,
-            upazilaID,
-            status:'pending'
+        } = e.target;
 
+        const selectedDistrict = districts.find((d) => d.id === districtID.value);
+        const selectedUpazila = upazilas.find((u) => u.id === upazilaID.value);
+
+        const recipientData = {
+            name: name.value,
+            email: email.value,
+            bloodgroup: bloodgroup.value,
+            districtName: selectedDistrict?.name || "Unknown",
+            districtNameBan: selectedDistrict?.bn_name || "Unknown",
+            upazilaName: selectedUpazila?.name || "Unknown",
+            upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
+            recipientname: recipientname.value,
+            hospitalname: hospitalname.value,
+            fulladdress: fulladdress.value,
+            donationdate: donationdate.value,
+            donationtime: donationtime.value,
+            requestmessage: requestmessage.value,
+            districtID: districtID.value,
+            upazilaID: upazilaID.value,
+            status: "pending",
+            donorID:userDonor._id, 
+            donorEmail:userDonor.email,
         };
-        console.log(recipientData)
 
-        // Submit the request to database
+
+
         fetch("http://localhost:5000/donation-requests", {
             method: "POST",
             headers: {
@@ -113,7 +118,7 @@ const DonationRequest = () => {
         })
             .then((res) => res.json())
             .then((result) => {
-                if (result.insertedId) {
+                if (result?.insertedId) {
                     Swal.fire("Success", "Donation request submitted successfully!", "success");
                 } else {
                     handleError("Error", "Failed to submit the request.");
@@ -124,13 +129,19 @@ const DonationRequest = () => {
                 console.error("Submission error:", error);
             });
 
-
         e.target.reset();
     };
 
+    const handleError = (title, message) => {
+        Swal.fire({
+            icon: "error",
+            title,
+            text: message,
+        });
+    };
+console.log(userDonor)
 
-
-
+// const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,_id}=userDonor;
 
     return (
       
@@ -138,16 +149,25 @@ const DonationRequest = () => {
 
         <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
-            <div className="text-center lg:text-left">
-                <h1 className="text-5xl font-bold">Request Donation</h1>
-                <p className="py-6">
-                    Please fill in the details to request a donation. Make sure to select the
-                    correct district and upazila for accurate information.
-                </p>
-            </div>
+        <div className="p-4 card card-compact bg-base-100 w-96 mx-auto shadow-xl">
+            <h1 className="text-2xl font-bold text-center">Donor Details</h1>
+            <img src={userDonor.photo} alt={`${userDonor.name}'s avatar`} className="w-32 h-32 rounded-full mx-auto mb-4" />
+            <p><strong>Name:</strong> {userDonor.name}</p>
+            <p><strong>Email:</strong> {userDonor.email}</p>
+            <p><strong>Blood Group:</strong> {userDonor.bloodgroup}</p>
+            <p><strong>District:</strong> {userDonor.districtName} ({userDonor.districtNameBan})</p>
+            <p><strong>Upazila:</strong> {userDonor.upazilaName} ({userDonor.upazilaNameBan})</p>
+            <p><strong>Status:</strong> {userDonor.status}</p>
+            <p><strong>Role:</strong> {userDonor.role}</p>
+           
+          
+
+
+
+        </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
 
-
+<div className="text-2xl font-semibold text-center">Patient details</div>
 
 
                 <form onSubmit={handleSubmit} className="card-body">
