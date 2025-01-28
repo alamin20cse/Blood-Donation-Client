@@ -17,9 +17,9 @@ const handleLogOut = () => {
     const link=<>
     
      <li><NavLink to='/'>Home</NavLink></li>
-     <li><NavLink to='/signup'>Sign up</NavLink></li>
-     <li><NavLink to='/login'>Loagin</NavLink></li>
+     <li><NavLink to='/login'>Login</NavLink></li>
      <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
+     <li><NavLink to='/allcreateddonor'>Request created</NavLink></li>
 
      
     

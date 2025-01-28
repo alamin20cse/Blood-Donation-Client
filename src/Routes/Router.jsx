@@ -13,6 +13,9 @@ import Ex from "../Pages/Ex";
 import Profile from "../Pages/Profile";
 import DonationRequest from "../Pages/DonationRequest";
 import AllUsers from "../Pages/Adminpage/AllUsers";
+import DashboardHome from "./DashboardHome";
+import AllCreatedDonor from "../Pages/AllCreatedDonor";
+import UserDetails from "../Pages/UserDetails";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -34,19 +37,31 @@ import AllUsers from "../Pages/Adminpage/AllUsers";
         {
             path:'/secret',
             element:<PrivateRoute><Secret></Secret></PrivateRoute>
+        },
+        // for requested data;
+        {
+            path:'/allcreateddonor',
+            element:<AllCreatedDonor></AllCreatedDonor>
         }
 
       ]
     },
     {
         path:"/dashboard",
-        element:<Dashboard></Dashboard>,
+        element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
         children:[
             {
                 path:'/dashboard/ex',
                 element:<Ex></Ex>
                
             },
+            {
+                path:"/dashboard",
+                element:<DashboardHome></DashboardHome>
+
+
+            },
+
             {
                 path:'/dashboard/profile',
                 element:<Profile></Profile>
@@ -56,6 +71,11 @@ import AllUsers from "../Pages/Adminpage/AllUsers";
                 path:'/dashboard/donationrequest',
                 element:<PrivateRoute><DonationRequest></DonationRequest></PrivateRoute>
             },
+            {
+                path: '/dashboard/usersDetails/:id', // Add leading slash
+                element: <UserDetails></UserDetails>
+            },
+            
 
 
 
