@@ -6,8 +6,15 @@ const AllUsers = () => {
 
     if(loading)
     {
-        <h1>Loading...</h1>
+        return <h1>Loading...</h1>
     }
+
+    console.log(allusers);
+    
+
+
+
+
     return (
         <div>
 
