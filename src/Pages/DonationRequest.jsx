@@ -50,6 +50,75 @@ const DonationRequest = () => {
         });
     };
 
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const bloodgroup = e.target.bloodgroup.value;
+        const districtID = e.target.districtID.value;
+        const upazilaID = e.target.upazilaID.value;
+        const recipientname = e.target.recipientname.value;
+        const hospitalname = e.target.hospitalname.value;
+        const fulladdress = e.target.fulladdress.value;
+        const donationdate = e.target.donationdate.value;
+        const donationtime = e.target.donationtime.value;
+        const requestmessage = e.target.requestmessage.value;
+
+        // Find the selected district and upazila
+        const selectedDistrict = districts.find((d) => d.id === districtID);
+        const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
+
+        const recipientData = {
+            name,
+            email,
+            bloodgroup,
+            districtName: selectedDistrict?.name || "Unknown",
+            districtNameBan: selectedDistrict?.bn_name || "Unknown",
+            upazilaName: selectedUpazila?.name || "Unknown",
+            upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
+            recipientname,
+            hospitalname,
+            fulladdress,
+            donationdate,
+            donationtime,
+            requestmessage,
+            districtID,
+            upazilaID,
+            status:'pending'
+
+        };
+        console.log(recipientData)
+
+        // Submit the request to database
+        fetch("http://localhost:5000/donation-requests", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(recipientData),
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                if (result.insertedId) {
+                    Swal.fire("Success", "Donation request submitted successfully!", "success");
+                } else {
+                    handleError("Error", "Failed to submit the request.");
+                }
+            })
+            .catch((error) => {
+                handleError("Error", "An error occurred during submission.");
+                console.error("Submission error:", error);
+            });
+
+
+        e.target.reset();
+    };
+
+
+
+
 
     return (
       
@@ -65,7 +134,11 @@ const DonationRequest = () => {
                 </p>
             </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                <form className="card-body">
+
+
+
+
+                <form onSubmit={handleSubmit} className="card-body">
                     <div className="form-control mb-4">
                         <label className="label">
                             <span className="label-text">Name</span>
@@ -145,14 +218,14 @@ const DonationRequest = () => {
                             <label className="label">
                                 <span className="label-text">Recipient name</span>
                             </label>
-                            <input type="text" name="recipientname" placeholder=" like: Dhaka Medical College Hospital" className="input input-bordered" required />
+                            <input type="text" name="recipientname" placeholder="recipient name" className="input input-bordered" required />
                         </div>
                    
                     <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Hospital name</span>
                             </label>
-                            <input type="text" name="hospitalname" placeholder="hospital name" className="input input-bordered" required />
+                            <input type="text" name="hospitalname" placeholder="like: Dhaka Medical College Hospital" className="input input-bordered" required />
                         </div>
                    
                     <div className="form-control mb-4">
@@ -217,7 +290,7 @@ const DonationRequest = () => {
 
 
                     <div className="form-control mt-6">
-                        <button className="btn btn-primary">Submit Request</button>
+                        <button  className="btn btn-primary">Submit Request</button>
                     </div>
                 </form>
             </div>

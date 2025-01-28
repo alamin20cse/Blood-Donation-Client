@@ -8,7 +8,9 @@ const Profile = () => {
     }
     console.log(users)
 
-    const {name,_id,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,districtID,upazilaID,status,role}=users[0];
+    const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,
+        // districtID,upazilaID,_id
+    }=users[0];
 
     return (
         <div>
