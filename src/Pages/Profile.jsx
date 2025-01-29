@@ -6,7 +6,7 @@ const Profile = () => {
     if (loading) {
         return <h1>Loading...</h1>; // Return the loading state early
     }
-    console.log(users)
+    // console.log(users)
 
     const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,
         // districtID,upazilaID,_id
