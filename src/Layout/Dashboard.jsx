@@ -38,11 +38,11 @@ const Dashboard = () => {
 
             {/* Sidebar for Larger Screens */}
             <div className="hidden  py-4 lg:block w-64 bg-orange-400 p-4">
-                <ul className="space-y-2">
-                    <li><NavLink to="/" className="hover:text-white">Home</NavLink></li>
+                <ul className="space-y-2 menu p-4">
+                    <li ><NavLink to="/" className="hover:text-white">Home</NavLink></li>
                     <li><NavLink to="/dashboard/ex" className="hover:text-white">Check</NavLink></li>
                     <li><NavLink to="/dashboard/profile" className="hover:text-white">Profile</NavLink></li>
-                    <li><NavLink to='/allcreateddonor'>Request created</NavLink></li>
+                    <li><NavLink to='/allcreateddonor'className="hover:text-white" >Request created</NavLink></li>
                     <li><NavLink to="/dashboard/allusers" className="hover:text-white">All Users</NavLink></li>
                 </ul>
             </div>

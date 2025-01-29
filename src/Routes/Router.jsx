@@ -16,6 +16,7 @@ import AllUsers from "../Pages/Adminpage/AllUsers";
 import DashboardHome from "./DashboardHome";
 import AllCreatedDonor from "../Pages/AllCreatedDonor";
 import UserDetails from "../Pages/UserDetails";
+import UpdateDonationRequest from "../Pages/UpdateDonationRequest";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -71,6 +72,12 @@ import UserDetails from "../Pages/UserDetails";
                 path:'/dashboard/donationrequest/:id',
                 element:<PrivateRoute><DonationRequest></DonationRequest></PrivateRoute>
             },
+            {
+                path:'/dashboard/updatedonationrequest/:id',
+                element:<UpdateDonationRequest></UpdateDonationRequest>
+
+            },
+
             {
                 path: '/dashboard/usersDetails/:id', // Add leading slash
                 element: <UserDetails></UserDetails>

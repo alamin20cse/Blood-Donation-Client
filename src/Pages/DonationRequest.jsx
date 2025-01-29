@@ -16,6 +16,7 @@ const DonationRequest = () => {
     const [userDonor, setUserDonor] = useState(null); // State to store user data
     const [error, setError] = useState(null); // State to handle errors
 
+
     // Fetch donor details
     useEffect(() => {
         fetch(`http://localhost:5000/allusers/${id}`)
@@ -32,6 +33,7 @@ const DonationRequest = () => {
             });
     }, [id]);
 
+   
     // Fetch districts on mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
@@ -63,7 +65,10 @@ const DonationRequest = () => {
             });
     };
 
-    
+    if(error)
+    {
+        return alert('error');
+    }
 
 
     const handleSubmit = (e) => {

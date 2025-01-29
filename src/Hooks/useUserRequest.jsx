@@ -6,7 +6,7 @@ import axios from "axios";
 const useUserRequest = () => {
     const { user, loading: authLoading } = useContext(AuthContext); // Correct destructuring
 
-    const {
+    const {refetch,
         data: usersReq = [], // Default to an empty array
         isLoading: queryLoading,
     } = useQuery({
@@ -22,7 +22,7 @@ const useUserRequest = () => {
     });
 
     const loading = authLoading || queryLoading; // Combine loading states
-    return [usersReq, loading];
+    return [usersReq, loading,refetch];
 };
 
 export default useUserRequest;
