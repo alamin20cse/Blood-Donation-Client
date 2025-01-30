@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios"; // Import axios
 
 const useAllRequest = () => {
-    const {
+    const {refetch,
         data: allRequest = [], // Default to an empty array
         isLoading: queryLoading,
     } = useQuery({
@@ -13,7 +13,7 @@ const useAllRequest = () => {
         },
     });
 
-    return [allRequest, queryLoading]; // Return queryLoading instead of isloading
+    return [allRequest, queryLoading,refetch]; // Return queryLoading instead of isloading
 };
 
 export default useAllRequest;
