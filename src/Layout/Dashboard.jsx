@@ -30,6 +30,7 @@ const Dashboard = () => {
                             <li><NavLink to="/dashboard/profile">Profile</NavLink></li>
                             <li><NavLink to='/allcreateddonor'>Request created</NavLink></li>
                             <li><NavLink to="/dashboard/allusers">All Users</NavLink></li>
+                            <li><NavLink to="/dashboard/my-donation-requests">My Donation Request</NavLink></li>
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">Dashboard</a>
@@ -44,6 +45,7 @@ const Dashboard = () => {
                     <li><NavLink to="/dashboard/profile" className="hover:text-white">Profile</NavLink></li>
                     <li><NavLink to='/allcreateddonor'className="hover:text-white" >Request created</NavLink></li>
                     <li><NavLink to="/dashboard/allusers" className="hover:text-white">All Users</NavLink></li>
+                    <li><NavLink to="/dashboard/my-donation-requests" className="hover:text-white">My Donation Request</NavLink></li>
                 </ul>
             </div>
 
