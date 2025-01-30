@@ -100,7 +100,7 @@ const SignUp = () => {
             districtID,
             upazilaID,
             status:'active',
-            role:' donner'
+            role:' donor'
         };
 
         console.log("User Data:", userData);

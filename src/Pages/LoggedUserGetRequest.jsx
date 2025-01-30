@@ -1,14 +1,14 @@
-import { useContext } from "react";
+
 import useUserRequest from "../Hooks/useUserRequest";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import { AuthContext } from "../AuthProvider/AuthProvider";
+
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const LoggedUserGetRequest = () => {
     const [usersReq, loading, refetch] = useUserRequest();
-    const { user } = useContext(AuthContext);
+    // const { user } = useContext(AuthContext);
 
     // Slice the first 3 requests
     const firstThreeRequests = usersReq.slice(0, 3);
@@ -56,7 +56,7 @@ const LoggedUserGetRequest = () => {
 
     return (
         <div className="p-5">
-            <h2 className="text-3xl font-bold text-center mb-5">Welcome {user.displayName}</h2>
+            {/* <h2 className="text-3xl font-bold text-center mb-5">Welcome {user.displayName}</h2> */}
             <h2 className="text-3xl font-bold text-center mb-5">Donation Requests</h2>
 
             <div className="overflow-x-auto">

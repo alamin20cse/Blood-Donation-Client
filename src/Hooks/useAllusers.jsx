@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useUsers from "./useUsers";
 
+// all user will show
+
 const useAllusers = () => {
     // Get user data and loading state from useUsers hook
     const [users, usersLoading] = useUsers();
@@ -21,7 +23,7 @@ const useAllusers = () => {
     // Combine all loading states
     const loading = usersLoading || queryLoading;
 
-    return [allusers, loading,];
+    return [allusers, loading];
 };
 
 export default useAllusers;
