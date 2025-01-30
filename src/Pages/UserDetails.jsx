@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Loading from "../Layout/Shared/Loading";
 
 const UserDetails = () => {
     const { id } = useParams(); // Get the `id` parameter from the route
@@ -23,7 +24,7 @@ const UserDetails = () => {
     }
 
     if (!userDonor) {
-        return <div>Loading...</div>; // Show a loading state while fetching data
+        return <Loading></Loading> ;// Show a loading state while fetching data
     }
 
   

@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUsers from "../Hooks/useUsers";
 import { useParams } from "react-router-dom";
+import Loading from "../Layout/Shared/Loading";
 
 
 const DonationRequest = () => {
@@ -44,8 +45,8 @@ const DonationRequest = () => {
                 console.error("Error fetching districts:", error);
             });
     }, []);
-    if(loading) return <h1>Loading....</h1>
-    if(!userDonor) return <h1>Loading....</h1>
+    if(loading) return <Loading></Loading>
+    if(!userDonor) return <Loading></Loading>
 
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;

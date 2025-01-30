@@ -11,6 +11,7 @@ import {
     GoogleAuthProvider,
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
+import Loading from "../Layout/Shared/Loading";
 
 export const AuthContext=createContext();
 
@@ -98,7 +99,7 @@ const AuthProvider = ({children}) => {
 
     return (
         <AuthContext.Provider value={authInfo}>
-            {loading ? <div>Loading...</div> : children}
+            {loading ? <div><Loading></Loading></div> : children}
         </AuthContext.Provider>
     );
     

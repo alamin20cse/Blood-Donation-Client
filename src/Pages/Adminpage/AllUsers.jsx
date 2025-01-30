@@ -1,10 +1,11 @@
 import useAllusers from "../../Hooks/useAllusers";
+import Loading from "../../Layout/Shared/Loading";
 
 const AllUsers = () => {
     const [allusers, loading, refetch] = useAllusers(); 
 
     if (loading) {
-        return <h1>Loading...</h1>;
+        return <Loading></Loading>;
     }
 
     // Function to update user status

@@ -1,8 +1,9 @@
 import useAllRequest from "../../Hooks/useAllRequest";
 import useAllusers from "../../Hooks/useAllusers";
-import { FaUsersLine } from "react-icons/fa6";
+
 import usericon from '../../assets/usersicon.png'
 import reqicon from '../../assets/requesticon.gif'
+import Loading from "../../Layout/Shared/Loading";
 
 
 
@@ -12,7 +13,7 @@ const AdminDashboardStatistic = () => {
     const isLoading = queryLoading || loading;
 
     if (isLoading) {
-        return <h2>Loading...</h2>;
+        return <Loading></Loading>;
     }
 
 

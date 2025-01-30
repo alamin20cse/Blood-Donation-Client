@@ -1,10 +1,11 @@
 import useUsers from "../Hooks/useUsers";
+import Loading from "../Layout/Shared/Loading";
 
 const Profile = () => {
     const [users, loading] = useUsers();
 
     if (loading) {
-        return <h1>Loading...</h1>; // Return the loading state early
+        return <Loading></Loading>; // Return the loading state early
     }
     // console.log(users)
 

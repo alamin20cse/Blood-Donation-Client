@@ -1,4 +1,5 @@
 import useAllusers from "../Hooks/useAllusers";
+import Loading from "../Layout/Shared/Loading";
 import UserCard from "./UserCard";
 
 
@@ -6,7 +7,7 @@ const AllCreatedDonor = () => {
   const   [allusers, loading]=useAllusers();
   
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loading></Loading>;
 }
 
     return (

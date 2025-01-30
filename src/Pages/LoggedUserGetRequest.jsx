@@ -5,6 +5,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loading from "../Layout/Shared/Loading";
 
 const LoggedUserGetRequest = () => {
     const [usersReq, loading, refetch] = useUserRequest();
@@ -14,7 +15,7 @@ const LoggedUserGetRequest = () => {
     const firstThreeRequests = usersReq.slice(0, 3);
 
     if (loading) {
-        return <h1 className="text-center text-2xl font-bold">Loading...</h1>;
+        return <Loading></Loading>
     }
 
     if (!usersReq.length) {

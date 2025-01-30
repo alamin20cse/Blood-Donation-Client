@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import LoggedUserGetRequest from "../Pages/LoggedUserGetRequest";
 import useUsers from "../Hooks/useUsers";
 import AdminDashboardStatistic from "../Pages/Adminpage/AdminDashboardStatistic";
+import Loading from "../Layout/Shared/Loading";
 
 
 const DashboardHome = () => {
@@ -12,7 +13,7 @@ const DashboardHome = () => {
 
     if(loading)
     {
-        return <h1>Loading....</h1>
+        return <Loading></Loading>;
     }
     // console.log(users);
     

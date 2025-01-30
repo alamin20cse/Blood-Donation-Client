@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loading from "../Layout/Shared/Loading";
 
 const MyDonationRequestDetails = () => {
     const { id } = useParams();
@@ -13,7 +14,7 @@ const MyDonationRequestDetails = () => {
     }, [id]);
 
     if (!reqDetails) {
-        return <div className="text-center text-lg font-semibold mt-10">Loading...</div>;
+        return <Loading></Loading>;
     }
 
     return (

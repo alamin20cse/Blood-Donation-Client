@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import Loading from "../Layout/Shared/Loading";
 
 
 const UpdateDonationRequest = () => {
@@ -169,7 +170,7 @@ const UpdateDonationRequest = () => {
 
     // Show loading messages
     if (loadingReqUser || loadingAllUser) {
-        return <h2>Loading...</h2>;
+        return <Loading></Loading>;
     }
 
     return (

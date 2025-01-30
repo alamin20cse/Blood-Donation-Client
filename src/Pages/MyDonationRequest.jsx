@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
+import Loading from "../Layout/Shared/Loading";
 
 
 const MyDonationRequest = () => {
@@ -13,7 +14,7 @@ const MyDonationRequest = () => {
 
 
     if (loading) {
-        return <h1 className="text-center text-2xl font-bold">Loading...</h1>;
+        return <Loading></Loading>;
     }
 
     if (!usersReq.length) {
