@@ -16,8 +16,8 @@ const AdminDashboardStatistic = () => {
     }
 
 
-    console.log(allRequest);
-    console.log(allusers);
+    // console.log(allRequest);
+    // console.log(allusers);
     
 
 
