@@ -2,6 +2,17 @@ import { NavLink, Outlet } from "react-router-dom";
 import LoginInfo from "./Shared/LoginInfo";
 
 const Dashboard = () => {
+
+    const link= <>
+     <li ><NavLink to="/" className="hover:text-white">Home</NavLink></li>
+                    <li><NavLink to="/dashboard/ex" className="hover:text-white">Check</NavLink></li>
+                    <li><NavLink to="/dashboard/profile" className="hover:text-white">Profile</NavLink></li>
+                    <li><NavLink to='/dashboard/donationrequest'className="hover:text-white" >Request created</NavLink></li>
+                    <li><NavLink to="/dashboard/allusers" className="hover:text-white">All Users</NavLink></li>
+                    <li><NavLink to="/dashboard/my-donation-requests" className="hover:text-white">My Donation Request</NavLink></li>
+                    <li><NavLink to="/dashboard/all-blood-donation-request" className="hover:text-white">All Donation Request</NavLink></li>
+                    <li><NavLink to="/dashboard/content-management" className="hover:text-white">Content Management</NavLink></li>
+    </>
     return (
         <div className="flex   flex-col lg:flex-row min-h-screen">
             {/* Navbar for Mobile */}
@@ -25,13 +36,7 @@ const Dashboard = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                            <li><NavLink to="/">Home</NavLink></li>
-                            <li><NavLink to="/dashboard/ex">Check</NavLink></li>
-                            <li><NavLink to="/dashboard/profile">Profile</NavLink></li>
-                            <li><NavLink to='/dashboard/donationrequest'>Request created</NavLink></li>
-                            <li><NavLink to="/dashboard/allusers">All Users</NavLink></li>
-                            <li><NavLink to="/dashboard/my-donation-requests">My Donation Request</NavLink></li>
-                            <li><NavLink to="/dashboard/all-blood-donation-request">All Donation Request</NavLink></li>
+                           {link}
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">Dashboard</a>
@@ -41,13 +46,11 @@ const Dashboard = () => {
             {/* Sidebar for Larger Screens */}
             <div className="hidden  py-4 lg:block w-64 bg-orange-400 p-4">
                 <ul className="space-y-2 menu p-4">
-                    <li ><NavLink to="/" className="hover:text-white">Home</NavLink></li>
-                    <li><NavLink to="/dashboard/ex" className="hover:text-white">Check</NavLink></li>
-                    <li><NavLink to="/dashboard/profile" className="hover:text-white">Profile</NavLink></li>
-                    <li><NavLink to='/dashboard/donationrequest'className="hover:text-white" >Request created</NavLink></li>
-                    <li><NavLink to="/dashboard/allusers" className="hover:text-white">All Users</NavLink></li>
-                    <li><NavLink to="/dashboard/my-donation-requests" className="hover:text-white">My Donation Request</NavLink></li>
-                    <li><NavLink to="/dashboard/all-blood-donation-request" className="hover:text-white">All Donation Request</NavLink></li>
+                   
+
+{link}
+
+
                 </ul>
             </div>
 

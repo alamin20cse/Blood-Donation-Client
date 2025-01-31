@@ -20,6 +20,8 @@ import UpdateDonationRequest from "../Pages/UpdateDonationRequest";
 import MyDonationRequest from "../Pages/MyDonationRequest";
 import MyDonationRequestDetails from "../Pages/MyDonationRequestDetails";
 import AllDonationRequest from "../Pages/Adminpage/AllDonationRequest";
+import ContentManagement from "../Pages/ContentManagement ";
+import AddBlog from "../Pages/AddBlog";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -92,6 +94,16 @@ import AllDonationRequest from "../Pages/Adminpage/AllDonationRequest";
             {
                 path:'/dashboard/mydonationrequestdetails/:id',
                 element:<MyDonationRequestDetails></MyDonationRequestDetails>
+            },
+            {
+                path:'/dashboard/content-management',
+                element:<ContentManagement></ContentManagement>,
+
+            },
+            {
+                path:'/dashboard/add-blog',
+                element:<AddBlog></AddBlog>
+
             }
             
 
