@@ -1,4 +1,5 @@
 import { useState } from "react";
+import contactpic from '../assets/contactpic.jpg';
 
 const Contact = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -15,62 +16,76 @@ const Contact = () => {
     };
 
     return (
-        <div className="px-14 mx-auto p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-3xl font-bold text-center text-red-600">📞 Contact Us</h2>
-            <p className="text-gray-700 text-center mt-2">
-                Have questions? Reach out to us!
-            </p>
+        <div className="relative px-14 mx-auto p-6 bg-white rounded-lg shadow-lg">
+            {/* Background Image with Opacity Overlay */}
+            <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                    backgroundImage: `url(${contactpic})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    filter: "brightness(60%)", // Darkens image instead of opacity
+                }}
+            ></div>
 
-            {/* Contact Info Section */}
-            <div className="mt-6 flex flex-col md:flex-row items-center justify-between">
-                <div className="w-full md:w-1/2 space-y-4">
-                    <p className="text-lg font-semibold">📍 Address:</p>
-                    <p className="text-gray-700">123 Blood Drive Street, City, Country</p>
-                    
-                    <p className="text-lg font-semibold">📞 Phone:</p>
-                    <p className="text-gray-700">+123 456 7890</p>
+            {/* Contact Content (kept above background) */}
+            <div className="relative z-10">
+                <h2 className="text-3xl font-bold text-center text-white">📞 Contact Us</h2>
+                <p className="text-gray-200 text-center mt-2">
+                    Have questions? Reach out to us!
+                </p>
 
-                    <p className="text-lg font-semibold">📧 Email:</p>
-                    <p className="text-gray-700">support@blooddonation.com</p>
-                </div>
+                {/* Contact Info Section */}
+                <div className="mt-6 flex flex-col md:flex-row items-center justify-between">
+                    <div className="w-full md:w-1/2 space-y-4 text-white">
+                        <p className="text-lg font-semibold">📍 Address:</p>
+                        <p>123 Blood Drive Street, City, Country</p>
+                        
+                        <p className="text-lg font-semibold">📞 Phone:</p>
+                        <p>+123 456 7890</p>
 
-                {/* Contact Form */}
-                <div className="w-full md:w-1/2 mt-6 md:mt-0">
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder="Your Name"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
-                            required
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="Your Email"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
-                            required
-                        />
-                        <textarea
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            placeholder="Your Message"
-                            rows="4"
-                            className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
-                            required
-                        />
-                        <button
-                            type="submit"
-                            className="w-full bg-red-500 text-white py-2 rounded-lg shadow-md hover:bg-red-600 transition"
-                        >
-                            Send Message
-                        </button>
-                    </form>
+                        <p className="text-lg font-semibold">📧 Email:</p>
+                        <p>support@blooddonation.com</p>
+                    </div>
+
+                    {/* Contact Form */}
+                    <div className="w-full md:w-1/2 mt-6 md:mt-0">
+                        <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow-lg">
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder="Your Name"
+                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                required
+                            />
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Your Email"
+                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                required
+                            />
+                            <textarea
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                placeholder="Your Message"
+                                rows="4"
+                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                className="w-full bg-red-500 text-white py-2 rounded-lg shadow-md hover:bg-red-600 transition"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

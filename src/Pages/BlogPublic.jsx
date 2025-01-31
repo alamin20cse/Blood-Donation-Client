@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import useBlog from "../Hooks/useBlog";
 import Loading from "../Layout/Shared/Loading";
 
 const BlogPublic = () => {
-    const [blogs, isLoading, refetch] = useBlog();
+    const [blogs, isLoading,] = useBlog();
    if(isLoading)
    {
     return <Loading></Loading>
@@ -25,7 +26,7 @@ const BlogPublic = () => {
 
                      
                         <h1 className="text-lg font-semibold mt-2">{blog.title}</h1>
-                            <div className="text-sm text-gray-600 mt-1" dangerouslySetInnerHTML={{ __html: blog.content }} />
+                          <Link to={`/blogdetails/${blog._id}`}>Details</Link>
                     </div>
                 ))}
             </div>

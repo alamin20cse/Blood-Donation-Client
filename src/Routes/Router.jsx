@@ -24,6 +24,7 @@ import ContentManagement from "../Pages/ContentManagement ";
 import AddBlog from "../Pages/AddBlog";
 import BlogPublic from "../Pages/BlogPublic";
 import Contact from "../Pages/Contact";
+import BlogDetails from "../Pages/BlogDetails";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -55,6 +56,12 @@ import Contact from "../Pages/Contact";
             path:'/blogpublic',
             element:<BlogPublic></BlogPublic>
         },
+        {
+            path:'/blogdetails/:id',
+            element:<BlogDetails></BlogDetails>
+
+        },
+
         {
             path:'/contact',
             element:<Contact></Contact>
