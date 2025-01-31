@@ -103,7 +103,13 @@ const ContentManagement = () => {
                 {filteredBlogs.length > 0 ? (
                     filteredBlogs.map((blog) => (
                         <div key={blog._id} className="border p-4 rounded-lg shadow-md bg-white">
-                            <img src={blog.thumbnail} alt={blog.title} className="w-full h-40 object-cover rounded-md" />
+
+                            <figure className="h-[210px]">
+                                <img src={blog.thumbnail} alt={blog.title} className="w-full h-full rounded-md" />
+                            </figure>
+
+
+
                             <h1 className="text-lg font-semibold mt-2">{blog.title}</h1>
                             <div className="text-sm text-gray-600 mt-1" dangerouslySetInnerHTML={{ __html: blog.content }} />
 
@@ -111,14 +117,14 @@ const ContentManagement = () => {
                             <div className="mt-4 flex gap-2">
                                 {userRole === "admin" && (
                                     <>
-                                        <button 
-                                            className="btn btn-sm" 
+                                        <button
+                                            className="btn btn-sm"
                                             onClick={() => handleStatusToggle(blog._id, blog.status)}
                                         >
                                             {blog.status === "draft" ? "Publish" : "Unpublish"}
                                         </button>
-                                        
-                                        <button 
+
+                                        <button
                                             className="btn btn-sm btn-error"
                                             onClick={() => handleDelete(blog._id)}
                                         >

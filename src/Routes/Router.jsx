@@ -22,6 +22,8 @@ import MyDonationRequestDetails from "../Pages/MyDonationRequestDetails";
 import AllDonationRequest from "../Pages/Adminpage/AllDonationRequest";
 import ContentManagement from "../Pages/ContentManagement ";
 import AddBlog from "../Pages/AddBlog";
+import BlogPublic from "../Pages/BlogPublic";
+import Contact from "../Pages/Contact";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -48,6 +50,14 @@ import AddBlog from "../Pages/AddBlog";
         {
             path:'/allcreateddonor',
             element:<AllCreatedDonor></AllCreatedDonor>
+        },
+        {
+            path:'/blogpublic',
+            element:<BlogPublic></BlogPublic>
+        },
+        {
+            path:'/contact',
+            element:<Contact></Contact>
         }
 
       ]

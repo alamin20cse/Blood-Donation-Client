@@ -1,11 +1,13 @@
+import { useState } from "react";
 import useAllusers from "../../Hooks/useAllusers";
 import Loading from "../../Layout/Shared/Loading";
 
 const AllUsers = () => {
-    const [allusers, loading, refetch] = useAllusers(); 
+    const [allusers, loading, refetch] = useAllusers();
+    const [filterStatus, setFilterStatus] = useState(""); // Default: show all
 
     if (loading) {
-        return <Loading></Loading>;
+        return <Loading />;
     }
 
     // Function to update user status
@@ -14,49 +16,55 @@ const AllUsers = () => {
             const response = await fetch(`http://localhost:5000/allusers/${userId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ status: newStatus })
+                body: JSON.stringify({ status: newStatus }),
             });
 
-            const data = await response.json();
             if (response.ok) {
-                console.log(`User status updated: ${newStatus}`);
-
-                // Refetch the data to update the UI after status change
-                refetch(); // Trigger the refetch to get updated data
-            } else {
-                console.error("Error updating status:", data.message);
+                refetch(); // Refresh data after update
             }
         } catch (error) {
             console.error("Failed to update status:", error);
         }
     };
 
-    // Function to update user role (Admin or Volunteer)
+    // Function to update user role
     const updateUserRole = async (userId, newRole) => {
         try {
             const response = await fetch(`http://localhost:5000/allusers/${userId}/role`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ role: newRole })
+                body: JSON.stringify({ role: newRole }),
             });
 
-            const data = await response.json();
             if (response.ok) {
-                console.log(`User role updated: ${newRole}`);
-
-                // Refetch the data to update the UI after role change
-                refetch(); // Trigger the refetch to get updated data
-            } else {
-                console.error("Error updating role:", data.message);
+                refetch();
             }
         } catch (error) {
             console.error("Failed to update role:", error);
         }
     };
 
+    // Filter users based on selected status
+    const filteredUsers = filterStatus
+        ? allusers.filter((user) => user.status === filterStatus)
+        : allusers;
+
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">All Users ({allusers.length})</h1>
+            <h1 className="text-2xl font-bold mb-4">All Users ({filteredUsers.length})</h1>
+
+            {/* Filter Dropdown */}
+            <div className="mb-4">
+                <details className="dropdown">
+                    <summary className="btn m-1">Filter: {filterStatus || "All"}</summary>
+                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                        <li><a onClick={() => setFilterStatus("")}>All</a></li>
+                        <li><a onClick={() => setFilterStatus("active")}>Active</a></li>
+                        <li><a onClick={() => setFilterStatus("blocked")}>Blocked</a></li>
+                    </ul>
+                </details>
+            </div>
+
             <div className="overflow-x-auto">
                 <table className="table-auto w-full border-collapse border border-gray-300">
                     <thead>
@@ -72,7 +80,7 @@ const AllUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allusers.map((user, index) => (
+                        {filteredUsers.map((user, index) => (
                             <tr key={user._id} className="hover:bg-gray-100">
                                 <td className="border border-gray-300 p-2 text-center">{index + 1}</td>
                                 <td className="border border-gray-300 p-2 flex items-center space-x-2">

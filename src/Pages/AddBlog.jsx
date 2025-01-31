@@ -89,7 +89,7 @@ const AddBlog = () => {
                 <span className="label-text">Thumbnail Image (imageBB URL)</span>
               </label>
               <input
-                type="url"
+                type="text"
                 placeholder="Paste image URL here"
                 className="input input-bordered"
                 required
