@@ -64,7 +64,7 @@ const LoggedUserGetRequest = () => {
                 <table className="table-auto border-collapse border border-gray-400 w-full">
                     <thead>
                         <tr className="bg-gray-200">
-                            <th className="border border-gray-400 px-4 py-2">Email of donor</th>
+                           
                             <th className="border border-gray-400 px-4 py-2">Blood Group</th>
                             <th className="border border-gray-400 px-4 py-2">District</th>
                             <th className="border border-gray-400 px-4 py-2">Upazila</th>
@@ -79,7 +79,7 @@ const LoggedUserGetRequest = () => {
                     <tbody>
                         {firstThreeRequests.map((request) => (
                             <tr key={request._id} className="text-center">
-                                <td className="border border-gray-400 px-4 py-2">{request.donorEmail}</td>
+                               
                                 <td className="border border-gray-400 px-4 py-2">{request.bloodgroup}</td>
                                 <td className="border border-gray-400 px-4 py-2">{request.districtName}</td>
                                 <td className="border border-gray-400 px-4 py-2">{request.upazilaName}</td>

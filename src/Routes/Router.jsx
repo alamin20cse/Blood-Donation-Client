@@ -72,7 +72,7 @@ import AllDonationRequest from "../Pages/Adminpage/AllDonationRequest";
 
             },
             {
-                path:'/dashboard/donationrequest/:id',
+                path:'/dashboard/donationrequest',
                 element:<PrivateRoute><DonationRequest></DonationRequest></PrivateRoute>
             },
             {

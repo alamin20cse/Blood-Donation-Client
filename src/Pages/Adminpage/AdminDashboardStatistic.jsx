@@ -35,7 +35,7 @@ const AdminDashboardStatistic = () => {
                 {/* data and title */}
                 <div>
                     <h1 className="text-3xl ">Total users</h1>
-                    <h1 className="text-3xl font-bold ">{allusers.length}</h1>
+                    <h1 className="text-3xl text-red-600  font-bold ">{allusers.length}</h1>
 
 
                 </div>
@@ -55,7 +55,7 @@ const AdminDashboardStatistic = () => {
                 {/* data and title */}
                 <div>
                     <h1 className="text-3xl ">Total blood donation request</h1>
-                    <h1 className="text-3xl font-bold ">{allRequest.length}</h1>
+                    <h1 className="text-3xl text-red-600 font-bold ">{allRequest.length}</h1>
 
 
                 </div>

@@ -4,29 +4,24 @@ import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../Layout/Shared/Loading";
 
-
 const UpdateDonationRequest = () => {
     const { user } = useContext(AuthContext);
     const { id } = useParams(); // Get ID from URL params
 
-
-  
-
     // State Variables
     const [reqUser, setReqUser] = useState(null);
-    const [userDonor, setUserDonor] = useState(null);
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [loadingReqUser, setLoadingReqUser] = useState(true);
-    const [loadingAllUser, setLoadingAllUser] = useState(true);
+    const [loadingDistricts, setLoadingDistricts] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch donor details
+    // Fetch donation request details
     useEffect(() => {
         setLoadingReqUser(true);
         fetch(`http://localhost:5000/donation-requests-logged-user/${id}`)
             .then((res) => {
-                if (!res.ok) throw new Error("Failed to fetch user details");
+                if (!res.ok) throw new Error("Failed to fetch donation request details");
                 return res.json();
             })
             .then((data) => {
@@ -39,34 +34,18 @@ const UpdateDonationRequest = () => {
             });
     }, [id]);
 
-    // Fetch user donor details
-    useEffect(() => {
-        if (!reqUser || !reqUser.donorID) return; 
-
-        setLoadingAllUser(true);
-        fetch(`http://localhost:5000/allusers/${reqUser.donorID}`)
-            .then((res) => {
-                if (!res.ok) throw new Error("Failed to fetch donor details");
-                return res.json();
-            })
-            .then((data) => {
-                setUserDonor(data);
-                setLoadingAllUser(false);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoadingAllUser(false);
-            });
-    }, [reqUser]);
-
-    // destic
+    // Fetch districts
     useEffect(() => {
         fetch("http://localhost:5000/districts")
             .then((res) => res.json())
-            .then((data) => setDistricts(data[2]?.data || []))
+            .then((data) => {
+                setDistricts(data[2]?.data || []);
+                setLoadingDistricts(false);
+            })
             .catch((error) => {
-                handleError("Error", "Failed to load districts.");
+                setError("Failed to load districts.");
                 console.error("Error fetching districts:", error);
+                setLoadingDistricts(false);
             });
     }, []);
 
@@ -84,7 +63,7 @@ const UpdateDonationRequest = () => {
                 setUpazilas(filteredUpazilas);
             })
             .catch((error) => {
-                handleError("Error", "Failed to load upazilas.");
+                setError("Failed to load upazilas.");
                 console.error("Error fetching upazilas:", error);
             });
     };
@@ -93,52 +72,32 @@ const UpdateDonationRequest = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!userDonor) {
-            Swal.fire("Error", "Donor details are missing!", "error");
-            return;
-        }
-
-        const {
-            name,
-            email,
-            bloodgroup,
-            districtID,
-            upazilaID,
-            recipientname,
-            hospitalname,
-            fulladdress,
-            donationdate,
-            donationtime,
-            requestmessage,
-        } = e.target;
-
-        const selectedDistrict = districts.find((d) => d.id === districtID.value);
-        const selectedUpazila = upazilas.find((u) => u.id === upazilaID.value);
+        const formData = new FormData(e.target);
+        const selectedDistrict = districts.find((d) => d.id === formData.get("districtID"));
+        const selectedUpazila = upazilas.find((u) => u.id === formData.get("upazilaID"));
 
         const recipientData = {
-            name: name.value,
-            email: email.value,
-            bloodgroup: bloodgroup.value,
+            name: user?.displayName || "",
+            email: user?.email || "",
+            bloodgroup: formData.get("bloodgroup"),
             districtName: selectedDistrict?.name || "Unknown",
             districtNameBan: selectedDistrict?.bn_name || "Unknown",
             upazilaName: selectedUpazila?.name || "Unknown",
             upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
-            recipientname: recipientname.value,
-            hospitalname: hospitalname.value,
-            fulladdress: fulladdress.value,
-            donationdate: donationdate.value,
-            donationtime: donationtime.value,
-            requestmessage: requestmessage.value,
-            districtID: districtID.value,
-            upazilaID: upazilaID.value,
+            recipientname: formData.get("recipientname"),
+            hospitalname: formData.get("hospitalname"),
+            fulladdress: formData.get("fulladdress"),
+            donationdate: formData.get("donationdate"),
+            donationtime: formData.get("donationtime"),
+            requestmessage: formData.get("requestmessage"),
+            districtID: formData.get("districtID"),
+            upazilaID: formData.get("upazilaID"),
             status: "pending",
             requestTime: new Date().toISOString(),
-            donorID: userDonor?._id, // ✅ Safe access
-            donorEmail: userDonor?.email,
         };
 
         fetch(`http://localhost:5000/donation-requests/${id}`, {
-            method: 'PUT',
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(recipientData),
         })
@@ -147,77 +106,76 @@ const UpdateDonationRequest = () => {
                 if (result.modifiedCount > 0 || result.upsertedCount > 0) {
                     Swal.fire("Success", "Donation request updated successfully!", "success");
                 } else {
-                    handleError("Error", "Failed to update the request.");
+                    throw new Error("Failed to update the request.");
                 }
             })
             .catch((error) => {
-                handleError("Error", "An error occurred during submission.");
+                Swal.fire("Error", "An error occurred during submission.", "error");
                 console.error("Submission error:", error);
             });
-
-        e.target.reset();
     };
 
     // Handle errors
-    const handleError = (title, message) => {
-        Swal.fire({ icon: "error", title, text: message });
-    };
+    // const handleError = (title, message) => {
+    //     Swal.fire({ icon: "error", title, text: message });
+    // };
 
-    // Show error message
+    // Show loading or error messages
+    if (loadingReqUser || loadingDistricts) {
+        return <Loading />;
+    }
     if (error) {
         Swal.fire("Error", error, "error");
-    }
-
-    // Show loading messages
-    if (loadingReqUser || loadingAllUser) {
-        return <Loading></Loading>;
     }
 
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="p-4 card card-compact bg-base-100 w-96 mx-auto shadow-xl">
-                    <h1 className="text-2xl font-bold text-center">Donor Details</h1>
-                    <img src={userDonor.photo} alt={`${userDonor.name}'s avatar`} className="w-32 h-32 rounded-full mx-auto mb-4" />
-                    <p><strong>Name:</strong> {userDonor.name}</p>
-                    <p><strong>Email:</strong> {userDonor.email}</p>
-                    <p><strong>Blood Group:</strong> {userDonor.bloodgroup}</p>
-                    <p><strong>District:</strong> {userDonor.districtName} ({userDonor.districtNameBan})</p>
-                    <p><strong>Upazila:</strong> {userDonor.upazilaName} ({userDonor.upazilaNameBan})</p>
-                    <p><strong>Status:</strong> {userDonor.status}</p>
-                    <p><strong>Role:</strong> {userDonor.role}</p>
-                </div>
-                <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <div className="text-2xl font-semibold text-center">Patient details</div>
-
-                    
+                <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+                    <div className="text-2xl font-semibold text-center p-4">Update Donation Request</div>
                     <form onSubmit={handleSubmit} className="card-body">
+                        {/* Requester Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Name</span>
+                                <span className="label-text">Requester Name</span>
                             </label>
                             <input
                                 type="text"
                                 readOnly
-                                name="name"
                                 value={user?.displayName || ""}
                                 className="input input-bordered"
-                                required
                             />
                         </div>
+
+                        {/* Requester Email */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Email</span>
+                                <span className="label-text">Requester Email</span>
                             </label>
                             <input
                                 type="email"
                                 readOnly
-                                name="email"
                                 value={user?.email || ""}
+                                className="input input-bordered"
+                            />
+                        </div>
+
+                        {/* Recipient Name */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Recipient Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="recipientname"
+                                defaultValue={reqUser?.recipientname || ""}
+                                placeholder="Recipient name"
                                 className="input input-bordered"
                                 required
                             />
                         </div>
+
+                        {/* District Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">District</span>
@@ -226,6 +184,7 @@ const UpdateDonationRequest = () => {
                                 name="districtID"
                                 className="select input-bordered"
                                 onChange={handleDistrictChange}
+                                defaultValue={reqUser?.districtID || ""}
                                 required
                             >
                                 <option value="">Select a district</option>
@@ -236,6 +195,8 @@ const UpdateDonationRequest = () => {
                                 ))}
                             </select>
                         </div>
+
+                        {/* Upazila Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Upazila</span>
@@ -244,12 +205,11 @@ const UpdateDonationRequest = () => {
                                 name="upazilaID"
                                 className="select input-bordered"
                                 disabled={!upazilas.length}
+                                defaultValue={reqUser?.upazilaID || ""}
                                 required
                             >
                                 <option value="">
-                                    {upazilas.length
-                                        ? "Select an upazila"
-                                        : "No upazilas available"}
+                                    {upazilas.length ? "Select an upazila" : "No upazilas available"}
                                 </option>
                                 {upazilas.map((upazila) => (
                                     <option key={upazila.id} value={upazila.id}>
@@ -258,30 +218,49 @@ const UpdateDonationRequest = () => {
                                 ))}
                             </select>
                         </div>
+
+                        {/* Hospital Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Recipient name</span>
+                                <span className="label-text">Hospital Name</span>
                             </label>
-                            <input type="text" name="recipientname" placeholder="recipient name" className="input input-bordered" required />
+                            <input
+                                type="text"
+                                name="hospitalname"
+                                defaultValue={reqUser?.hospitalname || ""}
+                                placeholder="e.g., Dhaka Medical College Hospital"
+                                className="input input-bordered"
+                                required
+                            />
                         </div>
+
+                        {/* Full Address */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Hospital name</span>
+                                <span className="label-text">Full Address</span>
                             </label>
-                            <input type="text" name="hospitalname" placeholder="like: Dhaka Medical College Hospital" className="input input-bordered" required />
+                            <input
+                                type="text"
+                                name="fulladdress"
+                                defaultValue={reqUser?.fulladdress || ""}
+                                placeholder="e.g., Zahir Raihan Rd, Dhaka"
+                                className="input input-bordered"
+                                required
+                            />
                         </div>
+
+                        {/* Blood Group Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Full address line</span>
+                                <span className="label-text">Blood Group</span>
                             </label>
-                            <input type="text" name="fulladdress" placeholder="(like: Zahir Raihan Rd, Dhaka" className="input input-bordered" required />
-                        </div>
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Blood group</span>
-                            </label>
-                            <select name="bloodgroup" className="select input-bordered" required>
-                                <option value="">Pick a group</option>
+                            <select
+                                name="bloodgroup"
+                                className="select input-bordered"
+                                defaultValue={reqUser?.bloodgroup || ""}
+                                required
+                            >
+                                <option value="">Select a blood group</option>
                                 <option>A+</option>
                                 <option>A-</option>
                                 <option>B+</option>
@@ -292,12 +271,22 @@ const UpdateDonationRequest = () => {
                                 <option>O-</option>
                             </select>
                         </div>
+
+                        {/* Donation Date */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation date</span>
+                                <span className="label-text">Donation Date</span>
                             </label>
-                            <input type="date" name="donationdate" placeholder="Date" className="input input-bordered" required />
+                            <input
+                                type="date"
+                                name="donationdate"
+                                defaultValue={reqUser?.donationdate || ""}
+                                className="input input-bordered"
+                                required
+                            />
                         </div>
+
+                        {/* Donation Time */}
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Donation Time</span>
@@ -305,22 +294,36 @@ const UpdateDonationRequest = () => {
                             <input
                                 type="time"
                                 name="donationtime"
-                                placeholder="Select time"
+                                defaultValue={reqUser?.donationtime || ""}
                                 className="input input-bordered"
                                 required
                             />
                         </div>
+
+                        {/* Request Message */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Request message</span>
+                                <span className="label-text">Request Message</span>
                             </label>
-                            <textarea type="text" name="requestmessage" placeholder="requester will write, why he need blood in this input field in details" className="textarea textarea-bordered" required />
+                            <textarea
+                                name="requestmessage"
+                                defaultValue={reqUser?.requestmessage || ""}
+                                placeholder="Explain why you need blood in detail"
+                                className="textarea textarea-bordered"
+                                required
+                            />
                         </div>
+
+                        {/* Submit Button */}
                         <div className="form-control mt-6">
-                            {user?.status === 'blocked' ? (
-                                <button disabled className="btn btn-primary">Submit Request</button>
+                            {user?.status === "blocked" ? (
+                                <button disabled className="btn btn-primary">
+                                    Submit Request
+                                </button>
                             ) : (
-                                <button className="btn btn-primary">Submit Request</button>
+                                <button type="submit" className="btn btn-primary">
+                                    Submit Request
+                                </button>
                             )}
                         </div>
                     </form>

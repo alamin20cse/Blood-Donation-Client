@@ -2,52 +2,27 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUsers from "../Hooks/useUsers";
-import { useParams } from "react-router-dom";
 import Loading from "../Layout/Shared/Loading";
-
 
 const DonationRequest = () => {
     const { user } = useContext(AuthContext);
-
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [users, loading] = useUsers();
+    const [error, setError] = useState(null);
 
-    const { id } = useParams(); // Get the `id` parameter from the route
-    const [userDonor, setUserDonor] = useState(null); // State to store user data
-    const [error, setError] = useState(null); // State to handle errors
-
-
-    // Fetch donor details
-    useEffect(() => {
-        fetch(`http://localhost:5000/allusers/${id}`)
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error("Failed to fetch user details");
-                }
-                return res.json();
-            })
-            .then((data) => setUserDonor(data))
-            .catch((err) => {
-                setError(err.message);
-                console.error("Error fetching user details:", err);
-            });
-    }, [id]);
-
-   
     // Fetch districts on mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
             .catch((error) => {
-                handleError("Error", "Failed to load districts.");
+                setError("Failed to load districts.");
                 console.error("Error fetching districts:", error);
             });
     }, []);
-    if(loading) return <Loading></Loading>
-    if(!userDonor) return <Loading></Loading>
 
+    // Fetch upazilas based on selected district
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
@@ -61,61 +36,42 @@ const DonationRequest = () => {
                 setUpazilas(filteredUpazilas);
             })
             .catch((error) => {
-                handleError("Error", "Failed to load upazilas.");
+                setError("Failed to load upazilas.");
                 console.error("Error fetching upazilas:", error);
             });
     };
 
-    if(error)
-    {
-        return alert('error');
-    }
-
-
+    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const {
-            name,
-            email,
-            bloodgroup,
-            districtID,
-            upazilaID,
-            recipientname,
-            hospitalname,
-            fulladdress,
-            donationdate,
-            donationtime,
-            requestmessage,
-        } = e.target;
-
-        const selectedDistrict = districts.find((d) => d.id === districtID.value);
-        const selectedUpazila = upazilas.find((u) => u.id === upazilaID.value);
-
+    
+        // Extract form values
+        const formData = new FormData(e.target);
+        const selectedDistrict = districts.find((d) => d.id === formData.get("districtID"));
+        const selectedUpazila = upazilas.find((u) => u.id === formData.get("upazilaID"));
+    
+        // Construct recipientData object
         const recipientData = {
-            name: name.value,
-            email: email.value,
-            bloodgroup: bloodgroup.value,
+            name: user?.displayName || "", // Logged-in user's name
+            email: user?.email || "", // Logged-in user's email
+            bloodgroup: formData.get("bloodgroup"),
             districtName: selectedDistrict?.name || "Unknown",
             districtNameBan: selectedDistrict?.bn_name || "Unknown",
             upazilaName: selectedUpazila?.name || "Unknown",
             upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
-            recipientname: recipientname.value,
-            hospitalname: hospitalname.value,
-            fulladdress: fulladdress.value,
-            donationdate: donationdate.value,
-            donationtime: donationtime.value,
-            requestmessage: requestmessage.value,
-            districtID: districtID.value,
-            upazilaID: upazilaID.value,
-            status: "pending",
-            requestTime:new Date().toISOString(),
-            donorID:userDonor._id, 
-            donorEmail:userDonor.email,
+            recipientname: formData.get("recipientname"),
+            hospitalname: formData.get("hospitalname"),
+            fulladdress: formData.get("fulladdress"),
+            donationdate: formData.get("donationdate"),
+            donationtime: formData.get("donationtime"),
+            requestmessage: formData.get("requestmessage"),
+            districtID: formData.get("districtID"),
+            upazilaID: formData.get("upazilaID"),
+            status: "pending", // Default status
+            requestTime: new Date().toISOString(), // Current timestamp
         };
-
-
-
+    
+        // Send data to the backend
         fetch("http://localhost:5000/donation-requests", {
             method: "POST",
             headers: {
@@ -127,162 +83,143 @@ const DonationRequest = () => {
             .then((result) => {
                 if (result?.insertedId) {
                     Swal.fire("Success", "Donation request submitted successfully!", "success");
+                    e.target.reset(); // Reset the form after successful submission
                 } else {
-                    handleError("Error", "Failed to submit the request.");
+                    throw new Error("Failed to submit the request.");
                 }
             })
             .catch((error) => {
-                handleError("Error", "An error occurred during submission.");
+                Swal.fire("Error", "An error occurred during submission.", "error");
                 console.error("Submission error:", error);
             });
-
-        e.target.reset();
     };
 
-    const handleError = (title, message) => {
-        Swal.fire({
-            icon: "error",
-            title,
-            text: message,
-        });
-    };
-console.log(userDonor)
-
-// const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,_id}=userDonor;
+    if (loading) return <Loading />;
+    if (error) return <div className="text-red-500 text-center mt-4">{error}</div>;
 
     return (
-      
-
-
         <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="p-4 card card-compact bg-base-100 w-96 mx-auto shadow-xl">
-            <h1 className="text-2xl font-bold text-center">Donor Details</h1>
-            <img src={userDonor.photo} alt={`${userDonor.name}'s avatar`} className="w-32 h-32 rounded-full mx-auto mb-4" />
-            <p><strong>Name:</strong> {userDonor.name}</p>
-            <p><strong>Email:</strong> {userDonor.email}</p>
-            <p><strong>Blood Group:</strong> {userDonor.bloodgroup}</p>
-            <p><strong>District:</strong> {userDonor.districtName} ({userDonor.districtNameBan})</p>
-            <p><strong>Upazila:</strong> {userDonor.upazilaName} ({userDonor.upazilaNameBan})</p>
-            <p><strong>Status:</strong> {userDonor.status}</p>
-            <p><strong>Role:</strong> {userDonor.role}</p>
-           
-          
+            <div className="hero-content flex-col lg:flex-row-reverse">
+                <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
+                    <div className="text-2xl font-semibold text-center p-4">Create Donation Request</div>
+                    <form onSubmit={handleSubmit} className="card-body">
+                        {/* Requester Name */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Requester Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                readOnly
+                                value={user?.displayName || ""}
+                                className="input input-bordered"
+                            />
+                        </div>
 
+                        {/* Requester Email */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Requester Email</span>
+                            </label>
+                            <input
+                                type="email"
+                                readOnly
+                                value={user?.email || ""}
+                                className="input input-bordered"
+                            />
+                        </div>
 
+                        {/* Recipient Name */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Recipient Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="recipientname"
+                                placeholder="Recipient name"
+                                className="input input-bordered"
+                                required
+                            />
+                        </div>
 
-        </div>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                        {/* District Selector */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">District</span>
+                            </label>
+                            <select
+                                name="districtID"
+                                className="select input-bordered"
+                                onChange={handleDistrictChange}
+                                required
+                            >
+                                <option value="">Select a district</option>
+                                {districts.map((district) => (
+                                    <option key={district.id} value={district.id}>
+                                        {district.name} ({district.bn_name})
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
 
-<div className="text-2xl font-semibold text-center">Patient details</div>
-
-
-                <form onSubmit={handleSubmit} className="card-body">
-                    <div className="form-control mb-4">
-                        <label className="label">
-                            <span className="label-text">Name</span>
-                        </label>
-                        <input
-                            type="text"
-                            readOnly
-                            name="name"
-                            value={user?.displayName || ""}
-                            className="input input-bordered"
-                            required
-                        />
-                    </div>
-
-
-                    <div className="form-control mb-4">
-                        <label className="label">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input
-                            type="email"
-                            readOnly
-                            name="email"
-                            value={user?.email || ""}
-                            className="input input-bordered"
-                            required
-                        />
-                    </div>
-
-                  
-
-
-
-                    <div className="form-control mb-4">
-                        <label className="label">
-                            <span className="label-text">District</span>
-                        </label>
-                        <select
-                            name="districtID"
-                            className="select input-bordered"
-                            onChange={handleDistrictChange}
-                            required
-                        >
-                            <option value="">Select a district</option>
-                            {districts.map((district) => (
-                                <option key={district.id} value={district.id}>
-                                    {district.name} ({district.bn_name})
+                        {/* Upazila Selector */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Upazila</span>
+                            </label>
+                            <select
+                                name="upazilaID"
+                                className="select input-bordered"
+                                disabled={!upazilas.length}
+                                required
+                            >
+                                <option value="">
+                                    {upazilas.length ? "Select an upazila" : "No upazilas available"}
                                 </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="form-control mb-4">
-                        <label className="label">
-                            <span className="label-text">Upazila</span>
-                        </label>
-                        <select
-                            name="upazilaID"
-                            className="select input-bordered"
-                            disabled={!upazilas.length}
-                            required
-                        >
-                            <option value="" >
-                                {upazilas.length
-                                    ? "Select an upazila"
-                                    : "No upazilas available"}
-                            </option>
-                            {upazilas.map((upazila) => (
-                                <option key={upazila.id} value={upazila.id}>
-                                    {upazila.name} ({upazila.bn_name})
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
-                     
-                    <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Recipient name</span>
-                            </label>
-                            <input type="text" name="recipientname" placeholder="recipient name" className="input input-bordered" required />
-                        </div>
-                   
-                    <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Hospital name</span>
-                            </label>
-                            <input type="text" name="hospitalname" placeholder="like: Dhaka Medical College Hospital" className="input input-bordered" required />
-                        </div>
-                   
-                    <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Full address line</span>
-                            </label>
-                            <input type="text" name="fulladdress" placeholder="(like: Zahir Raihan Rd, Dhaka" className="input input-bordered" required />
+                                {upazilas.map((upazila) => (
+                                    <option key={upazila.id} value={upazila.id}>
+                                        {upazila.name} ({upazila.bn_name})
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
-
-
-
-                    <div className="form-control mb-4">
+                        {/* Hospital Name */}
+                        <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Blood group</span>
+                                <span className="label-text">Hospital Name</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="hospitalname"
+                                placeholder="e.g., Dhaka Medical College Hospital"
+                                className="input input-bordered"
+                                required
+                            />
+                        </div>
+
+                        {/* Full Address */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Full Address</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="fulladdress"
+                                placeholder="e.g., Zahir Raihan Rd, Dhaka"
+                                className="input input-bordered"
+                                required
+                            />
+                        </div>
+
+                        {/* Blood Group Selector */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Blood Group</span>
                             </label>
                             <select name="bloodgroup" className="select input-bordered" required>
-                                <option value="">Pick a group</option>
+                                <option value="">Select a blood group</option>
                                 <option>A+</option>
                                 <option>A-</option>
                                 <option>B+</option>
@@ -294,53 +231,61 @@ console.log(userDonor)
                             </select>
                         </div>
 
+                        {/* Donation Date */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation date</span>
+                                <span className="label-text">Donation Date</span>
                             </label>
-                            <input type="date" name="donationdate" placeholder="Date" className="input input-bordered" required />
+                            <input
+                                type="date"
+                                name="donationdate"
+                                className="input input-bordered"
+                                required
+                            />
                         </div>
 
+                        {/* Donation Time */}
                         <div className="form-control mb-4">
-    <label className="label">
-        <span className="label-text">Donation Time</span>
-    </label>
-    <input 
-        type="time" 
-        name="donationtime" 
-        placeholder="Select time" 
-        className="input input-bordered" 
-        required 
-    />
-</div>
-
-
- 
-<div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Request message</span>
+                                <span className="label-text">Donation Time</span>
                             </label>
-                            <textarea type="text" name="requestmessage" placeholder="requester will write, why he need blood in this input field in details" className="textarea textarea-bordered" required />
+                            <input
+                                type="time"
+                                name="donationtime"
+                                className="input input-bordered"
+                                required
+                            />
                         </div>
 
+                        {/* Request Message */}
+                        <div className="form-control mb-4">
+                            <label className="label">
+                                <span className="label-text">Request Message</span>
+                            </label>
+                            <textarea
+                                name="requestmessage"
+                                placeholder="Explain why you need blood in detail"
+                                className="textarea textarea-bordered"
+                                required
+                            />
+                        </div>
 
-
-
-
-
-                    <div className="form-control mt-6">
-
-                      {
-                         users?.[0]?.status==='blocked'? <button disabled className="btn btn-primary">Submit Request</button>: <button  className="btn btn-primary">Submit Request</button>
-
-                      } 
-                       
-                    </div>
-                </form>
+                        {/* Submit Button */}
+                        <div className="form-control mt-6">
+                            {users?.[0]?.status === "blocked" ? (
+                                <button disabled className="btn btn-primary">
+                                    Submit Request
+                                </button>
+                            ) : (
+                                <button type="submit" className="btn btn-primary">
+                                    Submit Request
+                                </button>
+                            )}
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
     );
 };
 
