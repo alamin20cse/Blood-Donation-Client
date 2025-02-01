@@ -26,7 +26,7 @@ const BlogPublic = () => {
 
                      
                         <h1 className="text-lg font-semibold mt-2">{blog.title}</h1>
-                          <Link to={`/blogdetails/${blog._id}`}>Details</Link>
+                          <Link to={`/blogdetails/${blog._id}`}><button className="btn bg-lime-600 rounded-3xl">Details</button></Link>
                     </div>
                 ))}
             </div>

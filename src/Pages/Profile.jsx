@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useUsers from "../Hooks/useUsers";
 import Loading from "../Layout/Shared/Loading";
 
@@ -9,12 +10,15 @@ const Profile = () => {
     }
     // console.log(users)
 
-    const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,
+    const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,_id
         // districtID,upazilaID,_id
     }=users[0]||'';
 
     return (
         <div>
+          <div>
+            <Link to={`/dashboard/profileEdit/${_id}`}><button className="btn btn-primary">Edit </button></Link>
+          </div>
 
 
 <div className="card bg-gray-300 w-full shadow-xl">

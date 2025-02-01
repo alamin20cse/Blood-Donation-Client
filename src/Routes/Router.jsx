@@ -27,6 +27,7 @@ import Contact from "../Pages/Contact";
 import BlogDetails from "../Pages/BlogDetails";
 import BloodDonationRequestPending from "../Pages/BloodDonationRequestPending";
 import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPendingDetails";
+import ProfileEdit from "../Pages/ProfileEdit";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -99,6 +100,11 @@ import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPen
             {
                 path:'/dashboard/profile',
                 element:<Profile></Profile>
+
+            },
+            {
+                  path:'/dashboard/profileEdit/:id',
+                  element:<ProfileEdit></ProfileEdit>
 
             },
             {

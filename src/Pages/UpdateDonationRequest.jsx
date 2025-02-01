@@ -105,9 +105,11 @@ const UpdateDonationRequest = () => {
             .then((result) => {
                 if (result.modifiedCount > 0 || result.upsertedCount > 0) {
                     Swal.fire("Success", "Donation request updated successfully!", "success");
+                 
                 } else {
                     throw new Error("Failed to update the request.");
                 }
+                console.log(result.modifiedCount,result.upsertedCount);
             })
             .catch((error) => {
                 Swal.fire("Error", "An error occurred during submission.", "error");
