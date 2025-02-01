@@ -69,6 +69,9 @@ const DonationRequest = () => {
             upazilaID: formData.get("upazilaID"),
             status: "pending", // Default status
             requestTime: new Date().toISOString(), // Current timestamp
+            DonorEmail:'',
+            DonorName:'',
+            DonorId:'',
         };
     
         // Send data to the backend

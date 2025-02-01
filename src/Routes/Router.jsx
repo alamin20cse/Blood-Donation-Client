@@ -25,6 +25,8 @@ import AddBlog from "../Pages/AddBlog";
 import BlogPublic from "../Pages/BlogPublic";
 import Contact from "../Pages/Contact";
 import BlogDetails from "../Pages/BlogDetails";
+import BloodDonationRequestPending from "../Pages/BloodDonationRequestPending";
+import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPendingDetails";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -65,6 +67,15 @@ import BlogDetails from "../Pages/BlogDetails";
         {
             path:'/contact',
             element:<Contact></Contact>
+        },
+        {
+            path:'/BloodDonationRequestPending',
+            element:<BloodDonationRequestPending></BloodDonationRequestPending>
+        },
+        {
+            path:'/BloodDonationRequestPending/:id',
+            element:<PrivateRoute><BloodDonationRequestPendingDetails></BloodDonationRequestPendingDetails></PrivateRoute>
+
         }
 
       ]
