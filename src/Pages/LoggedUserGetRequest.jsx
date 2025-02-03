@@ -63,6 +63,17 @@ const LoggedUserGetRequest = () => {
     };
     console.log(firstThreeRequests);
 
+
+
+
+
+
+
+
+
+
+    
+
     return (
         <div className="p-5">
             <h2 className="text-3xl font-bold text-center mb-5">Donation Requests</h2>
@@ -153,27 +164,28 @@ const LoggedUserGetRequest = () => {
                                     </span>
                                 </td>
 
-                                {/* Edit Button */}
-                                <td className="border border-gray-400 px-4 py-2">
+                                                   {/* Edit Button */}
+                                                   <td className="border border-gray-400 px-4 py-2">
 
 
-                                {(request.status ===request.status === "done" || request.status === "canceled") ? (
-            
-            <Link to={`/dashboard/updatedonationrequest/${request._id}`}>
-            <button className="btn btn-primary mr-2">
-                <FaRegEdit />
-            </button>
-        </Link>
-        ) : (
-            <button disabled className="btn btn-primary mr-2">
-                <FaRegEdit />
-            </button>
-            
-        )}
+{(request.status ===request.status === "done" || request.status === "canceled") ? (
+<button disabled className="btn btn-primary mr-2">
+<FaRegEdit />
+</button>
+
+) :(
+
+<Link to={`/dashboard/updatedonationrequest/${request._id}`}>
+<button className="btn btn-primary mr-2">
+<FaRegEdit />
+</button>
+</Link>
+) }
 
 
 
-                                </td>
+</td>
+
 
                                 {/* Delete Button */}
                                 <td className="border border-gray-400 px-4 py-2">
