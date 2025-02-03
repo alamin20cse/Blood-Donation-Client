@@ -59,6 +59,7 @@ const BloodDonationRequestPendingDetails = () => {
             setIsSubmitting(false);
         }
     };
+    // console.log(request)
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -75,6 +76,7 @@ const BloodDonationRequestPendingDetails = () => {
                     <p><span className="font-semibold">Full Address:</span> {request.fulladdress}</p>
                     <p><span className="font-semibold">Donation Date:</span> {request.donationdate}</p>
                     <p><span className="font-semibold">Donation Time:</span> {request.donationtime}</p>
+                    <p><span className="font-semibold">Email:</span> {request.email}</p>
                     <p><span className="font-semibold">Status:</span> {request.status}</p>
                     <p className="bg-yellow-200 rounded-2xl p-4"><span className="font-semibold">Request Message:</span> {request.requestmessage}</p>
                     <p className="text-gray-500 text-sm">📅 Requested on: {new Date(request.requestTime).toLocaleDateString()}</p>

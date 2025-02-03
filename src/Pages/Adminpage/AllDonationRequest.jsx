@@ -60,6 +60,21 @@ const AllDonationRequest = () => {
 
 
     }
+    console.log(allRequest);
+   
+  
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
     return (
@@ -74,7 +89,7 @@ const AllDonationRequest = () => {
                         <tr className="bg-gray-200">
 
 
-                            <th className="border border-gray-400 px-4 py-2">Email of donor</th>
+                           
                             <th className="border border-gray-400 px-4 py-2">Email of requested</th>
                             <th className="border border-gray-400 px-4 py-2">Blood Group</th>
                             <th className="border border-gray-400 px-4 py-2">District</th>
@@ -84,7 +99,9 @@ const AllDonationRequest = () => {
                             <th className="border border-gray-400 px-4 py-2">Donation Date</th>
                             <th className="border border-gray-400 px-4 py-2">Donation Time</th>
 
+                         
                             <th className="border border-gray-400 px-4 py-2">Status</th>
+                           
                             <th className="border border-gray-400 px-4 py-2">Edit</th>
                             <th className="border border-gray-400 px-4 py-2">Delete</th>
                             <th className="border border-gray-400 px-4 py-2">Details</th>
@@ -95,7 +112,6 @@ const AllDonationRequest = () => {
                             <tr key={request._id} className="text-center">
 
 
-                                <td className="border border-gray-400 px-4 py-2">{request.donorEmail}</td>
                                 <td className="border border-gray-400 px-4 py-2">{request.email}</td>
                                 <td className="border border-gray-400 px-4 py-2">{request.bloodgroup}</td>
                                 <td className="border border-gray-400 px-4 py-2">{request.districtName}</td>
@@ -110,6 +126,7 @@ const AllDonationRequest = () => {
                                         {request.status}
                                     </span>
                                 </td>
+                              
 
                                 <td className="border border-gray-400 px-4 py-2" > <Link to={`/dashboard/updatedonationrequest/${request._id}`}>
                                     <button className="btn btn-primary mr-2"><FaRegEdit></FaRegEdit> </button>

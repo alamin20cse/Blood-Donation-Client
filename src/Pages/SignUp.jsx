@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import ani1 from '../Component/SignUpAni.json'
+import Lottie from "lottie-react";
 
 const SignUp = () => {
     const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -161,7 +163,9 @@ e.target.reset();
     return (
         <div className="flex flex-col lg:flex-row-reverse">
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
-                <h2 className="text-3xl font-bold">Your Animation Here</h2>
+              
+<Lottie animationData={ani1}></Lottie>
+
             </div>
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-100">
                 <div className="max-w-sm w-full p-6 shadow-2xl rounded-lg">

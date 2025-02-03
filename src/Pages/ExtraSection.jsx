@@ -6,7 +6,14 @@ import pic3 from '../assets/pic3.jpg'
 
 const ExtraSection = () => {
     return (
-        <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+     <div  className="bg-cover bg-center"
+                     style={{
+                         backgroundImage: `url(${pic3})`,
+                         backgroundSize: "cover",
+                         backgroundPosition: "center",
+                         filter: "brightness(100%)", // Darkens image instead of opacity
+                     }} >
+           <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-lg">
             {/* Section 1: Why Donate Blood */}
             <div className="flex flex-col md:flex-row items-center gap-6 bg-pink-300 rounded-2xl">
                 <img 
@@ -14,7 +21,7 @@ const ExtraSection = () => {
                     alt="Blood Donation" 
                     className="w-full md:w-1/2 rounded-lg shadow-md"
                 />
-                <div>
+                <div >
                     <h2 className="text-3xl font-bold text-red-600">🩸 Why Donate Blood?</h2>
                     <ul className="list-disc list-inside text-gray-700 mt-4 space-y-2">
                         <li><span className="font-bold text-red-500">Saves Lives</span> – Essential for patients in critical conditions.</li>
@@ -68,6 +75,7 @@ const ExtraSection = () => {
               
             </div>
         </div>
+     </div>
     );
 };
 

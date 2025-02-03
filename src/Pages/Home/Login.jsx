@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import ani1 from '../../Component/LoginAnimation.json'
+import Lottie from 'lottie-react';
 
 const Login = () => {
   const navigate=useNavigate();
@@ -54,8 +56,8 @@ const Login = () => {
         {/* dfsdf */}
         <div className='w-full lg:w-1/2 flex items-center justify-center bg-base-200'>
 
-{/* <Lottie animationData={ani1}></Lottie> */}
-<h2>ana will add </h2>
+<Lottie animationData={ani1}></Lottie>
+
 
       </div>
 
