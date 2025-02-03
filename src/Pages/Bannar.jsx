@@ -18,7 +18,7 @@ const Bannar = () => {
 
         </div>
         <div className='bg-red-500 rounded-3xl p-5'>
-           <Link className='btn'>Search Donors</Link>
+           <Link to='/dashboard/searchdonors' className='btn'>Search Donors</Link>
 
 
         </div>

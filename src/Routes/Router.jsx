@@ -28,6 +28,7 @@ import BlogDetails from "../Pages/BlogDetails";
 import BloodDonationRequestPending from "../Pages/BloodDonationRequestPending";
 import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPendingDetails";
 import ProfileEdit from "../Pages/ProfileEdit";
+import SearchDonors from "../Pages/SearchDonor";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -138,7 +139,13 @@ import ProfileEdit from "../Pages/ProfileEdit";
                 path:'/dashboard/add-blog',
                 element:<AddBlog></AddBlog>
 
+            },
+            {
+                path:'/dashboard/searchdonors',
+                element:<SearchDonors></SearchDonors>
+
             }
+
             
 
 
