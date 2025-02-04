@@ -12,6 +12,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
 import Loading from "../Layout/Shared/Loading";
+import axios from "axios";
 
 export const AuthContext=createContext();
 
@@ -87,13 +88,40 @@ const AuthProvider = ({children}) => {
         handleGoogleSignIn,
     };
 
+   
+    
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-            setLoading(false);
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (currentUser?.email) {
+                setUser(currentUser);
+    
+                try {
+                    const { data } = await axios.post(`http://localhost:5000/jwt`, {
+                        email: currentUser.email,
+                    },{
+                        withCredentials: true
+                    });
+                    console.log(data); // Handle token or other responses
+                    // localStorage.setItem("authToken", data.token); // Save token if needed
+
+                    
+                } catch (error) {
+                    console.error("Error generating JWT:", error.message);
+                }
+            } else {
+                setUser(null); // Clear user if no user is signed in
+
+
+                const { data } = await axios.get(`http://localhost:5000/logout`,{
+                    withCredentials: true
+                });
+            }
+    
+            setLoading(false); // Set loading to false after processing
         });
+    
         return () => {
-            unsubscribe();
+            unsubscribe(); // Cleanup subscription
         };
     }, []);
 

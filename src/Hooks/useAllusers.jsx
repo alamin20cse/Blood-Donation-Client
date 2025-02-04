@@ -1,35 +1,55 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useUsers from "./useUsers";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
-// all user will show
+// Hook to fetch and manage all user data
 const useAllusers = () => {
-    // Get user data and loading state from useUsers hook
-    const [users, usersLoading] = useUsers();
-    const queryClient = useQueryClient();
+  // Get user data and loading state from useUsers hook
+  const [users, usersLoading] = useUsers();
+  const { logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-    // Fetch all users without any condition
-    const { refetch, data: allusers = [], isLoading: queryLoading } = useQuery({
-        queryKey: ['allusers'],
-        queryFn: async () => {
-            const res = await axios.get(`http://localhost:5000/allusers`);
-            return res.data;
-        },
-        // Add staleTime and cacheTime to ensure data is refetched when necessary
-        staleTime: 0, // Data is always stale after being fetched
-        cacheTime: 1000 * 60 * 5, // Cache data for 5 minutes
-    });
+  // Fetch all users
+  const { 
+    refetch, 
+    data: allusers = [], // Default to an empty array 
+    isLoading: queryLoading 
+  } = useQuery({
+    queryKey: ["allusers"],
+    queryFn: async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/allusers`, {
+          withCredentials: true,
+        });
+        return res.data; // Return the data if request is successful
+      } catch (error) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+          // Handle unauthorized access
+          await logOut();
+          navigate("/login", { replace: true });
+          throw new Error("Unauthorized: Logging out...");
+        }
+        throw error; // Re-throw other errors
+      }
+    },
+    staleTime: 0, // Always fetch fresh data
+    cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
+  });
 
-    // Function to manually invalidate the cache and refetch
-    const invalidateAndRefetch = async () => {
-        await queryClient.invalidateQueries(['allusers']);
-        refetch();  // Manually triggering refetch
-    };
+  // Manually invalidate cache and refetch
+  const invalidateAndRefetch = async () => {
+    queryClient.invalidateQueries(["allusers"]);
+    await refetch();
+  };
 
-    // Combine all loading states
-    const loading = usersLoading || queryLoading;
+  // Combine all loading states
+  const loading = usersLoading || queryLoading;
 
-    return [allusers, loading, refetch, invalidateAndRefetch];
+  return [allusers, loading, refetch, invalidateAndRefetch];
 };
 
 export default useAllusers;

@@ -22,7 +22,7 @@ const DashboardHome = () => {
 
     return (
         <div>
-               <h2 className="text-3xl font-bold text-center mb-5">Welcome {users[0].name}</h2>
+               <h2 className="text-3xl font-bold text-center mb-5">Welcome {users[0]?.name}</h2>
           
 
 

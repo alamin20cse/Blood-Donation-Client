@@ -3,20 +3,70 @@ import LoginInfo from "./Shared/LoginInfo";
 import { FaHome, FaUser, FaUsers } from "react-icons/fa";
 import { MdContentPasteSearch, MdOutlineBloodtype, MdOutlineRequestPage } from "react-icons/md";
 import { CiSquareQuestion } from "react-icons/ci";
+import useUsers from "../Hooks/useUsers";
+import Loading from "./Shared/Loading";
 
 
 const Dashboard = () => {
+    const  [users, loading]=useUsers();
+   
+    if(loading)
+    {
+        return <Loading></Loading>
+    }
+    console.log(users)
+   
+    const link = (
+        <>
+          <li>
+            <NavLink to="/" className="hover:text-white">
+              <FaHome /> Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/ex" className="hover:text-white">
+              <FaHome /> Check
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/profile" className="hover:text-white">
+              <FaUser /> Profile
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/donationrequest" className="hover:text-white">
+              <MdOutlineBloodtype /> Request created
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/my-donation-requests" className="hover:text-white">
+              <CiSquareQuestion /> My Donation Request
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/content-management" className="hover:text-white">
+              <MdContentPasteSearch /> Content Management
+            </NavLink>
+          </li>
+          {users[0]?.role === 'admin' && (
+            <>
+              <li>
+                <NavLink to="/dashboard/allusers" className="hover:text-white">
+                  <FaUsers /> All Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/all-blood-donation-request" className="hover:text-white">
+                  <MdOutlineRequestPage /> All Donation Request
+                </NavLink>
+              </li>
+            </>
+          )}
+        </>
+      );
+    
 
-    const link= <>
-     <li ><NavLink to="/" className="hover:text-white"><FaHome></FaHome>Home</NavLink></li>
-                    <li><NavLink to="/dashboard/ex" className="hover:text-white"> <FaHome></FaHome> Check</NavLink></li>
-                    <li><NavLink to="/dashboard/profile" className="hover:text-white"><FaUser></FaUser> Profile</NavLink></li>
-                    <li><NavLink to='/dashboard/donationrequest'className="hover:text-white"><MdOutlineBloodtype/> Request created</NavLink></li>
-                    <li><NavLink to="/dashboard/allusers" className="hover:text-white"><FaUsers></FaUsers> All Users</NavLink></li>
-                    <li><NavLink to="/dashboard/my-donation-requests" className="hover:text-white"><CiSquareQuestion />My Donation Request</NavLink></li>
-                    <li><NavLink to="/dashboard/all-blood-donation-request" className="hover:text-white"><MdOutlineRequestPage />All Donation Request</NavLink></li>
-                    <li><NavLink to="/dashboard/content-management" className="hover:text-white"><MdContentPasteSearch />Content Management</NavLink></li>
-    </>
+   
     return (
         <div className="flex   flex-col lg:flex-row min-h-screen">
             {/* Navbar for Mobile */}

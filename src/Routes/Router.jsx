@@ -31,6 +31,7 @@ import ProfileEdit from "../Pages/ProfileEdit";
 import SearchDonors from "../Pages/SearchDonor";
 import Funding from "../Pages/Funding/Funding";
 import Payment from "../Pages/Funding/Payment";
+import AdminRoute from "./AdminRoute";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -83,11 +84,11 @@ import Payment from "../Pages/Funding/Payment";
         },
         {
             path:'/funding',
-            element:<Funding></Funding>
+            element:<PrivateRoute><Funding></Funding></PrivateRoute>
         },
         {
             path:'/payment',
-            element:<Payment></Payment>
+            element:<PrivateRoute><Payment></Payment></PrivateRoute>
         }
 
       ]
@@ -103,19 +104,19 @@ import Payment from "../Pages/Funding/Payment";
             },
             {
                 path:"/dashboard",
-                element:<DashboardHome></DashboardHome>
+                element:<PrivateRoute><DashboardHome></DashboardHome></PrivateRoute>
 
 
             },
 
             {
                 path:'/dashboard/profile',
-                element:<Profile></Profile>
+                element:<PrivateRoute><Profile></Profile></PrivateRoute>
 
             },
             {
                   path:'/dashboard/profileEdit/:id',
-                  element:<ProfileEdit></ProfileEdit>
+                  element:<PrivateRoute><ProfileEdit></ProfileEdit></PrivateRoute>
 
             },
             {
@@ -129,7 +130,7 @@ import Payment from "../Pages/Funding/Payment";
             },
 
             {
-                path: '/dashboard/usersDetails/:id', // Add leading slash
+                path: '/dashboard/usersDetails/:id', 
                 element: <UserDetails></UserDetails>
             },
             {
@@ -167,11 +168,11 @@ import Payment from "../Pages/Funding/Payment";
             ,
             {
                 path:'/dashboard/allusers',
-                element:<AllUsers></AllUsers>
+                element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
             },
             {
                 path:'/dashboard/all-blood-donation-request',
-                element:<AllDonationRequest></AllDonationRequest>
+                element:<AdminRoute><AllDonationRequest></AllDonationRequest></AdminRoute>
             },
         ]
     }
