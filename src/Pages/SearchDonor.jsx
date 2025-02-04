@@ -147,7 +147,7 @@ const SearchDonor = () => {
                             <p>Blood Group: {user.status
                             }</p>
                             <p>Blood Group: {user.bloodgroup}</p>
-                            <p>Blood Group: {user.bloodgroup}</p>
+                          
                         </div>
                     ))
                 ) : (

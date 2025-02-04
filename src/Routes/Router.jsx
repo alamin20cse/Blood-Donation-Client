@@ -29,6 +29,8 @@ import BloodDonationRequestPending from "../Pages/BloodDonationRequestPending";
 import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPendingDetails";
 import ProfileEdit from "../Pages/ProfileEdit";
 import SearchDonors from "../Pages/SearchDonor";
+import Funding from "../Pages/Funding/Funding";
+import Payment from "../Pages/Funding/Payment";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -78,6 +80,14 @@ import SearchDonors from "../Pages/SearchDonor";
             path:'/BloodDonationRequestPending/:id',
             element:<PrivateRoute><BloodDonationRequestPendingDetails></BloodDonationRequestPendingDetails></PrivateRoute>
 
+        },
+        {
+            path:'/funding',
+            element:<Funding></Funding>
+        },
+        {
+            path:'/payment',
+            element:<Payment></Payment>
         }
 
       ]
