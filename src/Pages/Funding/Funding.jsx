@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import usePayment from "../../Hooks/usePayment";
 
 const Funding = () => {
-    const [allPayment, queryLoading, refetch] = usePayment();
+    const [allPayment, qLoading, refetch] = usePayment();
 
-    if (queryLoading) {
+    if (qLoading) {
         return <p>Loading...</p>;
     }
 

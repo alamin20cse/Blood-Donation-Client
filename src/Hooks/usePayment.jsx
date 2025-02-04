@@ -5,16 +5,16 @@ import axios from "axios";
 const usePayment = () => {
     const {refetch,
         data: allPayment = [], // Default to an empty array
-        isLoading: queryLoading,
+        isLoading: qLoading,
     } = useQuery({
-        queryKey: ['allRequest'],
+        queryKey: ['payment'],
         queryFn: async () => {
             const res = await axios.get(`http://localhost:5000/payments`);
             return res.data;
         },
     });
 
-    return [allPayment, queryLoading,refetch]; // Return queryLoading instead of isloading
+    return [allPayment, qLoading,refetch]; // Return queryLoading instead of isloading
 };
 
 
