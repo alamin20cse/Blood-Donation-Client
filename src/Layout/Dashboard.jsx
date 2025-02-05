@@ -19,40 +19,54 @@ const Dashboard = () => {
     const link = (
         <>
           <li>
-            <NavLink to="/" className="hover:text-white">
+            <NavLink  to="/"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
               <FaHome /> Home
             </NavLink>
           </li>
          
           <li>
-            <NavLink to="/dashboard/profile" className="hover:text-white">
+            <NavLink to="/dashboard/profile"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
               <FaUser /> Profile
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/donationrequest" className="hover:text-white">
+            <NavLink to="/dashboard/donationrequest"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
               <MdOutlineBloodtype /> Request created
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/my-donation-requests" className="hover:text-white">
+            <NavLink to="/dashboard/my-donation-requests"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
               <CiSquareQuestion /> My Donation Request
             </NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/content-management" className="hover:text-white">
+            <NavLink to="/dashboard/content-management"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
               <MdContentPasteSearch /> Content Management
             </NavLink>
           </li>
           {users[0]?.role === 'admin' && (
             <>
               <li>
-                <NavLink to="/dashboard/allusers" className="hover:text-white">
+                <NavLink to="/dashboard/allusers"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
                   <FaUsers /> All Users
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/all-blood-donation-request" className="hover:text-white">
+                <NavLink to="/dashboard/all-blood-donation-request"   className={({ isActive }) =>
+                        isActive ? "text-white bg-blue-500" : "hover:text-white"
+                    }>
                   <MdOutlineRequestPage /> All Donation Request
                 </NavLink>
               </li>
