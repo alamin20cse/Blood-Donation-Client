@@ -18,6 +18,7 @@ const AddBlog = () => {
       title,
       thumbnail,
       content,
+      date: new Date(), //utc date convert
       status:'draft',
     };
 

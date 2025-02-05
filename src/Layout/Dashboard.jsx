@@ -23,11 +23,7 @@ const Dashboard = () => {
               <FaHome /> Home
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/dashboard/ex" className="hover:text-white">
-              <FaHome /> Check
-            </NavLink>
-          </li>
+         
           <li>
             <NavLink to="/dashboard/profile" className="hover:text-white">
               <FaUser /> Profile

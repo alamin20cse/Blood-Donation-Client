@@ -1,6 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -10,15 +10,15 @@ const CheckoutForm = () => {
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState('');
     const [totalPrice, setTotalPrice] = useState('');
-    const [isProcessing, setIsProcessing] = useState(false); // Prevents multiple submissions
-    const [transctionId,setTransctionId]=useState('')
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [transctionId, setTransctionId] = useState('');
     const stripe = useStripe();
     const elements = useElements();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const fetchClientSecret = async (price) => {
-        if (!price || isNaN(price)) {
-            setError("Invalid amount entered.");
+        if (!price || isNaN(price) || price <= 0 || price > 999999.99) {
+            setError("Please enter a valid amount between 1 and 999999.99.");
             return;
         }
         try {
@@ -33,7 +33,7 @@ const CheckoutForm = () => {
     };
 
     const handlePriceChange = (event) => {
-        const price = event.target.value;
+        const price = parseFloat(event.target.value);
         setTotalPrice(price);
         fetchClientSecret(price);
     };
@@ -71,47 +71,37 @@ const CheckoutForm = () => {
             } else {
                 console.log("Payment successful:", paymentIntent);
                 setError("");
-                if(paymentIntent.status==='succeeded')
-                {
-                    console.log('transicotnonn id',paymentIntent.id)
-                    setTransctionId(paymentIntent.id)
+                if (paymentIntent.status === 'succeeded') {
+                    console.log('Transaction ID:', paymentIntent.id);
+                    setTransctionId(paymentIntent.id);
 
-
-                    // save to database
-                    const payment={
-                        email:user?.email,
-                        name:user?.displayName,
-                        photo:user?.photoURL,
+                    // Save to database
+                    const payment = {
+                        email: user?.email,
+                        name: user?.displayName,
+                        photo: user?.photoURL,
                         price: totalPrice,
                         transctionId: paymentIntent.id,
-                        date: new Date(), //utc date convert
-                        status:'pending'
-
+                        date: new Date(),
+                        status: 'pending'
+                    };
+                    const res = await axios.post(`http://localhost:5000/payments`, payment);
+                    console.log(res.data.insertedId);
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Thank you for your donation!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/funding');
                     }
-                const res=await    axios.post(`http://localhost:5000/payments`,payment)
-                console.log(res.data.insertedId)
-                if(res.data.insertedId)
-                {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Thank you for the taka paisa",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    navigate('/funding')
                 }
-
-                }
-               
-                
-                // alert("Payment Successful!");
-                
             }
         } catch (err) {
             console.error("Error in payment:", err);
             setError("Payment failed. Please try again.");
-
         }
 
         setIsProcessing(false);
@@ -119,23 +109,27 @@ const CheckoutForm = () => {
 
     return (
         <div>
+            <h1>Amount between 1 and 999999.99</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">Taka</span>
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         name="taka"
                         placeholder="EX: 10 tk"
                         className="input input-bordered"
                         value={totalPrice}
                         onChange={handlePriceChange}
                         required
+                        min="1"
+                        max="999999.99"
+                        step="0.01"
                     />
                 </div>
                 <div className="my-5">
-
+                    {/* Optional additional styling or content */}
                 </div>
 
                 <CardElement
@@ -166,5 +160,3 @@ const CheckoutForm = () => {
 };
 
 export default CheckoutForm;
-
-//6 11

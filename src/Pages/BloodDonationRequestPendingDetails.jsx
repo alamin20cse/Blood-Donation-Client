@@ -27,6 +27,7 @@ const BloodDonationRequestPendingDetails = () => {
         return <Loading />;
     }
 
+    console.log(request)
     const handleConfirmDonation = async () => {
         if (!donor._id || !donor.email) {
             alert("Donor information is missing.");

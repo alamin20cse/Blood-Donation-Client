@@ -5,6 +5,8 @@ import Loading from "../../Layout/Shared/Loading";
 const AllUsers = () => {
     const [allusers, loading, refetch] = useAllusers();
     const [filterStatus, setFilterStatus] = useState(""); // Default: show all
+    const [currentPage, setCurrentPage] = useState(1); // Tracks current page
+    const rowsPerPage = 3; // Number of rows per page
 
     if (loading) {
         return <Loading />;
@@ -49,6 +51,18 @@ const AllUsers = () => {
         ? allusers.filter((user) => user.status === filterStatus)
         : allusers;
 
+    // Calculate the users to be shown on the current page
+    const indexOfLastUser = currentPage * rowsPerPage;
+    const indexOfFirstUser = indexOfLastUser - rowsPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredUsers.length / rowsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">All Users ({filteredUsers.length})</h1>
@@ -80,7 +94,7 @@ const AllUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredUsers.map((user, index) => (
+                        {currentUsers.map((user, index) => (
                             <tr key={user._id} className="hover:bg-gray-100">
                                 <td className="border border-gray-300 p-2 text-center">{index + 1}</td>
                                 <td className="border border-gray-300 p-2 flex items-center space-x-2">
@@ -131,6 +145,33 @@ const AllUsers = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-4">
+                <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="btn btn-sm btn-secondary mr-2"
+                >
+                    Previous
+                </button>
+                {[...Array(totalPages)].map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`btn btn-sm ${currentPage === index + 1 ? 'btn-primary' : 'btn-secondary'} mx-1`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="btn btn-sm btn-secondary ml-2"
+                >
+                    Next
+                </button>
             </div>
         </div>
     );

@@ -9,6 +9,8 @@ import { useState } from "react";
 const MyDonationRequest = () => {
     const [usersReq, loading, refetch] = useUserRequest();
     const [filterStatus, setFilterStatus] = useState("all");
+    const [currentPage, setCurrentPage] = useState(1);
+    const rowsPerPage = 3;
 
     if (loading) {
         return <Loading />;
@@ -22,7 +24,19 @@ const MyDonationRequest = () => {
         ? usersReq
         : usersReq.filter(request => request.status === filterStatus);
 
-    const handleDelete = id => {
+    // Get the current page data
+    const indexOfLastRequest = currentPage * rowsPerPage;
+    const indexOfFirstRequest = indexOfLastRequest - rowsPerPage;
+    const currentRequests = filteredRequests.slice(indexOfFirstRequest, indexOfLastRequest);
+
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    const totalPages = Math.ceil(filteredRequests.length / rowsPerPage);
+
+    const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -119,7 +133,7 @@ const MyDonationRequest = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredRequests.map((request) => (
+                        {currentRequests.map((request) => (
                             <tr key={request._id} className="text-center">
                                 <td className="border border-gray-400 px-4 py-2">
                                     {["inprogress", "done", "canceled"].includes(request.status) ? (
@@ -189,6 +203,24 @@ const MyDonationRequest = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            <div className="pagination mt-5 flex justify-center">
+                <button
+                    className="btn btn-primary mx-2"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <span className="px-4">{`Page ${currentPage} of ${totalPages}`}</span>
+                <button
+                    className="btn btn-primary mx-2"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );
