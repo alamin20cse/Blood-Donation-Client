@@ -7,7 +7,8 @@
 - **Admin Password**: password123
 
 ## Project Overview
-The Blood Donation Application is a platform that connects blood donors with those in need. Users can:
+The purpose of the Blood Donation Application is to create a user-friendly platform that facilitates blood donation activities. The application will connect donors with those in need of blood, promoting a seamless and efficient donation process.
+Users can:
 - Register as donors
 - Request blood donations
 - Manage their profiles
