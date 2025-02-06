@@ -32,6 +32,7 @@ import SearchDonors from "../Pages/SearchDonor";
 import Funding from "../Pages/Funding/Funding";
 import Payment from "../Pages/Funding/Payment";
 import AdminRoute from "./AdminRoute";
+import ErrorPage from "../Pages/ErrorPage";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -175,6 +176,11 @@ import AdminRoute from "./AdminRoute";
                 element:<AdminRoute><AllDonationRequest></AllDonationRequest></AdminRoute>
             },
         ]
+    },
+    {
+        path:'*',
+        element:<ErrorPage></ErrorPage>
     }
+
   ]);
   

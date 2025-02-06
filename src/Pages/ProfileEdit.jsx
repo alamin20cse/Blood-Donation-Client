@@ -3,12 +3,6 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../Layout/Shared/Loading";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import axios from "axios";
-
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-
 const ProfileEdit = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -17,11 +11,7 @@ const ProfileEdit = () => {
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false); // Added state for form submission
     const { id } = useParams();
-
-    const  axiousPublic=useAxiosPublic();
-
     // console.log(user);
-
     // Fetch districts on component mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
@@ -33,12 +23,10 @@ const ProfileEdit = () => {
             })
             .finally(() => setLoading(false));
     }, []);
-
     // Handle district change
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
-
         fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
@@ -52,7 +40,6 @@ const ProfileEdit = () => {
                 console.error("Error fetching upazilas:", error);
             });
     };
-
     // Handle errors
     const handleError = (title, message) => {
         Swal.fire({
@@ -61,16 +48,9 @@ const ProfileEdit = () => {
             text: message,
         });
     };
-
     // Handle form submission
-    const handleUpdateProfile = async(e) => {
+    const handleUpdateProfile = (e) => {
         e.preventDefault();
-        // console.log(imageFile)
-        console.log("e.ph",);
-
-
-          
-
         setSubmitting(true); // Disable submit button
         const name = e.target.name.value;
         const email = e.target.email.value;
@@ -78,29 +58,15 @@ const ProfileEdit = () => {
         const bloodgroup = e.target.bloodgroup.value;
         const districtID = e.target.districtID.value;
         const upazilaID = e.target.upazilaID.value;
-
         // Check if all fields are filled
         if (!name || !email || !photo || !bloodgroup || !districtID || !upazilaID) {
             handleError("Incomplete Form", "Please fill in all the required fields.");
             setSubmitting(false);
             return;
         }
-
         // Find the selected district and upazila
         const selectedDistrict = districts.find((d) => d.id === districtID);
         const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
-
-
-        
-           // image upload to imgbb and then get an url
-           const imageFile = { image: e.target.photo.value }
-           const res = await axiousPublic.post(image_hosting_api, photo, {
-               headers: {
-                   'content-type': 'multipart/form-data'
-               }
-           });
-           console.log(res.data);
-
         const userData = {
             name,
             email,
@@ -113,8 +79,6 @@ const ProfileEdit = () => {
             districtID,
             upazilaID,
         };
-        // console.log(userData)
-
         // Update user profile
         updateUserProfile({ displayName: name, photoURL: photo })
             .then(() => {
@@ -151,11 +115,9 @@ const ProfileEdit = () => {
                 setSubmitting(false);
             });
     };
-
     if (loading) {
         return <div><Loading></Loading></div>;
     }
-
     return (
         <div className="flex flex-col lg:flex-row-reverse">
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
@@ -179,7 +141,6 @@ const ProfileEdit = () => {
                                 required
                             />
                         </div>
-
                         {/* Email */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -194,16 +155,20 @@ const ProfileEdit = () => {
                                 required
                             />
                         </div>
-
-                        {/* Photo */}
+                        {/* Photo URL */}
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Photo URL</span>
                             </label>
-                            <input type="file"   name="photo"   required className="file-input file-input-bordered w-full max-w-xs" />
-                           
+                            <input
+                                type="text"
+                                name="photo"
+                                placeholder="Photo URL"
+                                className="input input-bordered"
+                                defaultValue={user.photoURL} // Default value
+                                required
+                            />
                         </div>
-
                         {/* Blood Group */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -221,7 +186,6 @@ const ProfileEdit = () => {
                                 <option>O-</option>
                             </select>
                         </div>
-
                         {/* District */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -241,7 +205,6 @@ const ProfileEdit = () => {
                                 ))}
                             </select>
                         </div>
-
                         {/* Upazila */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -256,7 +219,6 @@ const ProfileEdit = () => {
                                 ))}
                             </select>
                         </div>
-
                         {/* Update Button */}
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary" disabled={submitting}>
@@ -269,5 +231,4 @@ const ProfileEdit = () => {
         </div>
     );
 };
-
 export default ProfileEdit;
