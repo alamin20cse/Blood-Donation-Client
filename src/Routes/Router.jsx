@@ -33,6 +33,7 @@ import Funding from "../Pages/Funding/Funding";
 import Payment from "../Pages/Funding/Payment";
 import AdminRoute from "./AdminRoute";
 import ErrorPage from "../Pages/ErrorPage";
+import TestImageUpload from "../Pages/Testing/TestImageUpload";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -90,6 +91,10 @@ import ErrorPage from "../Pages/ErrorPage";
         {
             path:'/payment',
             element:<PrivateRoute><Payment></Payment></PrivateRoute>
+        },
+        {
+            path:'/testimageupload',
+            element:<TestImageUpload></TestImageUpload>
         }
 
       ]

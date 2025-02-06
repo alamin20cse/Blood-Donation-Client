@@ -3,15 +3,45 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../Layout/Shared/Loading";
+
 const ProfileEdit = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [submitting, setSubmitting] = useState(false); // Added state for form submission
+    const [submitting, setSubmitting] = useState(false);
+    const [loadingi, setLoadingi] = useState(false);
     const { id } = useParams();
-    // console.log(user);
+    const [photoURL, setPhotoURL] = useState(user?.photoURL || ""); // State to store the photo URL
+
+    // Handle file upload to Cloudinary
+    const handleFileUpload = async (event) => {
+        event.preventDefault();
+        const file = event.target.files[0];
+        if (!file) return;
+        setLoadingi(true);
+
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset",`${import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET}`)
+        data.append("cloud_name",`${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}`)
+
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: "POST",
+                body: data,
+            });
+            const uploadImageURL = await res.json();
+            setPhotoURL(uploadImageURL.url); // Update the photo URL state
+        } catch (error) {
+            Swal.fire("Error", "Failed to upload image.", "error");
+            console.error("Error uploading image:", error);
+        } finally {
+            setLoadingi(false);
+        }
+    };
+
     // Fetch districts on component mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
@@ -23,6 +53,7 @@ const ProfileEdit = () => {
             })
             .finally(() => setLoading(false));
     }, []);
+
     // Handle district change
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
@@ -40,6 +71,7 @@ const ProfileEdit = () => {
                 console.error("Error fetching upazilas:", error);
             });
     };
+
     // Handle errors
     const handleError = (title, message) => {
         Swal.fire({
@@ -48,29 +80,33 @@ const ProfileEdit = () => {
             text: message,
         });
     };
+
     // Handle form submission
-    const handleUpdateProfile = (e) => {
+    const handleUpdateProfile = async (e) => {
         e.preventDefault();
-        setSubmitting(true); // Disable submit button
+        setSubmitting(true);
+
         const name = e.target.name.value;
         const email = e.target.email.value;
-        const photo = e.target.photo.value;
         const bloodgroup = e.target.bloodgroup.value;
         const districtID = e.target.districtID.value;
         const upazilaID = e.target.upazilaID.value;
+
         // Check if all fields are filled
-        if (!name || !email || !photo || !bloodgroup || !districtID || !upazilaID) {
+        if (!name || !email || !photoURL || !bloodgroup || !districtID || !upazilaID) {
             handleError("Incomplete Form", "Please fill in all the required fields.");
             setSubmitting(false);
             return;
         }
+
         // Find the selected district and upazila
         const selectedDistrict = districts.find((d) => d.id === districtID);
         const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
+
         const userData = {
             name,
             email,
-            photo,
+            photo: photoURL,
             bloodgroup,
             districtName: selectedDistrict?.name || "Unknown",
             districtNameBan: selectedDistrict?.bn_name || "Unknown",
@@ -79,45 +115,41 @@ const ProfileEdit = () => {
             districtID,
             upazilaID,
         };
-        // Update user profile
-        updateUserProfile({ displayName: name, photoURL: photo })
-            .then(() => {
-                // Send updated data to the server
-                fetch(`http://localhost:5000/allusers/${id}/edit`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        // console.log("Backend Response:", data);
-                        if (data.success) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Profile Updated",
-                                text: "Your profile has been updated successfully!",
-                            });
-                            navigate("/dashboard/profile");
-                        } else {
-                            handleError("Update Failed", data.message || "Failed to update profile.");
-                        }
-                    })
-                    .catch((error) => {
-                        handleError("Error", "An error occurred while updating the profile.");
-                        console.error("Error updating profile:", error);
-                    })
-                    .finally(() => setSubmitting(false)); // Re-enable the submit button
-            })
-            .catch((error) => {
-                handleError("Profile Update Failed", error.message);
-                setSubmitting(false);
+
+        try {
+            await updateUserProfile({ displayName: name, photoURL: photoURL });
+
+            const res = await fetch(`http://localhost:5000/allusers/${id}/edit`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
             });
+
+            const data = await res.json();
+            if (data.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Profile Updated",
+                    text: "Your profile has been updated successfully!",
+                });
+                navigate("/dashboard/profile");
+            } else {
+                handleError("Update Failed", data.message || "Failed to update profile.");
+            }
+        } catch (error) {
+            handleError("Error", "An error occurred while updating the profile.");
+            console.error("Error updating profile:", error);
+        } finally {
+            setSubmitting(false);
+        }
     };
-    if (loading) {
-        return <div><Loading></Loading></div>;
+
+    if (loading || loadingi) {
+        return <Loading />;
     }
+
     return (
         <div className="flex flex-col lg:flex-row-reverse">
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
@@ -137,10 +169,11 @@ const ProfileEdit = () => {
                                 name="name"
                                 placeholder="Name"
                                 className="input input-bordered"
-                                defaultValue={user.displayName} // Default value
+                                defaultValue={user.displayName}
                                 required
                             />
                         </div>
+
                         {/* Email */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -155,26 +188,40 @@ const ProfileEdit = () => {
                                 required
                             />
                         </div>
-                        {/* Photo URL */}
+
+                        {/* Photo Upload */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Photo URL</span>
+                                <span className="label-text">Profile Photo</span>
                             </label>
                             <input
-                                type="text"
+                                type="file"
                                 name="photo"
-                                placeholder="Photo URL"
+                                accept="image/*"
+                                onChange={handleFileUpload}
                                 className="input input-bordered"
-                                defaultValue={user.photoURL} // Default value
                                 required
                             />
+                            {photoURL && (
+                                <img
+                                    src={photoURL}
+                                    alt="Profile"
+                                    className="mt-2 w-24 h-24 rounded-full"
+                                />
+                            )}
                         </div>
+
                         {/* Blood Group */}
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Blood Group</span>
                             </label>
-                            <select name="bloodgroup" className="select input-bordered" defaultValue={user.bloodgroup} required>
+                            <select
+                                name="bloodgroup"
+                                className="select input-bordered"
+                                defaultValue={user.bloodgroup}
+                                required
+                            >
                                 <option value="">Pick a group</option>
                                 <option>A+</option>
                                 <option>A-</option>
@@ -186,6 +233,7 @@ const ProfileEdit = () => {
                                 <option>O-</option>
                             </select>
                         </div>
+
                         {/* District */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -205,6 +253,7 @@ const ProfileEdit = () => {
                                 ))}
                             </select>
                         </div>
+
                         {/* Upazila */}
                         <div className="form-control mb-4">
                             <label className="label">
@@ -219,6 +268,7 @@ const ProfileEdit = () => {
                                 ))}
                             </select>
                         </div>
+
                         {/* Update Button */}
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary" disabled={submitting}>
@@ -231,4 +281,5 @@ const ProfileEdit = () => {
         </div>
     );
 };
+
 export default ProfileEdit;
