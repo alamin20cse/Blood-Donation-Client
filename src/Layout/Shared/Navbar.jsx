@@ -7,7 +7,11 @@ const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
 
     const handleLogOut = () => {
-        logOut().catch(error => console.log(error));
+        logOut().catch(error =>{
+              //  console.log(error)
+        }
+          
+            );
     };
 
     const links = (

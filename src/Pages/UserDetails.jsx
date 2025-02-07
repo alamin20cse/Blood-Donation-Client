@@ -8,7 +8,7 @@ const UserDetails = () => {
     const [error, setError] = useState(null); // State to handle errors
 
     useEffect(() => {
-        fetch(`http://localhost:5000/allusers/${id}`) // Use the dynamic `id`
+        fetch(`https://blood-donation-server-pied.vercel.app/allusers/${id}`) // Use the dynamic `id`
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch user details");

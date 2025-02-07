@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -7,148 +8,103 @@ import Loading from "../Layout/Shared/Loading";
 const ProfileEdit = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+    const { id } = useParams();
+    const { register, handleSubmit, watch, setValue } = useForm();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
-    const [loadingi, setLoadingi] = useState(false);
-    const { id } = useParams();
-    const [photoURL, setPhotoURL] = useState(user?.photoURL || ""); // State to store the photo URL
 
-    // Handle file upload to Cloudinary
-    const handleFileUpload = async (event) => {
-        event.preventDefault();
-        const file = event.target.files[0];
-        if (!file) return;
-        setLoadingi(true);
-
-        const data = new FormData();
-        data.append("file", file);
-        data.append("upload_preset",`${import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET}`)
-        data.append("cloud_name",`${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}`)
-
-        try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                method: "POST",
-                body: data,
-            });
-            const uploadImageURL = await res.json();
-            setPhotoURL(uploadImageURL.url); // Update the photo URL state
-        } catch (error) {
-            Swal.fire("Error", "Failed to upload image.", "error");
-            console.error("Error uploading image:", error);
-        } finally {
-            setLoadingi(false);
-        }
-    };
-
-    // Fetch districts on component mount
     useEffect(() => {
         fetch("http://localhost:5000/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
-            .catch((error) => {
-                handleError("Error", "Failed to load districts.");
-                console.error("Error fetching districts:", error);
-            })
+            .catch(() => Swal.fire("Error", "Failed to load districts.", "error"))
             .finally(() => setLoading(false));
     }, []);
 
     // Handle district change
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
+        setValue("upazilaID", ""); // Reset upazila selection
         setUpazilas([]);
+
         fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter(
-                    (upazila) => upazila.district_id === selectedDistrictID
+                    (upazila) => String(upazila.district_id) === selectedDistrictID
                 );
                 setUpazilas(filteredUpazilas);
             })
-            .catch((error) => {
-                handleError("Error", "Failed to load upazilas.");
-                console.error("Error fetching upazilas:", error);
-            });
-    };
-
-    // Handle errors
-    const handleError = (title, message) => {
-        Swal.fire({
-            icon: "error",
-            title,
-            text: message,
-        });
+            .catch(() => Swal.fire("Error", "Failed to load upazilas.", "error"));
     };
 
     // Handle form submission
-    const handleUpdateProfile = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (formData) => {
         setSubmitting(true);
 
-        const name = e.target.name.value;
-        const email = e.target.email.value;
-        const bloodgroup = e.target.bloodgroup.value;
-        const districtID = e.target.districtID.value;
-        const upazilaID = e.target.upazilaID.value;
+        const selectedDistrict = districts.find((d) => d.id === formData.districtID);
+        const selectedUpazila = upazilas.find((u) => u.id === formData.upazilaID);
 
-        // Check if all fields are filled
-        if (!name || !email || !photoURL || !bloodgroup || !districtID || !upazilaID) {
-            handleError("Incomplete Form", "Please fill in all the required fields.");
-            setSubmitting(false);
-            return;
+        const photoFile = watch("photo")?.[0];
+        let photoURL = user.photoURL;
+
+        // Upload image if a new file is selected
+        if (photoFile) {
+            setLoading(true);
+            const data = new FormData();
+            data.append("file", photoFile);
+            data.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+            data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+
+            try {
+                const res = await fetch(
+                    `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+                    { method: "POST", body: data }
+                );
+                const uploadImageURL = await res.json();
+                photoURL = uploadImageURL.url;
+            } catch (error) {
+                Swal.fire("Error", "Image upload failed.", "error");
+                setSubmitting(false);
+                setLoading(false);
+                return;
+            }
+            setLoading(false);
         }
 
-        // Find the selected district and upazila
-        const selectedDistrict = districts.find((d) => d.id === districtID);
-        const selectedUpazila = upazilas.find((u) => u.id === upazilaID);
-
         const userData = {
-            name,
-            email,
+            ...formData,
             photo: photoURL,
-            bloodgroup,
             districtName: selectedDistrict?.name || "Unknown",
-            districtNameBan: selectedDistrict?.bn_name || "Unknown",
             upazilaName: selectedUpazila?.name || "Unknown",
-            upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
-            districtID,
-            upazilaID,
         };
 
         try {
-            await updateUserProfile({ displayName: name, photoURL: photoURL });
+            await updateUserProfile({ displayName: formData.name, photoURL });
 
             const res = await fetch(`http://localhost:5000/allusers/${id}/edit`, {
                 method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData),
             });
 
             const data = await res.json();
             if (data.success) {
-                Swal.fire({
-                    icon: "success",
-                    title: "Profile Updated",
-                    text: "Your profile has been updated successfully!",
-                });
+                Swal.fire("Success", "Profile updated successfully!", "success");
                 navigate("/dashboard/profile");
             } else {
-                handleError("Update Failed", data.message || "Failed to update profile.");
+                Swal.fire("Error", data.message || "Failed to update profile.", "error");
             }
         } catch (error) {
-            handleError("Error", "An error occurred while updating the profile.");
-            console.error("Error updating profile:", error);
+            Swal.fire("Error", "An error occurred while updating the profile.", "error");
         } finally {
             setSubmitting(false);
         }
     };
 
-    if (loading || loadingi) {
-        return <Loading />;
-    }
+    if (loading) return <Loading />;
 
     return (
         <div className="flex flex-col lg:flex-row-reverse">
@@ -158,92 +114,56 @@ const ProfileEdit = () => {
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-100">
                 <div className="max-w-sm w-full p-6 shadow-2xl rounded-lg">
                     <h1 className="text-5xl font-bold text-center mb-6">Update Profile</h1>
-                    <form onSubmit={handleUpdateProfile}>
-                        {/* Name */}
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Name</span>
-                            </label>
+                            <label className="label">Name</label>
                             <input
                                 type="text"
-                                name="name"
+                                {...register("name", { required: true })}
                                 placeholder="Name"
                                 className="input input-bordered"
                                 defaultValue={user.displayName}
-                                required
                             />
                         </div>
 
-                        {/* Email */}
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Email</span>
-                            </label>
+                            <label className="label">Email</label>
                             <input
                                 type="email"
-                                name="email"
+                                {...register("email")}
                                 placeholder="Email"
+                                className="input input-bordered"
                                 defaultValue={user.email}
                                 readOnly
-                                required
                             />
                         </div>
 
-                        {/* Photo Upload */}
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Profile Photo</span>
-                            </label>
-                            <input
-                                type="file"
-                                name="photo"
-                                accept="image/*"
-                                onChange={handleFileUpload}
-                                className="input input-bordered"
-                                required
-                            />
-                            {photoURL && (
-                                <img
-                                    src={photoURL}
-                                    alt="Profile"
-                                    className="mt-2 w-24 h-24 rounded-full"
-                                />
+                            <label className="label">Profile Photo</label>
+                            <input type="file" {...register("photo")} accept="image/*" className="input input-bordered" />
+                            {user.photoURL && (
+                                <img src={user.photoURL} alt="Profile" className="mt-2 w-24 h-24 rounded-full" />
                             )}
                         </div>
 
-                        {/* Blood Group */}
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Blood Group</span>
-                            </label>
-                            <select
-                                name="bloodgroup"
-                                className="select input-bordered"
-                                defaultValue={user.bloodgroup}
-                                required
-                            >
+                            <label className="label">Blood Group</label>
+                            <select {...register("bloodgroup", { required: true })} className="select input-bordered">
                                 <option value="">Pick a group</option>
-                                <option>A+</option>
-                                <option>A-</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>AB+</option>
-                                <option>AB-</option>
-                                <option>O+</option>
-                                <option>O-</option>
+                                {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
+                                    <option key={group} value={group}>
+                                        {group}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
-                        {/* District */}
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">District</span>
-                            </label>
+                            <label className="label">District</label>
                             <select
-                                name="districtID"
+                                {...register("districtID", { required: true })}
                                 className="select input-bordered"
                                 onChange={handleDistrictChange}
-                                required
                             >
                                 <option value="">Select a district</option>
                                 {districts.map((district) => (
@@ -254,12 +174,9 @@ const ProfileEdit = () => {
                             </select>
                         </div>
 
-                        {/* Upazila */}
                         <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text">Upazila</span>
-                            </label>
-                            <select name="upazilaID" className="select input-bordered" required>
+                            <label className="label">Upazila</label>
+                            <select {...register("upazilaID", { required: true })} className="select input-bordered">
                                 <option value="">Select an upazila</option>
                                 {upazilas.map((upazila) => (
                                     <option key={upazila.id} value={upazila.id}>
@@ -269,7 +186,6 @@ const ProfileEdit = () => {
                             </select>
                         </div>
 
-                        {/* Update Button */}
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary" disabled={submitting}>
                                 {submitting ? "Updating..." : "Update"}

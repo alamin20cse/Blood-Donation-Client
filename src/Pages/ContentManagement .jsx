@@ -28,7 +28,7 @@ const ContentManagement = () => {
 
         const newStatus = currentStatus === "draft" ? "published" : "draft";
 
-        const response = await fetch(`http://localhost:5000/blog/${id}`, {
+        const response = await fetch(`https://blood-donation-server-pied.vercel.app/blog/${id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: newStatus }),
@@ -60,7 +60,7 @@ const ContentManagement = () => {
         });
 
         if (confirm.isConfirmed) {
-            const response = await fetch(`http://localhost:5000/blog/${id}`, {
+            const response = await fetch(`https://blood-donation-server-pied.vercel.app/blog/${id}`, {
                 method: "DELETE",
             });
 

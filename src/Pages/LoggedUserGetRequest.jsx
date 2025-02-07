@@ -18,7 +18,7 @@ const LoggedUserGetRequest = () => {
 
     const handleStatusUpdate = async (userId, newStatus) => {
         try {
-            const response = await fetch(`http://localhost:5000/donation-requestsdoneCencel/${userId}`, {
+            const response = await fetch(`https://blood-donation-server-pied.vercel.app/donation-requestsdoneCencel/${userId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ status: newStatus }),  // ✅ Corrected field
@@ -48,7 +48,7 @@ const LoggedUserGetRequest = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/donation-requests-logged-user/${id}`, {
+                fetch(`https://blood-donation-server-pied.vercel.app/donation-requests-logged-user/${id}`, {
                     method: 'DELETE',
                 })
                     .then(res => res.json())

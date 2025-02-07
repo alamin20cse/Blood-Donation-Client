@@ -8,9 +8,9 @@ const BloodDonationRequestPending = () => {
     {
         return <Loading></Loading>
     }
-    console.log(allRequest);
+    // console.log(allRequest);
     const filterallRequest = allRequest.filter(request => request.status === "pending");
-    console.log(filterallRequest)
+    // console.log(filterallRequest)
 
 
 

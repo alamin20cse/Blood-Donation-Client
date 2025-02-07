@@ -14,7 +14,7 @@ const BloodDonationRequestPendingDetails = () => {
     const donor = users[0] || {}; // Safe access
 
     useEffect(() => {
-        fetch(`http://localhost:5000/donation-requests/${id}`)
+        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setRequest(data);
@@ -27,7 +27,7 @@ const BloodDonationRequestPendingDetails = () => {
         return <Loading />;
     }
 
-    console.log(request)
+    // console.log(request)
     const handleConfirmDonation = async () => {
         if (!donor._id || !donor.email) {
             alert("Donor information is missing.");
@@ -37,7 +37,7 @@ const BloodDonationRequestPendingDetails = () => {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch(`http://localhost:5000/donation-requests/${id}`, {
+            const response = await fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

@@ -22,7 +22,7 @@ const useAllusers = () => {
     queryKey: ["allusers"],
     queryFn: async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/allusers`, {
+        const res = await axios.get(`https://blood-donation-server-pied.vercel.app/allusers`, {
           withCredentials: true,
         });
         return res.data; // Return the data if request is successful

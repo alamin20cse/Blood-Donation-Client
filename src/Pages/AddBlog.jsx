@@ -7,9 +7,21 @@ import { useNavigate } from "react-router-dom";
 const AddBlog = () => {
   const editor = useRef(null);
   const [title, setTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setThumbnail] = useState(""); // Could be URL or image file
   const [content, setContent] = useState("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
+  // Handle image file upload
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnail(reader.result); // Set the base64 string
+      };
+      reader.readAsDataURL(file); // Convert file to base64
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,46 +30,37 @@ const AddBlog = () => {
       title,
       thumbnail,
       content,
-      date: new Date(), //utc date convert
-      status:'draft',
+      date: new Date().toISOString(), // Date in ISO format (UTC)
+      status: "draft", // Default status
     };
 
-    console.log(blogData);
+    // console.log(blogData);
 
-
-     // Send data to the backend
-            fetch("http://localhost:5000/blog", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(blogData),
-            })
-                .then((res) => res.json())
-                .then((result) => {
-                    if (result?.insertedId) {
-                        Swal.fire("Success", "Blog added successfully!", "success");
-                        e.target.reset(); // Reset the form after successful submission
-                        navigate('/dashboard/content-management');
-                    } else {
-                        throw new Error("Failed to submit the request.");
-                    }
-                })
-                .catch((error) => {
-                    Swal.fire("Error", "An error occurred during submission.", "error");
-                    console.error("Submission error:", error);
-                });
-    
-
-
-
-
-
-
-
-
-
-
+    // Send data to the backend
+    fetch("https://blood-donation-server-pied.vercel.app/blog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(blogData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result?.insertedId) {
+          Swal.fire("Success", "Blog added successfully!", "success");
+          e.target.reset(); // Reset the form after successful submission
+          setTitle(""); // Reset state
+          setThumbnail(""); // Reset state
+          setContent(""); // Reset state
+          navigate("/dashboard/content-management");
+        } else {
+          throw new Error("Failed to submit the request.");
+        }
+      })
+      .catch((error) => {
+        Swal.fire("Error", "An error occurred during submission.", "error");
+        console.error("Submission error:", error);
+      });
   };
 
   return (
@@ -65,7 +68,7 @@ const AddBlog = () => {
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Add Blog</h1>
-          <img  src={blogicon} alt="Blog Icon" className="mt-4  object-cover" />
+          <img src={blogicon} alt="Blog Icon" className="mt-4 object-cover" />
         </div>
         <div className="card bg-base-100 w-full max-w-lg shadow-2xl">
           <form onSubmit={handleSubmit} className="card-body">
@@ -84,22 +87,27 @@ const AddBlog = () => {
               />
             </div>
 
-            {/* Thumbnail URL */}
+            {/* Thumbnail Image */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Thumbnail Image (imageBB URL)</span>
+                <span className="label-text">Thumbnail Image</span>
               </label>
               <input
-                type="text"
-                placeholder="Paste image URL here"
+                type="file"
                 className="input input-bordered"
-                required
-                value={thumbnail}
-                onChange={(e) => setThumbnail(e.target.value)}
+                onChange={handleThumbnailChange} // Handle file input
+                accept="image/*"
               />
+              {thumbnail && (
+                <img
+                  src={thumbnail}
+                  alt="Thumbnail"
+                  className="mt-2 w-24 h-24 object-cover rounded-md"
+                />
+              )}
             </div>
 
-            {/* Rich Text Editor */}
+            {/* Blog Content (Rich Text Editor) */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Blog Content</span>
@@ -113,7 +121,7 @@ const AddBlog = () => {
 
             {/* Submit Button */}
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Create</button>
+              <button className="btn btn-primary">Create Blog</button>
             </div>
           </form>
         </div>

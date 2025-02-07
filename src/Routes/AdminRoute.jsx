@@ -11,8 +11,8 @@ const AdminRoute = ({children}) => {
     {
         return <Loading></Loading>
     }
-    console.log(users)
-    console.log(users[0].role);
+    // console.log(users)
+    // console.log(users[0].role);
     
 
     if(users[0].role==='admin'||users[0].role==='volunteer')

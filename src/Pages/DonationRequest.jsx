@@ -13,7 +13,7 @@ const DonationRequest = () => {
 
     // Fetch districts on mount
     useEffect(() => {
-        fetch("http://localhost:5000/districts")
+        fetch("https://blood-donation-server-pied.vercel.app/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
             .catch((error) => {
@@ -27,7 +27,7 @@ const DonationRequest = () => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
 
-        fetch("http://localhost:5000/upazilas")
+        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter(
@@ -75,7 +75,7 @@ const DonationRequest = () => {
         };
     
         // Send data to the backend
-        fetch("http://localhost:5000/donation-requests", {
+        fetch("https://blood-donation-server-pied.vercel.app/donation-requests", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

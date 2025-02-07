@@ -22,8 +22,8 @@ const CheckoutForm = () => {
             return;
         }
         try {
-            const res = await axios.post("http://localhost:5000/create-payment-intent", { price });
-            console.log("Client Secret received:", res.data.clientSecret);
+            const res = await axios.post("https://blood-donation-server-pied.vercel.app/create-payment-intent", { price });
+            // console.log("Client Secret received:", res.data.clientSecret);
             setClientSecret(res.data.clientSecret);
             setError("");
         } catch (err) {
@@ -66,13 +66,13 @@ const CheckoutForm = () => {
             });
 
             if (confirmError) {
-                console.log("Payment confirmation error:", confirmError);
+                // console.log("Payment confirmation error:", confirmError);
                 setError(confirmError.message);
             } else {
-                console.log("Payment successful:", paymentIntent);
+                // console.log("Payment successful:", paymentIntent);
                 setError("");
                 if (paymentIntent.status === 'succeeded') {
-                    console.log('Transaction ID:', paymentIntent.id);
+                    // console.log('Transaction ID:', paymentIntent.id);
                     setTransctionId(paymentIntent.id);
 
                     // Save to database
@@ -85,8 +85,8 @@ const CheckoutForm = () => {
                         date: new Date(),
                         status: 'pending'
                     };
-                    const res = await axios.post(`http://localhost:5000/payments`, payment);
-                    console.log(res.data.insertedId);
+                    const res = await axios.post(`https://blood-donation-server-pied.vercel.app/payments`, payment);
+                    // console.log(res.data.insertedId);
                     if (res.data.insertedId) {
                         Swal.fire({
                             position: "top-end",

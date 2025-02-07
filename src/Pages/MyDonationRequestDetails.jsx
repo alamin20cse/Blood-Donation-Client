@@ -7,7 +7,7 @@ const MyDonationRequestDetails = () => {
     const [reqDetails, setReqDetails] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/donation-requests-logged-user/${id}`)
+        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests-logged-user/${id}`)
             .then((res) => res.json())
             .then((data) => setReqDetails(data))
             .catch((error) => console.error("Error fetching request details:", error));

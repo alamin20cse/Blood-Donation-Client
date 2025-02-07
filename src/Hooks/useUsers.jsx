@@ -22,7 +22,7 @@ const useUsers = () => {
         queryFn: async () => {
             if (!user?.email) return []; // Avoid querying if email is not available
             // console.log("Fetching data for email:", user.email); // Debug log
-            const res = await axios.get(`http://localhost:5000/users?email=${user.email}`,{ withCredentials: true });
+            const res = await axios.get(`https://blood-donation-server-pied.vercel.app/users?email=${user.email}`,{ withCredentials: true });
             if (res.status === 401 || res.status === 403) {
                 logOut();
                 navigate('/login');

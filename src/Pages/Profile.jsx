@@ -4,7 +4,7 @@ import Loading from "../Layout/Shared/Loading";
 
 const Profile = () => {
     const [users, loading] = useUsers();
-    console.log(users)
+    // console.log(users)
 
     if (loading) {
         return <Loading></Loading>; // Return the loading state early
@@ -57,3 +57,5 @@ const Profile = () => {
 };
 
 export default Profile;
+
+// don relod
