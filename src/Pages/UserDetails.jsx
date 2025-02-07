@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const UserDetails = () => {
     const { id } = useParams(); // Get the `id` parameter from the route
     const [userDonor, setUserDonor] = useState(null); // State to store user data
     const [error, setError] = useState(null); // State to handle errors
+
+  
 
     useEffect(() => {
         fetch(`https://blood-donation-server-pied.vercel.app/allusers/${id}`) // Use the dynamic `id`
@@ -32,6 +35,9 @@ const UserDetails = () => {
 
     return (
         <div className="p-4 card card-compact bg-base-100 w-96 mx-auto shadow-xl">
+                <Helmet>
+        <title>Blood Donation Application | User Details</title>
+    </Helmet>
             <h1 className="text-2xl font-bold">User Details</h1>
             <img src={photo} alt={`${name}'s avatar`} className="w-32 h-32 rounded-full mx-auto mb-4" />
             <p><strong>Name:</strong> {name}</p>

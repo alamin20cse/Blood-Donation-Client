@@ -4,6 +4,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const ProfileEdit = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
@@ -14,6 +15,9 @@ const ProfileEdit = () => {
     const [upazilas, setUpazilas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+
+   
+  
 
     useEffect(() => {
         fetch("http://localhost:5000/districts")
@@ -116,6 +120,9 @@ const ProfileEdit = () => {
 
     return (
         <div className="flex flex-col lg:flex-row-reverse">
+               <Helmet>
+        <title>Blood Donation Application | Profile Edit </title>
+    </Helmet>
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
                 <h2 className="text-3xl font-bold">Your Animation Here</h2>
             </div>

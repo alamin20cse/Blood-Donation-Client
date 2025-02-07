@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
 import useUsers from "../Hooks/useUsers";
 import Loading from "../Layout/Shared/Loading";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Profile = () => {
     const [users, loading] = useUsers();
+ 
     // console.log(users)
 
     if (loading) {
         return <Loading></Loading>; // Return the loading state early
     }
     // console.log(users)
+   
 
     const {name,email,photo,bloodgroup,districtName,districtNameBan,upazilaName,upazilaNameBan,status,role,_id
         // districtID,upazilaID,_id
@@ -17,6 +21,11 @@ const Profile = () => {
 
     return (
         <div>
+               <Helmet>
+       <title>Blood Donation Application | Profile</title>
+   </Helmet>
+ 
+
           <div>
             <Link to={`/dashboard/profileEdit/${_id}`}><button className="btn btn-primary">Edit </button></Link>
           </div>

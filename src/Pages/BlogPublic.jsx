@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useBlog from "../Hooks/useBlog";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const BlogPublic = () => {
     const [blogs, isLoading,] = useBlog();
+    
    if(isLoading)
    {
     return <Loading></Loading>
@@ -14,6 +16,9 @@ const BlogPublic = () => {
 
     return (
         <div>
+             <Helmet>
+       <title>Blood Donation Application | Blogs</title>
+   </Helmet>
             <h1 className="text-xl font-bold">Published Blogs ({publishedBlogs.length})</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {publishedBlogs.map((blog) => (

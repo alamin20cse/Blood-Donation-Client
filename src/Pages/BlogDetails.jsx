@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 import useBlog from "../Hooks/useBlog";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
+
 
 const BlogDetails = () => {
     const { id } = useParams(); // Get blog ID from URL
     const [blogs, isLoading] = useBlog();
+  
 
     if (isLoading) {
         return <Loading />;
@@ -19,6 +22,9 @@ const BlogDetails = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+              <Helmet>
+      <title>Blood Donation Application | Blog Details</title>
+  </Helmet>
             <figure className="h-[300px] w-[300px] ">
                 <img  src={blog.thumbnail} alt={blog.title} className="w-full h-full  rounded-md" />
             </figure>

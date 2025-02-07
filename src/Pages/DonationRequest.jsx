@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import useUsers from "../Hooks/useUsers";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const DonationRequest = () => {
     const { user } = useContext(AuthContext);
@@ -102,6 +103,9 @@ const DonationRequest = () => {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
+              <Helmet>
+    <title>Blood Donation Application | Donation Request</title>
+</Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
                     <div className="text-2xl font-semibold text-center p-4">Create Donation Request</div>

@@ -5,13 +5,17 @@ import { MdContentPasteSearch, MdOutlineBloodtype, MdOutlineRequestPage } from "
 import { CiSquareQuestion } from "react-icons/ci";
 import useUsers from "../Hooks/useUsers";
 import Loading from "./Shared/Loading";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
     const [users, loading] = useUsers();
    
+   
     if (loading) {
         return <Loading />;
     }
+   
 
     // Link structure
     const link = (
@@ -89,6 +93,9 @@ const Dashboard = () => {
 
     return (
         <div className="flex flex-col lg:flex-row min-h-screen">
+               <Helmet>
+        <title>Blood Donation Application | Dashboard</title>
+    </Helmet>
             {/* Navbar for Mobile */}
             <div className="navbar bg-base-100 lg:hidden">
                 <div className="navbar-start">

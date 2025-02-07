@@ -1,70 +1,89 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
 import blogicon from "../assets/blog.jpeg.jpg"; // Ensure this path is correct
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AddBlog = () => {
   const editor = useRef(null);
   const [title, setTitle] = useState("");
-  const [thumbnail, setThumbnail] = useState(""); // Could be URL or image file
+  const [thumbnail, setThumbnail] = useState(null); // Change to null instead of empty string
   const [content, setContent] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state for image upload
   const navigate = useNavigate();
+  
 
-  // Handle image file upload
   const handleThumbnailChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setThumbnail(reader.result); // Set the base64 string
-      };
-      reader.readAsDataURL(file); // Convert file to base64
-    }
+    setThumbnail(e.target.files[0]); // Save file in state
   };
+ 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const blogData = {
-      title,
-      thumbnail,
-      content,
-      date: new Date().toISOString(), // Date in ISO format (UTC)
-      status: "draft", // Default status
-    };
 
-    // console.log(blogData);
+    if (!thumbnail) {
+      Swal.fire("Error", "Please upload a thumbnail image.", "error");
+      return;
+    }
 
-    // Send data to the backend
-    fetch("https://blood-donation-server-pied.vercel.app/blog", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(blogData),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        if (result?.insertedId) {
-          Swal.fire("Success", "Blog added successfully!", "success");
-          e.target.reset(); // Reset the form after successful submission
-          setTitle(""); // Reset state
-          setThumbnail(""); // Reset state
-          setContent(""); // Reset state
-          navigate("/dashboard/content-management");
-        } else {
-          throw new Error("Failed to submit the request.");
-        }
-      })
-      .catch((error) => {
-        Swal.fire("Error", "An error occurred during submission.", "error");
-        console.error("Submission error:", error);
+    setLoading(true);
+
+    try {
+      // Prepare the image upload to Cloudinary
+      const data = new FormData();
+      data.append("file", thumbnail);
+      data.append("upload_preset", import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET); // .env variables
+      data.append("cloud_name", import.meta.env.VITE_CLOUDINARY_CLOUD_NAME);
+
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: "POST", body: data }
+      );
+
+      const uploadImageURL = await res.json();
+      const photoURL = uploadImageURL.url; // This is the URL of the uploaded image
+
+      // Now send blog data along with the thumbnail URL to the backend
+      const blogData = {
+        title,
+        thumbnail: photoURL, // Use the image URL from Cloudinary
+        content,
+        date: new Date(), // UTC date
+        status: "draft",
+      };
+
+      const response = await fetch("http://localhost:5000/blog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(blogData),
       });
+
+      const result = await response.json();
+
+      if (result?.insertedId) {
+        Swal.fire("Success", "Blog added successfully!", "success");
+        e.target.reset(); // Reset the form after successful submission
+        setThumbnail(null); // Clear thumbnail after successful submission
+        setLoading(false);
+        navigate("/dashboard/content-management");
+      } else {
+        throw new Error("Failed to submit the request.");
+      }
+    } catch (error) {
+      Swal.fire("Error", "An error occurred during submission.", "error");
+      console.error("Submission error:", error);
+      setLoading(false);
+    }
   };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
+        <Helmet>
+      <title>Blood Donation Application | Add Blog</title>
+  </Helmet>
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Add Blog</h1>
@@ -87,7 +106,7 @@ const AddBlog = () => {
               />
             </div>
 
-            {/* Thumbnail Image */}
+            {/* Thumbnail */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Thumbnail Image</span>
@@ -95,19 +114,12 @@ const AddBlog = () => {
               <input
                 type="file"
                 className="input input-bordered"
-                onChange={handleThumbnailChange} // Handle file input
-                accept="image/*"
+                required
+                onChange={handleThumbnailChange} // Handle file change
               />
-              {thumbnail && (
-                <img
-                  src={thumbnail}
-                  alt="Thumbnail"
-                  className="mt-2 w-24 h-24 object-cover rounded-md"
-                />
-              )}
             </div>
 
-            {/* Blog Content (Rich Text Editor) */}
+            {/* Rich Text Editor */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Blog Content</span>
@@ -121,7 +133,9 @@ const AddBlog = () => {
 
             {/* Submit Button */}
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Create Blog</button>
+              <button className="btn btn-primary" disabled={loading}>
+                {loading ? "Uploading..." : "Create"} {/* Show loading text if uploading */}
+              </button>
             </div>
           </form>
         </div>

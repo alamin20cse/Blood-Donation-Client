@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import contactpic from '../assets/contactpic.jpg';
+import { Helmet } from "react-helmet-async";
 
 const Contact = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  
+   
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,6 +20,9 @@ const Contact = () => {
 
     return (
         <div className="relative px-14 mx-auto p-6 bg-white rounded-lg shadow-lg">
+               <Helmet>
+        <title>Blood Donation Application | Contact</title>
+    </Helmet>
             {/* Background Image with Opacity Overlay */}
             <div
                 className="absolute inset-0 bg-cover bg-center"

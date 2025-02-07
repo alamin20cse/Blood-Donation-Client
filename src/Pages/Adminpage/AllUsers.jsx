@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAllusers from "../../Hooks/useAllusers";
 import Loading from "../../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const AllUsers = () => {
     const [allusers, loading, refetch] = useAllusers();
@@ -12,6 +13,7 @@ const AllUsers = () => {
         return <Loading />;
     }
 
+ 
     // Function to update user status
     const updateUserStatus = async (userId, newStatus) => {
         try {
@@ -65,6 +67,10 @@ const AllUsers = () => {
 
     return (
         <div className="p-4">
+               <Helmet>
+      <title>Blood Donation Application | All users</title>
+  </Helmet>
+
             <h1 className="text-2xl font-bold mb-4">All Users ({filteredUsers.length})</h1>
 
             {/* Filter Dropdown */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../Layout/Shared/Loading";
 import useUsers from "../Hooks/useUsers";
+import { Helmet } from "react-helmet-async";
 
 const BloodDonationRequestPendingDetails = () => {
     const { id } = useParams();
@@ -11,7 +12,8 @@ const BloodDonationRequestPendingDetails = () => {
     const [showModal, setShowModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const donor = users[0] || {}; // Safe access
+    const donor = users[0] || {}; // Safe accesst
+  
 
     useEffect(() => {
         fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`)
@@ -64,6 +66,9 @@ const BloodDonationRequestPendingDetails = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
+              <Helmet>
+      <title>Blood Donation Application | Blood Donation Request Details</title>
+  </Helmet>
             <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-lg w-full">
                 <h2 className="text-2xl font-bold text-red-600 text-center">🩸 Blood Donation Request</h2>
                 <p className="text-center text-gray-600 mt-2">Details of the request</p>

@@ -3,6 +3,7 @@ import { AuthContext } from "../AuthProvider/AuthProvider";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const UpdateDonationRequest = () => {
     const { user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const UpdateDonationRequest = () => {
     const [loadingReqUser, setLoadingReqUser] = useState(true);
     const [loadingDistricts, setLoadingDistricts] = useState(true);
     const [error, setError] = useState(null);
-    
+
 
     // Fetch donation request details
     useEffect(() => {
@@ -133,6 +134,10 @@ const UpdateDonationRequest = () => {
 
     return (
         <div className="hero bg-base-200 min-h-screen">
+                
+      <Helmet>
+        <title>Blood Donation Application | Update Donation request</title>
+    </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
                     <div className="text-2xl font-semibold text-center p-4">Update Donation Request</div>

@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import useAllRequest from "../Hooks/useAllRequest";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const BloodDonationRequestPending = () => {
     const [allRequest, queryLoading,]=useAllRequest();
+   
     if(queryLoading)
     {
         return <Loading></Loading>
@@ -17,6 +19,9 @@ const BloodDonationRequestPending = () => {
 
     return (
         <div>
+           <Helmet>
+      <title>Blood Donation Application | Blood Donation Request</title>
+  </Helmet>
             <h1>All requests :({filterallRequest.length})</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useBlog from "../Hooks/useBlog";
 import useUsers from "../Hooks/useUsers";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const ContentManagement = () => {
     const [blogs, isLoading, refetch] = useBlog();
@@ -10,9 +11,13 @@ const ContentManagement = () => {
     const [users, loading] = useUsers();
     const userRole = users[0]?.role;
 
+    
+
     if (isLoading || loading) {
         return <p>Loading...</p>;
+        
     }
+    
 
     // Filter blogs based on selected status, or show all if filterStatus is empty
     const filteredBlogs = filterStatus
@@ -75,6 +80,9 @@ const ContentManagement = () => {
 
     return (
         <div className="relative p-4">
+              <Helmet>
+        <title>Blood Donation Application | Content Management </title>
+    </Helmet>
             <h2 className="text-2xl font-bold">Content Management</h2>
 
             {/* Add Blog Button */}

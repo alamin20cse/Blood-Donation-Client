@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const MyDonationRequestDetails = () => {
     const { id } = useParams();
     const [reqDetails, setReqDetails] = useState(null);
+   
 
     useEffect(() => {
         fetch(`https://blood-donation-server-pied.vercel.app/donation-requests-logged-user/${id}`)
@@ -19,6 +21,9 @@ const MyDonationRequestDetails = () => {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
+               <Helmet>
+        <title>Blood Donation Application | My Donation Request Details</title>
+    </Helmet>
             <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
                 <h2 className="text-2xl font-bold text-center text-red-600">Donation Request</h2>
                 

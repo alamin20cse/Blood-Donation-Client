@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 import ani1 from '../Component/SignUpAni.json';
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
     const { createNewUser, setUser, updateUserProfile } = useContext(AuthContext);
@@ -12,6 +13,7 @@ const SignUp = () => {
     const navigate = useNavigate();
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
+  
 
     // Fetch districts on component mount
     useEffect(() => {
@@ -167,6 +169,9 @@ const SignUp = () => {
 
     return (
         <div className="flex flex-col lg:flex-row-reverse">
+               <Helmet>
+       <title>Blood Donation Application | Signup</title>
+   </Helmet>
             <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
                 <Lottie animationData={ani1} />
             </div>

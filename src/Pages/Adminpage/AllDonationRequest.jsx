@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAllRequest from "../../Hooks/useAllRequest";
 import Loading from "../../Layout/Shared/Loading";
 import { MdDeleteForever } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const AllDonationRequest = () => {
   const [allRequest, queryLoading, refetch] = useAllRequest();
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 2; // Number of rows per page
+  
 
   if (queryLoading) {
     return <Loading />;
@@ -18,6 +20,7 @@ const AllDonationRequest = () => {
   if (!allRequest.length) {
     return <h1 className="text-center text-xl text-red-500">No donation requests found.</h1>;
   }
+
 
   // Calculate pagination variables
   const totalPages = Math.ceil(allRequest.length / rowsPerPage);
@@ -63,6 +66,9 @@ const AllDonationRequest = () => {
 
   return (
     <div className="p-5">
+        <Helmet>
+      <title>Blood Donation Application | All Donation Requests</title>
+  </Helmet>
       <h2 className="text-3xl font-bold text-center mb-5">
         All Donation Requests ({allRequest.length})
       </h2>

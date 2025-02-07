@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import usePayment from "../../Hooks/usePayment";
+import { Helmet } from "react-helmet-async";
 
 const Funding = () => {
 const [allPayment, qLoading, refetch] = usePayment();
     const [currentPage, setCurrentPage] = useState(1); // Current page state
     const rowsPerPage = 3; // Number of payments to display per page
+   
 
     if (qLoading) {
         return <p>Loading...</p>;
     }
+   
 
     // Calculate the payments to be shown on the current page
     const indexOfLastPayment = currentPage * rowsPerPage;
@@ -25,6 +28,9 @@ const [allPayment, qLoading, refetch] = usePayment();
 
     return (
         <div className="p-4">
+               <Helmet>
+        <title>Blood Donation Application | Finding</title>
+    </Helmet>
             {/* Button Section */}
             <div className="mb-6">
                 <Link to="/payment">

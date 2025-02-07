@@ -4,13 +4,16 @@ import { FaRegEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdDeleteForever } from "react-icons/md";
 import Loading from "../Layout/Shared/Loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 const MyDonationRequest = () => {
     const [usersReq, loading, refetch] = useUserRequest();
     const [filterStatus, setFilterStatus] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 3;
+
+
 
     if (loading) {
         return <Loading />;
@@ -19,6 +22,7 @@ const MyDonationRequest = () => {
     if (!usersReq.length) {
         return <h1 className="text-center text-xl text-red-500">No donation requests found.</h1>;
     }
+   
 
     const filteredRequests = filterStatus === "all"
         ? usersReq
@@ -101,6 +105,9 @@ const MyDonationRequest = () => {
 
     return (
         <div className="p-5">
+                  <Helmet>
+        <title>Blood Donation Application | My Donation Request</title>
+    </Helmet>
             <h2 className="text-3xl font-bold text-center mb-5">My Donation Requests</h2>
 
             <div className="dropdown">

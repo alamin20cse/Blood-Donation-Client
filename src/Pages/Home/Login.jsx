@@ -5,20 +5,22 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import ani1 from '../../Component/LoginAnimation.json'
 import Lottie from 'lottie-react';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
   const navigate=useNavigate();
   const location=useLocation();
-  
+ 
 
 
   const {userLogin,setUser,
    
 }=useContext(AuthContext);
+
 
     const handleLogin=e=>{
         e.preventDefault();
@@ -52,6 +54,10 @@ const Login = () => {
 
     return (
     <div className='hero min-h-screen flex flex-col lg:flex-row-reverse'>
+        <Helmet>
+     <title>Blood Donation Application | Home</title>
+ </Helmet>
+  
 
         {/* dfsdf */}
         <div className='w-full lg:w-1/2 flex items-center justify-center bg-base-200'>

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAllusers from "../Hooks/useAllusers";
 import Loading from "../Layout/Shared/Loading";
+import { Helmet } from "react-helmet-async";
 
 const SearchDonor = () => {
+    
     const [districts, setDistricts] = useState([]);
     const [upazilas, setUpazilas] = useState([]);
     const [allusers, loading, refetch, invalidateAndRefetch] = useAllusers();
     const [filteredUsers, setFilteredUsers] = useState([]); // Added state to store filtered users
+  
+
 
     // Fetch districts on component mount
     useEffect(() => {
@@ -82,6 +86,9 @@ const SearchDonor = () => {
 
     return (
         <div>
+                <Helmet>
+        <title>Blood Donation Application | Search Donor </title>
+    </Helmet>
             <form onSubmit={handleSearch}>
                 <div className="form-control mb-4">
                     <label className="label">
