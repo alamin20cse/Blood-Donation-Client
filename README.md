@@ -3,8 +3,8 @@
 
 
 ## Admin Credentials
-- **Admin Email**: admin@example.com
-- **Admin Password**: password123
+- **Admin Email**: admin@gmail.com
+- **Admin Password**: 1234aA
 
 ## Project Overview
 The purpose of the Blood Donation Application is to create a user-friendly platform that facilitates blood donation activities. The application will connect donors with those in need of blood, promoting a seamless and efficient donation process.
