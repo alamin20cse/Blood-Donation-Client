@@ -73,12 +73,20 @@ const ProfileEdit = () => {
             }
             setLoading(false);
         }
+        // console.log(selectedDistrict)
+        // console.log(selectedUpazila);
 
         const userData = {
             ...formData,
             photo: photoURL,
             districtName: selectedDistrict?.name || "Unknown",
+
+            districtNameBan: selectedDistrict?.bn_name || "Unknown",
+
+
             upazilaName: selectedUpazila?.name || "Unknown",
+
+            upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
         };
 
         try {
