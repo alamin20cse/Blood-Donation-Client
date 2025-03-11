@@ -67,7 +67,7 @@ Volunteers can create and manage donation requests.
 ### Installation Steps
 1. **Clone the repository of Frontend**:
     ```bash
-    git clone https:https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-alamin20cse
+    git clone https://github.com/alamin20cse/Blood-Donation-Client
     ```
 
 2. **Install dependencies**:
