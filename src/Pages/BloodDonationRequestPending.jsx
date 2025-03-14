@@ -29,15 +29,15 @@ const BloodDonationRequestPending = () => {
                     filterallRequest.map(request=><div  key={request._id}>
 
 
-<div className="card card-compact bg-yellow-400  shadow-xl">
+<div className="card card-compact bg-slate-200  shadow-xl">
   <figure>
     
   </figure>
   <div className="card-body">
     <h2 className="card-title">Recipient name: 
     {request.recipientname }</h2>
-   <div className="bg-amber-200 p-5 rounded-2xl">
-   <p>location : </p>
+   <div className="bg-white p-5 rounded-2xl">
+   <p className="text-2xl">Location : </p>
    <p>District: {request.districtName } ({request.districtNameBan }) </p>
    </div>
    <h1 className="text-2xl font-bold">Bloodgroup : {request.bloodgroup}</h1>

@@ -84,11 +84,11 @@ const BloodDonationRequestPendingDetails = () => {
                     <p><span className="font-semibold">Donation Time:</span> {request.donationtime}</p>
                     <p><span className="font-semibold">Email:</span> {request.email}</p>
                     <p><span className="font-semibold">Status:</span> {request.status}</p>
-                    <p className="bg-yellow-200 rounded-2xl p-4"><span className="font-semibold">Request Message:</span> {request.requestmessage}</p>
-                    <p className="text-gray-500 text-sm">📅 Requested on: {new Date(request.requestTime).toLocaleDateString()}</p>
+                    <p className="bg-slate-200 rounded-2xl p-4"><span className="font-semibold">Request Message:</span> {request.requestmessage}</p>
+                    <p className="text-gray-500 text-sm py-4">📅 Requested on: {new Date(request.requestTime).toLocaleDateString()}</p>
                 </div>
 
-                <div className="bg-pink-200 rounded-2xl p-4">
+                <div className="bg-slate-200 rounded-2xl p-4">
                     <h1 className="font-bold text-lg">Your Info:</h1>
                     <div className="form-control mb-4">
                         <label className="label"><span className="label-text">Requester Name</span></label>
@@ -102,7 +102,7 @@ const BloodDonationRequestPendingDetails = () => {
                 </div>
 
                 <button 
-                    className="mt-6 w-full bg-red-500 text-white py-2 rounded-lg shadow-md hover:bg-red-600 transition"
+                    className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg shadow-md hover:bg-red-600 transition"
                     onClick={() => setShowModal(true)}
                 >
                     Donate

@@ -34,6 +34,7 @@ import Payment from "../Pages/Funding/Payment";
 import AdminRoute from "./AdminRoute";
 import ErrorPage from "../Pages/ErrorPage";
 import TestImageUpload from "../Pages/Testing/TestImageUpload";
+import Statistics from "../Pages/Statistics";
   export const router = createBrowserRouter([
     {
       path: "/",
@@ -160,6 +161,12 @@ import TestImageUpload from "../Pages/Testing/TestImageUpload";
             {
                 path:'/dashboard/searchdonors',
                 element:<SearchDonors></SearchDonors>
+
+            }
+            ,
+            {
+                path:'/dashboard/statistics',
+                element:<Statistics></Statistics>
 
             }
 

@@ -125,6 +125,8 @@ const SignUp = () => {
             upazilaID,
             status: 'active',
             role: 'donor',
+            createdAt: new Date().toISOString(),
+            loginTime:new Date().toISOString()
         };
 
         // console.log("User Data:", userData);
@@ -252,6 +254,7 @@ const SignUp = () => {
                             </select>
                             {errors.districtID && <span className="text-red-500 text-sm">{errors.districtID.message}</span>}
                         </div>
+
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Upazila</span>
@@ -269,6 +272,7 @@ const SignUp = () => {
                             </select>
                             {errors.upazilaID && <span className="text-red-500 text-sm">{errors.upazilaID.message}</span>}
                         </div>
+                        
                         <div className="form-control mb-4">
                             <label className="label">
                                 <span className="label-text">Password</span>

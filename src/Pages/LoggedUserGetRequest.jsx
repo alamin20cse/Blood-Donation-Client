@@ -13,7 +13,7 @@ const LoggedUserGetRequest = () => {
 
     if (loading) return <Loading />;
     if (!usersReq.length) {
-        return <h1 className="text-center text-xl text-red-500">No donation requests found.</h1>;
+        return <h1 className="text-center text-xl text-red-500">I have No donation requested Yet .</h1>;
     }
 
     const handleStatusUpdate = async (userId, newStatus) => {
@@ -79,7 +79,7 @@ const LoggedUserGetRequest = () => {
             <h2 className="text-3xl font-bold text-center mb-5">Donation Requests</h2>
 
             <div className="overflow-x-auto">
-                <table className="table-auto border-collapse border border-gray-400 w-full">
+                <table className="table-auto border-collapse border  border-gray-400 w-full">
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="border border-gray-400 px-4 py-2">Donor Email and Name</th>

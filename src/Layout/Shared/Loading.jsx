@@ -2,7 +2,7 @@
 
 const Loading = () => {
     return (
-        <div>
+        <div className="min-h-screen">
             <span className="loading loading-spinner loading-lg"></span>
             
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import contactpic from '../assets/contactpic.jpg';
+import contactpic from '../assets/contactpic.webp';
 import { Helmet } from "react-helmet-async";
 
 const Contact = () => {

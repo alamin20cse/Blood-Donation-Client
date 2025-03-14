@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import bloodlogo from '../../assets/bloodlogo.jpg';
+import bloodlogo from '../../assets/bloodlogo.webp';
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
@@ -63,20 +63,20 @@ const Navbar = () => {
             <div className="navbar-end">
                 {user ? (
                     <div className="dropdown  dropdown-end"> {/* ✅ Right-Aligned Dropdown */}
-                        <div tabIndex={0} role="button" className="flex items-center px-6 cursor-pointer">
+                        <div tabIndex={0} role="button" className="flex items-center  px-6 cursor-pointer">
                             <img className="w-10 h-10  rounded-full border-2 border-gray-300" src={user?.photoURL} alt="User Avatar" />
                         </div>
-                        <ul className="menu dropdown-content z-[1] bg-amber-200 rounded-lg shadow-lg w-40 p-2">
+                        <ul className="menu dropdown-content z-[1] bg-slate-200 rounded-lg shadow-lg w-40 p-2">
                             <li>
                                 <span className="font-semibold">{user.displayName}</span>
                             </li>
                             <li>
-                                <button onClick={handleLogOut} className="btn btn-sm btn-error w-full">
+                                <button onClick={handleLogOut} className="btn btn-sm  w-full">
                                     Logout
                                 </button>
                             </li>
 
-                            <li><NavLink className='btn btn-sm btn-error w-full' to="/dashboard">Dashboard</NavLink></li>
+                            <li><NavLink className='btn btn-sm  w-full' to="/dashboard">Dashboard</NavLink></li>
 
 
                         </ul>
@@ -89,7 +89,7 @@ const Navbar = () => {
                                 <Link to="/login" className="btn btn-sm w-full">Login</Link>
                             </li>
                             <li>
-                                <Link to="/signup" className="btn btn-sm btn-primary w-full">Register</Link>
+                                <Link to="/signup" className="btn btn-sm  w-full">Register</Link>
                             </li>
                         </ul>
                     </details>

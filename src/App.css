@@ -40,3 +40,57 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+
+
+
+
+
+
+
+
+/* Base styles (Light Mode) */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --primary-color: #1d4ed8;
+  --secondary-color: #4b5563;
+}
+
+/* Dark Mode Styles */
+.dark {
+  --background-color: #1f2937;
+  --text-color: #717e92;
+  --primary-color: #3b82f6;
+  --secondary-color: #9ca3af;
+}
+
+/* Global styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.navbar, .card, .table {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+a:hover {
+  color: var(--secondary-color);
+}

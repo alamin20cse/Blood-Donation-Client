@@ -7,6 +7,7 @@ import useUsers from "../Hooks/useUsers";
 import Loading from "./Shared/Loading";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { BsGraphUpArrow } from "react-icons/bs";
 
 const Dashboard = () => {
     const [users, loading] = useUsers();
@@ -43,7 +44,7 @@ const Dashboard = () => {
                     to="/dashboard/donationrequest" 
                     className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
                 >
-                    <MdOutlineBloodtype /> Request Created
+                    <MdOutlineBloodtype /> Request Create
                 </NavLink>
             </li>
             
@@ -64,9 +65,38 @@ const Dashboard = () => {
                     <MdContentPasteSearch /> Content Management
                 </NavLink>
             </li>
+            <li>
+                <NavLink 
+                    to="/dashboard/statistics" 
+                    className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
+                >
+                   <BsGraphUpArrow /> Statistic
+                </NavLink>
+            </li>
+
+
+
+
+              {/* Admin or Volunteer Role */}
+              {(users[0]?.role === 'admin' || users[0]?.role === 'volunteer') && (
+               <div>
+                <div>
+                <div className="divider"></div>
+                </div>
+                 <li>
+                    <NavLink 
+                        to="/dashboard/all-blood-donation-request" 
+                        className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
+                    >
+                        <MdOutlineRequestPage /> All Donation Requests
+                    </NavLink>
+                </li>
+               </div>
+            )}
 
             {/* Admin Role */}
             {users[0]?.role === 'admin' && (
+                
                 <li>
                     <NavLink 
                         to="/dashboard/allusers" 
@@ -77,17 +107,7 @@ const Dashboard = () => {
                 </li>
             )}
 
-            {/* Admin or Volunteer Role */}
-            {(users[0]?.role === 'admin' || users[0]?.role === 'volunteer') && (
-                <li>
-                    <NavLink 
-                        to="/dashboard/all-blood-donation-request" 
-                        className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
-                    >
-                        <MdOutlineRequestPage /> All Donation Requests
-                    </NavLink>
-                </li>
-            )}
+          
         </>
     );
 
@@ -114,7 +134,7 @@ const Dashboard = () => {
             </div>
 
             {/* Sidebar for Larger Screens */}
-            <div className="hidden py-4 lg:block w-64 bg-orange-400 p-4">
+            <div className="hidden py-4 lg:block w-64 bg-slate-200  p-4">
                 <ul className="space-y-2 menu p-4">
                     {link}
                 </ul>
@@ -122,8 +142,9 @@ const Dashboard = () => {
 
             {/* Main Content */}
             <div className="flex flex-col w-full">
-                <div className="flex-1 p-4 bg-gray-50">
-                    <LoginInfo />
+            <LoginInfo />
+                <div className="flex-1 px-4 bg-gray-50">
+                   
                     <Outlet />
                 </div>
             </div>

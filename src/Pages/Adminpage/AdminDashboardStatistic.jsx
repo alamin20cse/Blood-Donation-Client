@@ -1,11 +1,13 @@
 import useAllRequest from "../../Hooks/useAllRequest";
 import useAllusers from "../../Hooks/useAllusers";
 
-import usericon from '../../assets/usersicon.png'
-import reqicon from '../../assets/requesticon.gif'
+
+
 import Loading from "../../Layout/Shared/Loading";
 import usePayment from "../../Hooks/usePayment";
 import { FcDonate } from "react-icons/fc";
+import { MdOutlineRequestQuote } from "react-icons/md";
+import { FaUser, FaUsers } from "react-icons/fa";
 
 
 
@@ -34,7 +36,7 @@ const AdminDashboardStatistic = () => {
             <div className="flex bg-amber-200 p-4 gap-4 rounded-3xl items-center">
                 {/* icon */}
                 <div className="w-16 h-16 bg bg-yellow-100 rounded-2xl">
-              <img src={usericon}></img>
+                <FaUsers  className="w-full h-full"/>
 
                 </div>
                 {/* data and title */}
@@ -54,7 +56,7 @@ const AdminDashboardStatistic = () => {
 <div className="flex bg-amber-200 p-4 gap-4 rounded-3xl items-center">
                 {/* icon */}
                 <div className="w-16 h-16 bg bg-yellow-100 rounded-2xl">
-                <img src={reqicon}></img>
+                <MdOutlineRequestQuote className="w-full h-full" />
 
                 </div>
                 {/* data and title */}

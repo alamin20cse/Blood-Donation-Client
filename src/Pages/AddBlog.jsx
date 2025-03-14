@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
-import blogicon from "../assets/blog.jpeg.jpg"; // Ensure this path is correct
+import blogicon from "../assets/bloodbg.webp"; // Ensure this path is correct
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -53,7 +53,7 @@ const AddBlog = () => {
         status: "draft",
       };
 
-      const response = await fetch("http://localhost:5000/blog", {
+      const response = await fetch("https://blood-donation-server-pied.vercel.app/blog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

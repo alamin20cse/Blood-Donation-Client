@@ -1,14 +1,14 @@
 
 import { Link } from 'react-router-dom';
-import bloodbg from '../assets/bloodbg.jpg'
+import bloodbg from '../assets/bloodbg.webp'
 const Bannar = () => {
     return (
         <div
-  className="hero min-h-screen"
+  className="hero lg:min-h-screen h-[400px]"
   style={{
     backgroundImage: `url(${bloodbg})`,
   }}>
-  <div className="hero-overlay bg-opacity-60"></div>
+  <div className="hero-overlay bg-opacity-20"></div>
   <div className="hero-content text-neutral-content text-center">
     <div className="max-w-md">
      <div className='grid gap-5 grid-cols-1 lg:grid-cols-2'>

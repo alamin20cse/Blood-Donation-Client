@@ -32,7 +32,7 @@ const TestImageUpload = () => {
       body: data
     })
     const uploadImageURL = await res.json();
-    //  console.log(uploadImageURL.url);
+     console.log(uploadImageURL.url);
     setPhoto(uploadImageURL.url)
     setLoading(false)
   }

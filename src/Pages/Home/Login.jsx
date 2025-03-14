@@ -10,6 +10,7 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 import ani1 from '../../Component/LoginAnimation.json'
 import Lottie from 'lottie-react';
 import { Helmet } from 'react-helmet-async';
+import { time } from 'motion';
 
 const Login = () => {
   const navigate=useNavigate();
@@ -22,29 +23,38 @@ const Login = () => {
 }=useContext(AuthContext);
 
 
-    const handleLogin=e=>{
-        e.preventDefault();
-        const email=e.target.email.value;
-        const password=e.target.password.value;
-        // console.log(email,password);
+const handleLogin = (e) => {
+  e.preventDefault();
+  const email = e.target.email.value;
+  const password = e.target.password.value;
 
-
-        userLogin(email,password)
-        .then(result=>{
-
+  userLogin(email, password)
+      .then((result) => {
           const user = result.user;
-          setUser(user); 
+          setUser(user);
 
-          // console.log(user);
-          
-          Swal.fire("Login succes fully");
-          navigate(location?.state?location.state:'/');
-        })
-        .catch(error=>{
-         Swal.fire(error.message);
-
-        })
-    }
+          // Send PATCH request to update the login time
+          fetch('http://localhost:5000/users/login-time', {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email: user.email }), // Send the email to update login time
+          })
+          .then((response) => response.json())
+          .then((data) => {
+              console.log(data.message); // Log success message
+              Swal.fire('Login successful');
+              navigate(location?.state ? location.state : '/');
+          })
+          .catch((error) => {
+              console.error('Error updating login time:', error);
+          });
+      })
+      .catch((error) => {
+          Swal.fire(error.message);
+      });
+};
 
 
 
