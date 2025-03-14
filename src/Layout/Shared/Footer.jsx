@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -29,10 +29,10 @@ const Footer = () => {
                 <div>
                     <h3 className="text-xl font-bold mb-3">Follow Us</h3>
                     <div className="flex space-x-4 text-2xl">
-                        <a href="#" className="hover:text-gray-300"><FaFacebook /></a>
-                        <a href="#" className="hover:text-gray-300"><FaTwitter /></a>
-                        <a href="#" className="hover:text-gray-300"><FaInstagram /></a>
-                        <a href="#" className="hover:text-gray-300"><FaLinkedin /></a>
+                        <a href="https://www.facebook.com/md.al.amin.hossain.706026" className="hover:text-gray-300"><FaFacebook /></a>
+                        <a href="https://github.com/alamin20cse" className="hover:text-gray-300"><FaGithub/></a>
+                      
+                        <a href="https://www.linkedin.com/in/md-al-amin-hossain-08146b355/" className="hover:text-gray-300"><FaLinkedin /></a>
                     </div>
                 </div>
             </div>
