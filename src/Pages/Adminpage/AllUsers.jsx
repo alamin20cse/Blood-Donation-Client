@@ -90,6 +90,7 @@ const AllUsers = () => {
                     <thead>
                         <tr className="bg-gray-200">
                             <th className="border border-gray-300 p-2">#</th>
+                            <th className="border border-gray-300 p-2">Photo</th>
                             <th className="border border-gray-300 p-2">Name</th>
                             <th className="border border-gray-300 p-2">Email</th>
                             <th className="border border-gray-300 p-2">Role</th>
@@ -103,9 +104,11 @@ const AllUsers = () => {
                         {currentUsers.map((user, index) => (
                             <tr key={user._id} className="hover:bg-gray-100">
                                 <td className="border border-gray-300 p-2 text-center">{index + 1}</td>
-                                <td className="border border-gray-300 p-2 flex items-center space-x-2">
-                                    <img src={user.photo} alt={user.name} className="w-8 h-8 rounded-full" />
-                                    <span>{user.name}</span>
+                                <td className="border border-gray-300 p-2">  <img src={user.photo} alt={user.name} className="w-8 h-8 rounded-full" /></td>
+                              
+                                <td className="border border-gray-300 p-2 text-center">
+                                   
+                                    {user.name}
                                 </td>
                                 <td className="border border-gray-300 p-2">{user.email}</td>
                                 <td className="border border-gray-300 p-2 text-center">{user.role}</td>

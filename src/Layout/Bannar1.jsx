@@ -45,23 +45,22 @@ const Bannar1 = () => {
           >
             Give Blood, Save Life ❤️🩸
           </motion.h1>
-<div className="overflow-x-auto">
-  
-<motion.p 
-            animate={{ x: [0, 50, 0], color: ["#FF0000", "#0000FF", "#FFFF00"] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="py-2 overflow-x-auto"
-          >
-            Donate Blood, Be a Hero!
-          </motion.p>
+          <div style={{ overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+  <motion.p 
+    animate={{ x: [0, 50, 0], color: ["#FF0000", "#0000FF", "#FFFF00"] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    className="py-2"
+  >
+    Donate Blood, Be a Hero!
+  </motion.p>
 
-          <motion.p 
-            animate={{ x: [0, 50, 0], color: ["#000000", "#FF0000", "#FFC0CB"] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="py-6 text-3xl font-bold overflow-x-auto"
-          >
-            A Drop for You, A Life for Someone!
-          </motion.p>
+  <motion.p 
+    animate={{ x: [0, 50, 0], color: ["#000000", "#FF0000", "#FFC0CB"] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    className="py-6 text-3xl font-bold"
+  >
+    A Drop for You, A Life for Someone!
+  </motion.p>
 </div>
         </div>
       </div>

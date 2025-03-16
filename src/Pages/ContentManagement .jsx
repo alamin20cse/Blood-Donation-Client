@@ -83,14 +83,16 @@ const ContentManagement = () => {
               <Helmet>
         <title>Blood Donation Application | Content Management </title>
     </Helmet>
-            <h2 className="text-2xl font-bold">Content Management</h2>
+           <div className="flex lg:flex-row justify-between flex-col">
+           <h2 className="text-2xl font-bold">Content Management</h2>
 
-            {/* Add Blog Button */}
-            <div className="absolute top-4 right-4">
-                <Link to='/dashboard/add-blog'>
-                    <button className="btn btn-error">Add Blog</button>
-                </Link>
-            </div>
+{/* Add Blog Button */}
+<div className="">
+    <Link to='/dashboard/add-blog'>
+        <button className="btn btn-error">Add Blog</button>
+    </Link>
+</div>
+           </div>
 
             {/* Filter Dropdown */}
             <div className="my-4">
@@ -107,7 +109,7 @@ const ContentManagement = () => {
             </div>
 
             {/* Blog Grid */}
-            <div className="grid grid-cols-2 gap-4 mt-6">
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1  gap-4 mt-6">
                 {filteredBlogs.length > 0 ? (
                     filteredBlogs.map((blog) => (
                         <div key={blog._id} className="border p-4 rounded-lg shadow-md bg-white">
