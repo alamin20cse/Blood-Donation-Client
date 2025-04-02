@@ -102,13 +102,13 @@ const DonationRequest = () => {
     if (error) return <div className="text-red-500 text-center mt-4">{error}</div>;
 
     return (
-        <div className="hero bg-base-200 min-h-screen">
+        <div className="hero  min-h-screen">
               <Helmet>
     <title>Blood Donation Application | Donation Request</title>
 </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
-                    <div className="text-2xl font-semibold text-center p-4">Create Donation Request</div>
+                <div className="card  w-full max-w-sm shadow-2xl">
+                    <div className="text-2xl font-semibold text-center  text-gray-400 p-4">Create Donation Request</div>
                     <form onSubmit={handleSubmit} className="card-body">
                         {/* Requester Name */}
                         <div className="form-control mb-4">
@@ -119,7 +119,7 @@ const DonationRequest = () => {
                                 type="text"
                                 readOnly
                                 value={user?.displayName || ""}
-                                className="input input-bordered"
+                                className="input text-gray-500 input-bordered"
                             />
                         </div>
 
@@ -132,7 +132,7 @@ const DonationRequest = () => {
                                 type="email"
                                 readOnly
                                 value={user?.email || ""}
-                                className="input input-bordered"
+                                className="input text-gray-500 input-bordered"
                             />
                         </div>
 
@@ -145,7 +145,7 @@ const DonationRequest = () => {
                                 type="text"
                                 name="recipientname"
                                 placeholder="Recipient name"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -157,7 +157,7 @@ const DonationRequest = () => {
                             </label>
                             <select
                                 name="districtID"
-                                className="select input-bordered"
+                                className="select input-bordered  text-gray-500 "
                                 onChange={handleDistrictChange}
                                 required
                             >
@@ -177,7 +177,7 @@ const DonationRequest = () => {
                             </label>
                             <select
                                 name="upazilaID"
-                                className="select input-bordered"
+                                className="select input-bordered text-gray-500"
                                 disabled={!upazilas.length}
                                 required
                             >
@@ -201,7 +201,7 @@ const DonationRequest = () => {
                                 type="text"
                                 name="hospitalname"
                                 placeholder="e.g., Dhaka Medical College Hospital"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -215,7 +215,7 @@ const DonationRequest = () => {
                                 type="text"
                                 name="fulladdress"
                                 placeholder="e.g., Zahir Raihan Rd, Dhaka"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -225,7 +225,7 @@ const DonationRequest = () => {
                             <label className="label">
                                 <span className="label-text">Blood Group</span>
                             </label>
-                            <select name="bloodgroup" className="select input-bordered" required>
+                            <select name="bloodgroup" className="select input-bordered text-gray-500" required>
                                 <option value="">Select a blood group</option>
                                 <option>A+</option>
                                 <option>A-</option>
@@ -246,7 +246,7 @@ const DonationRequest = () => {
                             <input
                                 type="date"
                                 name="donationdate"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -259,7 +259,7 @@ const DonationRequest = () => {
                             <input
                                 type="time"
                                 name="donationtime"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -272,7 +272,7 @@ const DonationRequest = () => {
                             <textarea
                                 name="requestmessage"
                                 placeholder="Explain why you need blood in detail"
-                                className="textarea textarea-bordered"
+                                className="textarea textarea-bordered text-gray-500"
                                 required
                             />
                         </div>

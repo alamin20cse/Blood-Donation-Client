@@ -18,7 +18,7 @@ const BloodDonationRequestPending = () => {
 
 
     return (
-        <div>
+        <div className="pt-16">
            <Helmet>
       <title>Blood Donation Application | Blood Donation Request</title>
   </Helmet>
@@ -29,17 +29,17 @@ const BloodDonationRequestPending = () => {
                     filterallRequest.map(request=><div  key={request._id}>
 
 
-<div className="card card-compact bg-slate-200  shadow-xl">
+<div className="card card-compact bg-white  shadow-xl">
   <figure>
     
   </figure>
   <div className="card-body">
     <h2 className="card-title">Recipient name: 
     {request.recipientname }</h2>
-   <div className="bg-white p-5 rounded-2xl">
+  
    <p className="text-2xl">Location : </p>
    <p>District: {request.districtName } ({request.districtNameBan }) </p>
-   </div>
+  
    <h1 className="text-2xl font-bold">Bloodgroup : {request.bloodgroup}</h1>
    <p>Donation date : {request.donationdate}</p>
    <p>Donation time : {request.donationtime}</p>

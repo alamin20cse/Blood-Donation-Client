@@ -108,11 +108,11 @@ const MyDonationRequest = () => {
                   <Helmet>
         <title>Blood Donation Application | My Donation Request</title>
     </Helmet>
-            <h2 className="text-3xl font-bold text-center mb-5">My Donation Requests</h2>
+            <h2 className="text-3xl text-gray-400  font-bold text-center mb-5">My Donation Requests</h2>
 
             <div className="dropdown">
                 <div tabIndex={0} role="button" className="btn m-1">Filter by Status</div>
-                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow  bg-slate-200  sidebar dark:bg-black dark:text-white">
                     <li><a onClick={() => setFilterStatus("all")}>All</a></li>
                     <li><a onClick={() => setFilterStatus("pending")}>Pending</a></li>
                     <li><a onClick={() => setFilterStatus("done")}>Done</a></li>
@@ -139,7 +139,7 @@ const MyDonationRequest = () => {
                             <th className="border border-gray-400 px-4 py-2">Details</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="bg-gray-200">
                         {currentRequests.map((request) => (
                             <tr key={request._id} className="text-center">
                                 <td className="border border-gray-400 px-4 py-2">
@@ -220,7 +220,7 @@ const MyDonationRequest = () => {
                 >
                     Previous
                 </button>
-                <span className="px-4">{`Page ${currentPage} of ${totalPages}`}</span>
+                <span className="px-4 text-gray-400">{`Page ${currentPage} of ${totalPages}`}</span>
                 <button
                     className="btn btn-primary mx-2"
                     onClick={() => handlePageChange(currentPage + 1)}

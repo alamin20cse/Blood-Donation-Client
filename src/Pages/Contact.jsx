@@ -19,7 +19,7 @@ const Contact = () => {
     };
 
     return (
-        <div className="relative px-14 mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <div className="relative px-14 mx-auto p-6 bg-white rounded-lg shadow-lg pt-16">
                <Helmet>
         <title>Blood Donation Application | Contact</title>
     </Helmet>

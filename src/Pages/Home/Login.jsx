@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className='hero min-h-screen flex flex-col lg:flex-row-reverse'>
+    <div className='hero min-h-screen flex flex-col lg:flex-row-reverse pt-16'>
       <Helmet>
         <title>Blood Donation Application | Home</title>
       </Helmet>

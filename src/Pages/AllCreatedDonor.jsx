@@ -14,7 +14,7 @@ const AllCreatedDonor = () => {
 }
 
     return (
-        <div>
+        <div className="pt-16">
             <Helmet>
      <title>Blood Donation Application | Donation Request Create</title>
  </Helmet>

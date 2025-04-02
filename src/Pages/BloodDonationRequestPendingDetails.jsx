@@ -65,7 +65,7 @@ const BloodDonationRequestPendingDetails = () => {
     // console.log(request)
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-16">
               <Helmet>
       <title>Blood Donation Application | Blood Donation Request Details</title>
   </Helmet>
@@ -84,20 +84,20 @@ const BloodDonationRequestPendingDetails = () => {
                     <p><span className="font-semibold">Donation Time:</span> {request.donationtime}</p>
                     <p><span className="font-semibold">Email:</span> {request.email}</p>
                     <p><span className="font-semibold">Status:</span> {request.status}</p>
-                    <p className="bg-slate-200 rounded-2xl p-4"><span className="font-semibold">Request Message:</span> {request.requestmessage}</p>
+                    <p className=" rounded-2xl p-4"><span className="font-semibold">Request Message:</span> {request.requestmessage}</p>
                     <p className="text-gray-500 text-sm py-4">📅 Requested on: {new Date(request.requestTime).toLocaleDateString()}</p>
                 </div>
 
-                <div className="bg-slate-200 rounded-2xl p-4">
+                <div className=" rounded-2xl p-4">
                     <h1 className="font-bold text-lg">Your Info:</h1>
                     <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Requester Name</span></label>
-                        <input type="text" readOnly value={donor.name || "Unknown"} className="input input-bordered" />
+                        <label className="label text-black"><span className="label-text">Requester Name</span></label>
+                        <input type="text" readOnly value={donor.name || "Unknown"} className="input input-bordered text-gray-500" />
                     </div>
 
                     <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Requester Email</span></label>
-                        <input type="email" readOnly value={donor.email || "Unknown"} className="input input-bordered" />
+                        <label className="label"><span className="label-text text-black">Requester Email</span></label>
+                        <input type="email" readOnly value={donor.email || "Unknown"} className="input text-gray-500 input-bordered" />
                     </div>
                 </div>
 

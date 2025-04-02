@@ -84,7 +84,7 @@ const ContentManagement = () => {
         <title>Blood Donation Application | Content Management </title>
     </Helmet>
            <div className="flex lg:flex-row justify-between flex-col">
-           <h2 className="text-2xl font-bold">Content Management</h2>
+           <h2 className="text-2xl text-gray-500 font-bold">Content Management</h2>
 
 {/* Add Blog Button */}
 <div className="">
@@ -100,7 +100,7 @@ const ContentManagement = () => {
                     <summary className="btn m-1">
                         Filter: {filterStatus || "All"}
                     </summary>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <ul className="menu dropdown-content  bg-slate-200 p-4 sidebar dark:bg-black dark:text-white rounded-box z-[1] w-52 p-2 shadow">
                         <li><a onClick={() => setFilterStatus("")}>All</a></li>
                         <li><a onClick={() => setFilterStatus("draft")}>Draft</a></li>
                         <li><a onClick={() => setFilterStatus("published")}>Published</a></li>
@@ -121,7 +121,7 @@ const ContentManagement = () => {
 
 
                             <h1 className="text-lg font-semibold mt-2">{blog.title}</h1>
-                            <div className="text-sm text-gray-600 mt-1" dangerouslySetInnerHTML={{ __html: blog.content }} />
+                            <div className="text-sm  mt-1" dangerouslySetInnerHTML={{ __html: blog.content }} />
 
                             {/* Status and Delete Buttons */}
                             <div className="mt-4 flex gap-2">

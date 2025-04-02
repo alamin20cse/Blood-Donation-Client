@@ -21,7 +21,7 @@ const BlogDetails = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg pt-16">
               <Helmet>
       <title>Blood Donation Application | Blog Details</title>
   </Helmet>

@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet-async";
 const Home = () => {
    
     return (
-        <div>
+        <div className="pt-16">
              <Helmet>
     <title>Blood Donation Application | Home</title>
 </Helmet>

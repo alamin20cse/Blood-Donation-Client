@@ -45,44 +45,42 @@ const Profile = () => {
     };
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100 dark:bg-black p-4">
             <Helmet>
                 <title>Blood Donation Application | Profile</title>
             </Helmet>
 
-            <div>
+            <div className="mb-4">
                 <Link to={`/dashboard/profileEdit/${_id}`}>
-                    <button className="btn btn-primary">Edit</button>
+                    <button className="btn btn-primary">Edit Profile</button>
                 </Link>
             </div>
 
-            <div className="card bg-gray-300 w-full shadow-xl">
-                <figure>
-                    <img src={photo} alt={name} />
+            <div className="card w-full max-w-2xl mx-auto bg-white text-black dark:bg-gray-900 dark:text-white shadow-xl">
+                <figure className="p-4">
+                    <img src={photo} alt={name} className="w-32 h-32 rounded-full object-cover border dark:border-gray-600" />
                 </figure>
                 <div className="card-body">
-                    <h2 className="card-title">{name}</h2>
-                    <p>Email: {email}</p>
-                    <p>District: {districtName} ({districtNameBan})</p>
-                    <p>Upazila: {upazilaName} ({upazilaNameBan})</p>
+                    <h2 className="card-title text-xl font-semibold">{name}</h2>
+                    <p className="text-sm"><strong>Email:</strong> {email}</p>
+                    <p className="text-sm"><strong>District:</strong> {districtName} ({districtNameBan})</p>
+                    <p className="text-sm"><strong>Upazila:</strong> {upazilaName} ({upazilaNameBan})</p>
 
-                    <div className="card-actions">
-                        <div className="flex flex-col lg:flex-row gap-3 items-center">
-                            <div className="text-[16px] font-bold p-4 rounded-3xl bg-lime-100">
-                                Blood group: {bloodgroup}
-                            </div>
-                            <div className="badge badge-outline bg-pink-200">
-                                Role: {role}
-                            </div>
-                            <div className="badge badge-outline bg-pink-200">
-                                Status: {status}
-                            </div>
+                    <div className="card-actions mt-4 flex flex-wrap gap-3">
+                        <div className="px-4 py-2 rounded-lg bg-lime-200 dark:bg-lime-700 text-black dark:text-white">
+                            <strong>Blood Group:</strong> {bloodgroup}
+                        </div>
+                        <div className="px-4 py-2 rounded-lg bg-pink-200 dark:bg-pink-700 text-black dark:text-white">
+                            <strong>Role:</strong> {role}
+                        </div>
+                        <div className="px-4 py-2 rounded-lg bg-blue-200 dark:bg-blue-700 text-black dark:text-white">
+                            <strong>Status:</strong> {status}
                         </div>
                     </div>
 
-                    <div>
-                        <h1>Registered Time: {formatDateTime(createdAt)}</h1>
-                        <h1>Last Login Time: {formatDateTime(loginTime)}</h1>
+                    <div className="mt-4 text-sm">
+                        <p><strong>Registered Time:</strong> {formatDateTime(createdAt)}</p>
+                        <p><strong>Last Login Time:</strong> {formatDateTime(loginTime)}</p>
                     </div>
                 </div>
             </div>

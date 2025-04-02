@@ -11,7 +11,7 @@ const stripePromise=loadStripe(import.meta.env.VITE_Payment_Gateway_PK)
 const Payment = () => {
  
     return (
-        <div>
+        <div className="pt-16">
                <Helmet>
       <title>Blood Donation Application | Payment</title>
   </Helmet>

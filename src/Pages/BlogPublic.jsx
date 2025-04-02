@@ -15,7 +15,7 @@ const BlogPublic = () => {
     const publishedBlogs = blogs.filter(blog => blog.status === 'published');
 
     return (
-        <div>
+        <div className="pt-16">
              <Helmet>
        <title>Blood Donation Application | Blogs</title>
    </Helmet>
