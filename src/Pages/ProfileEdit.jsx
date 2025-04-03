@@ -119,51 +119,51 @@ const ProfileEdit = () => {
     if (loading) return <Loading />;
 
     return (
-        <div className="flex flex-col lg:flex-row-reverse">
+        <div className="flex flex-col lg:flex-row-reverse bg-white">
                <Helmet>
         <title>Blood Donation Application | Profile Edit </title>
     </Helmet>
-            <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-200">
+            <div className="w-full lg:w-1/2 flex items-center justify-center bg-white">
                 <h2 className="text-3xl font-bold">Your Animation Here</h2>
             </div>
-            <div className="w-full lg:w-1/2 flex items-center justify-center bg-base-100">
+            <div className="w-full lg:w-1/2 flex items-center justify-center bg-white">
                 <div className="max-w-sm w-full p-6 shadow-2xl rounded-lg">
                     <h1 className="text-5xl font-bold text-center mb-6">Update Profile</h1>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-control mb-4">
-                            <label className="label">Name</label>
+                            <label className="label text-black">Name</label>
                             <input
                                 type="text"
                                 {...register("name", { required: true })}
                                 placeholder="Name"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 defaultValue={user.displayName}
                             />
                         </div>
 
                         <div className="form-control mb-4">
-                            <label className="label">Email</label>
+                            <label className="label text-black">Email</label>
                             <input
                                 type="email"
                                 {...register("email")}
                                 placeholder="Email"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 defaultValue={user.email}
                                 readOnly
                             />
                         </div>
 
                         <div className="form-control mb-4">
-                            <label className="label">Profile Photo</label>
-                            <input type="file" {...register("photo")} accept="image/*" className="input input-bordered" />
+                            <label className="label text-black">Profile Photo</label>
+                            <input type="file" {...register("photo")} accept="image/*" className="input input-bordered text-gray-500" />
                             {user.photoURL && (
                                 <img src={user.photoURL} alt="Profile" className="mt-2 w-24 h-24 rounded-full" />
                             )}
                         </div>
 
                         <div className="form-control mb-4">
-                            <label className="label">Blood Group</label>
-                            <select {...register("bloodgroup", { required: true })} className="select input-bordered">
+                            <label className="label text-black">Blood Group</label>
+                            <select {...register("bloodgroup", { required: true })} className="select input-bordered text-gray-500">
                                 <option value="">Pick a group</option>
                                 {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
                                     <option key={group} value={group}>
@@ -174,10 +174,10 @@ const ProfileEdit = () => {
                         </div>
 
                         <div className="form-control mb-4">
-                            <label className="label">District</label>
+                            <label className="label text-black">District</label>
                             <select
                                 {...register("districtID", { required: true })}
-                                className="select input-bordered"
+                                className="select input-bordered text-gray-500"
                                 onChange={handleDistrictChange}
                             >
                                 <option value="">Select a district</option>
@@ -190,8 +190,8 @@ const ProfileEdit = () => {
                         </div>
 
                         <div className="form-control mb-4">
-                            <label className="label">Upazila</label>
-                            <select {...register("upazilaID", { required: true })} className="select input-bordered">
+                            <label className="label text-black">Upazila</label>
+                            <select {...register("upazilaID", { required: true })} className="select input-bordered text-gray-500">
                                 <option value="">Select an upazila</option>
                                 {upazilas.map((upazila) => (
                                     <option key={upazila.id} value={upazila.id}>

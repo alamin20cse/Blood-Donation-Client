@@ -55,7 +55,7 @@ const Contact = () => {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="w-full md:w-1/2 mt-6 md:mt-0">
+                    <div className="w-full md:w-1/2 mt-6 md:mt-0 bg-white">
                         <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow-lg">
                             <input
                                 type="text"
@@ -63,7 +63,7 @@ const Contact = () => {
                                 value={formData.name}
                                 onChange={handleChange}
                                 placeholder="Your Name"
-                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                className="text-gray-400 placeholder-gray-400 w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
                                 required
                             />
                             <input
@@ -72,7 +72,7 @@ const Contact = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="Your Email"
-                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                className="text-gray-400 placeholder-gray-400 w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
                                 required
                             />
                             <textarea
@@ -81,7 +81,7 @@ const Contact = () => {
                                 onChange={handleChange}
                                 placeholder="Your Message"
                                 rows="4"
-                                className="w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
+                                className="text-gray-400 placeholder-gray-400 w-full p-3 border rounded-lg focus:outline-none focus:border-red-500"
                                 required
                             />
                             <button

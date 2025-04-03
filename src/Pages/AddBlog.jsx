@@ -84,22 +84,22 @@ const AddBlog = () => {
         <Helmet>
       <title>Blood Donation Application | Add Blog</title>
   </Helmet>
-      <div className="hero-content flex-col lg:flex-row-reverse">
+      <div className="hero-content flex-col lg:flex-row-reverse bg-white">
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Add Blog</h1>
           <img src={blogicon} alt="Blog Icon" className="mt-4 object-cover" />
         </div>
         <div className="card bg-base-100 w-full max-w-lg shadow-2xl">
-          <form onSubmit={handleSubmit} className="card-body">
+          <form onSubmit={handleSubmit} className="card-body bg-white">
             {/* Title */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Title</span>
+                <span className="label-text text-black">Title</span>
               </label>
               <input
                 type="text"
                 placeholder="Blog Title"
-                className="input input-bordered"
+                className="input input-bordered text-gray-500"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -109,11 +109,11 @@ const AddBlog = () => {
             {/* Thumbnail */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Thumbnail Image</span>
+                <span className="label-text text-black">Thumbnail Image</span>
               </label>
               <input
                 type="file"
-                className="input input-bordered"
+                className="input input-bordered text-gray-500"
                 required
                 onChange={handleThumbnailChange} // Handle file change
               />
@@ -122,9 +122,9 @@ const AddBlog = () => {
             {/* Rich Text Editor */}
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Blog Content</span>
+                <span className="label-text text-black">Blog Content</span>
               </label>
-              <JoditEditor
+              <JoditEditor className="text-gray-500"
                 ref={editor}
                 value={content}
                 onChange={(newContent) => setContent(newContent)}

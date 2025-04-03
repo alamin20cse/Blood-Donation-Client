@@ -27,7 +27,7 @@ const [allPayment, qLoading, refetch] = usePayment();
     };
 
     return (
-        <div className="p-4 pt-16">
+        <div className="p-4 bg-white">
                <Helmet>
         <title>Blood Donation Application | Finding</title>
     </Helmet>

@@ -138,47 +138,47 @@ const UpdateDonationRequest = () => {
       <Helmet>
         <title>Blood Donation Application | Update Donation request</title>
     </Helmet>
-            <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="hero-content flex-col lg:flex-row-reverse ">
                 <div className="card bg-base-100 w-full max-w-sm shadow-2xl">
-                    <div className="text-2xl font-semibold text-center p-4">Update Donation Request</div>
-                    <form onSubmit={handleSubmit} className="card-body">
+                    <div className="text-2xl font-semibold text-center text-gray-500 p-4">Update Donation Request</div>
+                    <form onSubmit={handleSubmit} className="card-body bg-white">
                         {/* Requester Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Requester Name</span>
+                                <span className="label-text text-black">Requester Name</span>
                             </label>
                             <input
                                 type="text"
                                 readOnly
                                 value={user?.displayName || ""}
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                             />
                         </div>
 
                         {/* Requester Email */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Requester Email</span>
+                                <span className="label-text text-black">Requester Email</span>
                             </label>
                             <input
                                 type="email"
                                 readOnly
                                 value={user?.email || ""}
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                             />
                         </div>
 
                         {/* Recipient Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Recipient Name</span>
+                                <span className="label-text text-black">Recipient Name</span>
                             </label>
                             <input
                                 type="text"
                                 name="recipientname"
                                 defaultValue={reqUser?.recipientname || ""}
                                 placeholder="Recipient name"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -186,11 +186,11 @@ const UpdateDonationRequest = () => {
                         {/* District Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">District</span>
+                                <span className="label-text text-black">District</span>
                             </label>
                             <select
                                 name="districtID"
-                                className="select input-bordered"
+                                className="select input-bordered text-gray-500"
                                 onChange={handleDistrictChange}
                                 defaultValue={reqUser?.districtID || ""}
                                 required
@@ -207,11 +207,11 @@ const UpdateDonationRequest = () => {
                         {/* Upazila Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Upazila</span>
+                                <span className="label-text text-black">Upazila</span>
                             </label>
                             <select
                                 name="upazilaID"
-                                className="select input-bordered"
+                                className="select input-bordered text-gray-500"
                                 disabled={!upazilas.length}
                                 defaultValue={reqUser?.upazilaID || ""}
                                 required
@@ -230,14 +230,14 @@ const UpdateDonationRequest = () => {
                         {/* Hospital Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Hospital Name</span>
+                                <span className="label-text text-black">Hospital Name</span>
                             </label>
                             <input
                                 type="text"
                                 name="hospitalname"
                                 defaultValue={reqUser?.hospitalname || ""}
                                 placeholder="e.g., Dhaka Medical College Hospital"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -245,14 +245,14 @@ const UpdateDonationRequest = () => {
                         {/* Full Address */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Full Address</span>
+                                <span className="label-text text-black">Full Address</span>
                             </label>
                             <input
                                 type="text"
                                 name="fulladdress"
                                 defaultValue={reqUser?.fulladdress || ""}
                                 placeholder="e.g., Zahir Raihan Rd, Dhaka"
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -260,11 +260,11 @@ const UpdateDonationRequest = () => {
                         {/* Blood Group Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Blood Group</span>
+                                <span className="label-text text-black">Blood Group</span>
                             </label>
                             <select
                                 name="bloodgroup"
-                                className="select input-bordered"
+                                className="select input-bordered text-gray-500"
                                 defaultValue={reqUser?.bloodgroup || ""}
                                 required
                             >
@@ -283,13 +283,13 @@ const UpdateDonationRequest = () => {
                         {/* Donation Date */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation Date</span>
+                                <span className="label-text text-black">Donation Date</span>
                             </label>
                             <input
                                 type="date"
                                 name="donationdate"
                                 defaultValue={reqUser?.donationdate || ""}
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -297,13 +297,13 @@ const UpdateDonationRequest = () => {
                         {/* Donation Time */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation Time</span>
+                                <span className="label-text text-black">Donation Time</span>
                             </label>
                             <input
                                 type="time"
                                 name="donationtime"
                                 defaultValue={reqUser?.donationtime || ""}
-                                className="input input-bordered"
+                                className="input input-bordered text-gray-500"
                                 required
                             />
                         </div>
@@ -311,13 +311,13 @@ const UpdateDonationRequest = () => {
                         {/* Request Message */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Request Message</span>
+                                <span className="label-text text-black">Request Message</span>
                             </label>
                             <textarea
                                 name="requestmessage"
                                 defaultValue={reqUser?.requestmessage || ""}
                                 placeholder="Explain why you need blood in detail"
-                                className="textarea textarea-bordered"
+                                className="textarea textarea-bordered text-gray-500"
                                 required
                             />
                         </div>

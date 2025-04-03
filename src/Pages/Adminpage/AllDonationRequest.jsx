@@ -65,7 +65,7 @@ const AllDonationRequest = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="p-5 bg-white">
         <Helmet>
       <title>Blood Donation Application | All Donation Requests</title>
   </Helmet>

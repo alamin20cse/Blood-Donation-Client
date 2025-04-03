@@ -66,7 +66,7 @@ const AllUsers = () => {
     };
 
     return (
-        <div className="p-4">
+        <div className="p-4 bg-white">
                <Helmet>
       <title>Blood Donation Application | All users</title>
   </Helmet>

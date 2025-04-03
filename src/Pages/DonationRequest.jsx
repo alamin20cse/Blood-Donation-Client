@@ -102,18 +102,18 @@ const DonationRequest = () => {
     if (error) return <div className="text-red-500 text-center mt-4">{error}</div>;
 
     return (
-        <div className="hero  min-h-screen">
+        <div className="hero  min-h-screen bg-white">
               <Helmet>
     <title>Blood Donation Application | Donation Request</title>
 </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse">
                 <div className="card  w-full max-w-sm shadow-2xl">
-                    <div className="text-2xl font-semibold text-center  text-gray-400 p-4">Create Donation Request</div>
+                    <div className="text-2xl font-semibold text-center  text-black p-4">Create Donation Request</div>
                     <form onSubmit={handleSubmit} className="card-body">
                         {/* Requester Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Requester Name</span>
+                                <span className="label-text text-black">Requester Name</span>
                             </label>
                             <input
                                 type="text"
@@ -126,7 +126,7 @@ const DonationRequest = () => {
                         {/* Requester Email */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Requester Email</span>
+                                <span className="label-text text-black">Requester Email</span>
                             </label>
                             <input
                                 type="email"
@@ -139,7 +139,7 @@ const DonationRequest = () => {
                         {/* Recipient Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Recipient Name</span>
+                                <span className="label-text text-black">Recipient Name</span>
                             </label>
                             <input
                                 type="text"
@@ -153,7 +153,7 @@ const DonationRequest = () => {
                         {/* District Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">District</span>
+                                <span className="label-text text-black">District</span>
                             </label>
                             <select
                                 name="districtID"
@@ -173,7 +173,7 @@ const DonationRequest = () => {
                         {/* Upazila Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Upazila</span>
+                                <span className="label-text text-black">Upazila</span>
                             </label>
                             <select
                                 name="upazilaID"
@@ -195,7 +195,7 @@ const DonationRequest = () => {
                         {/* Hospital Name */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Hospital Name</span>
+                                <span className="label-text text-black">Hospital Name</span>
                             </label>
                             <input
                                 type="text"
@@ -209,7 +209,7 @@ const DonationRequest = () => {
                         {/* Full Address */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Full Address</span>
+                                <span className="label-text text-black">Full Address</span>
                             </label>
                             <input
                                 type="text"
@@ -223,7 +223,7 @@ const DonationRequest = () => {
                         {/* Blood Group Selector */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Blood Group</span>
+                                <span className="label-text text-black">Blood Group</span>
                             </label>
                             <select name="bloodgroup" className="select input-bordered text-gray-500" required>
                                 <option value="">Select a blood group</option>
@@ -241,7 +241,7 @@ const DonationRequest = () => {
                         {/* Donation Date */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation Date</span>
+                                <span className="label-text text-black">Donation Date</span>
                             </label>
                             <input
                                 type="date"
@@ -254,7 +254,7 @@ const DonationRequest = () => {
                         {/* Donation Time */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Donation Time</span>
+                                <span className="label-text text-black">Donation Time</span>
                             </label>
                             <input
                                 type="time"
@@ -267,7 +267,7 @@ const DonationRequest = () => {
                         {/* Request Message */}
                         <div className="form-control mb-4">
                             <label className="label">
-                                <span className="label-text">Request Message</span>
+                                <span className="label-text text-black">Request Message</span>
                             </label>
                             <textarea
                                 name="requestmessage"

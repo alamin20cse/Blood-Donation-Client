@@ -136,7 +136,7 @@ const Dashboard = () => {
     );
 
     return (
-        <div className="flex flex-col lg:flex-row min-h-screen">
+        <div className="flex flex-col lg:flex-row min-h-screen bg-white">
                <Helmet>
         <title>Blood Donation Application | Dashboard</title>
     </Helmet>
@@ -166,9 +166,9 @@ const Dashboard = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full bg-white">
             <LoginInfo />
-                <div className="flex-1 px-4 bg-gray-50">
+                <div className="flex-1 px-4 bg-white">
                    
                     <Outlet />
                 </div>
