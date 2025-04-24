@@ -18,7 +18,7 @@ const BloodDonationRequestPending = () => {
 
 
     return (
-        <div className="pt-16">
+        <div className="pt-20">
            <Helmet>
       <title>Blood Donation Application | Blood Donation Request</title>
   </Helmet>

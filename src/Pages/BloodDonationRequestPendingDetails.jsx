@@ -65,7 +65,7 @@ const BloodDonationRequestPendingDetails = () => {
     // console.log(request)
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-16">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 pt-20">
               <Helmet>
       <title>Blood Donation Application | Blood Donation Request Details</title>
   </Helmet>

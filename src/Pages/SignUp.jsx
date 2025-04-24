@@ -170,7 +170,7 @@ const SignUp = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row-reverse pt-16">
+        <div className="flex flex-col lg:flex-row-reverse pt-20">
                <Helmet>
        <title>Blood Donation Application | Signup</title>
    </Helmet>

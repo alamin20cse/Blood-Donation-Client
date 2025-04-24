@@ -108,7 +108,7 @@ const CheckoutForm = () => {
     };
 
     return (
-        <div>
+        <div className="">
             <h1>Amount between 1 and 999999.99</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-control">

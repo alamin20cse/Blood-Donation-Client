@@ -33,7 +33,7 @@ const AdminDashboardStatistic = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:grid-cols-2">
 
 {/* for all user */}
-            <div className="flex bg-amber-200 p-4 gap-4 rounded-3xl items-center">
+            <div className="flex bg-gray-200 p-4 gap-4 rounded-3xl items-center">
                 {/* icon */}
                 <div className="w-16 h-16 bg bg-yellow-100 rounded-2xl">
                 <FaUsers  className="w-full h-full"/>
@@ -53,7 +53,7 @@ const AdminDashboardStatistic = () => {
 
 
 {/* for all request */}
-<div className="flex bg-amber-200 p-4 gap-4 rounded-3xl items-center">
+<div className="flex bg-gray-200 p-4 gap-4 rounded-3xl items-center">
                 {/* icon */}
                 <div className="w-16 h-16 bg bg-yellow-100 rounded-2xl">
                 <MdOutlineRequestQuote className="w-full h-full" />
@@ -70,9 +70,9 @@ const AdminDashboardStatistic = () => {
             </div>
 
 {/* for  FUNDING */}
-<div className="flex bg-amber-200 p-4 gap-4 rounded-3xl items-center">
+<div className="flex bg-gray-200 p-4 gap-4 rounded-3xl items-center">
                 {/* icon */}
-                <div className="w-16 h-16 bg bg-yellow-100 rounded-2xl">
+                <div className="w-16 h-16 bg bg-gray-200 rounded-2xl">
               <FcDonate className="w-full h-full"></FcDonate>
 
                 </div>

@@ -57,12 +57,12 @@ const Login = () => {
   };
 
   return (
-    <div className='hero min-h-screen flex flex-col lg:flex-row-reverse pt-16'>
+    <div className='hero min-h-screen flex flex-col lg:flex-row-reverse20'>
       <Helmet>
         <title>Blood Donation Application | Home</title>
       </Helmet>
 
-      <div className='w-full lg:w-1/2 flex items-center justify-center bg-base-200'>
+      <div className='w-full lg:w-1/2 flex items-center justify-center bg-white'>
         <Lottie animationData={ani1}></Lottie>
       </div>
 
@@ -70,9 +70,9 @@ const Login = () => {
         <div className="bg-base-200 min-h-screen">
           <div className="hero-content flex-col">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Login now!</h1>
+              <h1 className="text-5xl font-bold text-gray-600">Login now!</h1>
             </div>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+            <div className="card bg-white w-full max-w-sm shrink-0 shadow-2xl">
               <form onSubmit={handleLogin} className="card-body">
                 <div className="form-control">
                   <label className="label">
@@ -82,7 +82,7 @@ const Login = () => {
                     type="email"
                     name='email'
                     placeholder="email"
-                    className="input input-bordered"
+                    className="input input-bordered text-gray-600"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -96,7 +96,7 @@ const Login = () => {
                     type="password"
                     name='password'
                     placeholder="password"
-                    className="input input-bordered"
+                    className="input input-bordered text-gray-600"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
