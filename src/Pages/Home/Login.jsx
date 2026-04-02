@@ -28,7 +28,7 @@ const Login = () => {
         setUser(user);
 
         // Send PATCH request to update the login time
-        fetch('https://blood-donation-server-pied.vercel.app/users/login-time', {
+        fetch('http://localhost:5000/users/login-time', {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

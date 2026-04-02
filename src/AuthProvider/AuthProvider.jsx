@@ -96,7 +96,7 @@ const AuthProvider = ({children}) => {
                 setUser(currentUser);
     
                 try {
-                    const { data } = await axios.post(`https://blood-donation-server-pied.vercel.app/jwt`, {
+                    const { data } = await axios.post(`http://localhost:5000/jwt`, {
                         email: currentUser.email,
                     },{
                         withCredentials: true
@@ -113,7 +113,7 @@ const AuthProvider = ({children}) => {
                 setUser(null); // Clear user if no user is signed in
 
 
-                const { data } = await axios.get(`https://blood-donation-server-pied.vercel.app/logout`,{
+                const { data } = await axios.get(`http://localhost:5000/logout`,{
                     withCredentials: true
                 });
             }

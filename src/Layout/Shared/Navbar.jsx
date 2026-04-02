@@ -40,7 +40,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar max-w-screen-xl mx-auto bg-opacity-30 z-30 bg-black fixed text-white">
+        <div className="navbar  mx-auto bg-opacity-30 z-30 bg-black fixed text-white">
             <div className="navbar-start">
                 {/* Mobile Dropdown */}
                 <div className="dropdown">

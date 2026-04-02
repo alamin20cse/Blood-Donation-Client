@@ -22,7 +22,7 @@ const CheckoutForm = () => {
             return;
         }
         try {
-            const res = await axios.post("https://blood-donation-server-pied.vercel.app/create-payment-intent", { price });
+            const res = await axios.post("http://localhost:5000/create-payment-intent", { price });
             // console.log("Client Secret received:", res.data.clientSecret);
             setClientSecret(res.data.clientSecret);
             setError("");
@@ -85,7 +85,7 @@ const CheckoutForm = () => {
                         date: new Date(),
                         status: 'pending'
                     };
-                    const res = await axios.post(`https://blood-donation-server-pied.vercel.app/payments`, payment);
+                    const res = await axios.post(`http://localhost:5000/payments`, payment);
                     // console.log(res.data.insertedId);
                     if (res.data.insertedId) {
                         Swal.fire({

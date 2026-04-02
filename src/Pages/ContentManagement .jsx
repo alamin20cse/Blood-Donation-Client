@@ -122,7 +122,13 @@ const ContentManagement = () => {
 
                             <h1 className="text-lg font-semibold mt-2">{blog.title}</h1>
                             <div className="text-sm  mt-1" dangerouslySetInnerHTML={{ __html: blog.content }} />
-
+                           {/* Status */}
+  <div className="inline-block px-3 py-1 rounded-full bg-gray-100 text-gray-800 font-semibold text-sm border border-gray-300">
+    Status: <span className={`font-bold ${blog.status === 'done' ? 'text-green-600' : blog.status === 'pending' ? 'text-yellow-600' : 'text-red-600'}`}>
+      {blog.status}
+    </span>
+  </div>
+                        
                             {/* Status and Delete Buttons */}
                             <div className="mt-4 flex gap-2">
                                 {userRole === "admin" && (

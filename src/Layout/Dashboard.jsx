@@ -8,7 +8,8 @@ import Loading from "./Shared/Loading";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { BsGraphUpArrow } from "react-icons/bs";
-
+import { IoCloudDone } from "react-icons/io5";
+                
 const Dashboard = () => {
     const [users, loading] = useUsers();
      const [darkMode, setDarkMode] = useState(() => {
@@ -95,6 +96,14 @@ const Dashboard = () => {
                     className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
                 >
                    <BsGraphUpArrow /> Statistic
+                </NavLink>
+            </li>
+            <li>
+                <NavLink 
+                    to="/dashboard/BloodDonationDone" 
+                    className={({ isActive }) => isActive ? "text-white bg-blue-500" : "hover:text-white"}
+                >
+                  <IoCloudDone />Donation Complete List
                 </NavLink>
             </li>
 

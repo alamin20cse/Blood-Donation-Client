@@ -12,89 +12,113 @@ const DonationRequest = () => {
     const [users, loading] = useUsers();
     const [error, setError] = useState(null);
 
-    // Fetch districts on mount
+    // ✅ Fetch districts
     useEffect(() => {
-        fetch("https://blood-donation-server-pied.vercel.app/districts")
+        fetch("http://localhost:5000/districts")
             .then((res) => res.json())
-            .then((data) => setDistricts(data[2]?.data || []))
+            .then((data) => {
+                // 🔥 safer way (fix your issue)
+                const districtData = data?.data || data[2]?.data || data || [];
+                setDistricts(districtData);
+            })
             .catch((error) => {
                 setError("Failed to load districts.");
-                console.error("Error fetching districts:", error);
+                console.error(error);
             });
     }, []);
 
-    // Fetch upazilas based on selected district
+    // ✅ Fetch upazilas
     const handleDistrictChange = (e) => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
 
-        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
+        fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
-                const filteredUpazilas = data[2]?.data.filter(
-                    (upazila) => upazila.district_id === selectedDistrictID
+                const upazilaData = data?.data || data[2]?.data || data || [];
+
+                const filtered = upazilaData.filter(
+                    (u) => String(u.district_id) === String(selectedDistrictID)
                 );
-                setUpazilas(filteredUpazilas);
+
+                setUpazilas(filtered);
             })
             .catch((error) => {
                 setError("Failed to load upazilas.");
-                console.error("Error fetching upazilas:", error);
+                console.error(error);
             });
     };
 
-    // Handle form submission
+    // ✅ Submit
     const handleSubmit = (e) => {
         e.preventDefault();
-    
-        // Extract form values
+
         const formData = new FormData(e.target);
-        const selectedDistrict = districts.find((d) => d.id === formData.get("districtID"));
-        const selectedUpazila = upazilas.find((u) => u.id === formData.get("upazilaID"));
-    
-        // Construct recipientData object
+
+        const selectedDistrict = districts.find(
+            (d) => String(d.id) === String(formData.get("districtID"))
+        );
+
+        const selectedUpazila = upazilas.find(
+            (u) => String(u.id) === String(formData.get("upazilaID"))
+        );
+
         const recipientData = {
-            name: user?.displayName || "", // Logged-in user's name
-            email: user?.email || "", // Logged-in user's email
+            name: user?.displayName || "",
+            email: user?.email || "",
+            phone: formData.get("phone"), 
+
             bloodgroup: formData.get("bloodgroup"),
+
             districtName: selectedDistrict?.name || "Unknown",
             districtNameBan: selectedDistrict?.bn_name || "Unknown",
+
             upazilaName: selectedUpazila?.name || "Unknown",
             upazilaNameBan: selectedUpazila?.bn_name || "Unknown",
+
             recipientname: formData.get("recipientname"),
             hospitalname: formData.get("hospitalname"),
             fulladdress: formData.get("fulladdress"),
             donationdate: formData.get("donationdate"),
             donationtime: formData.get("donationtime"),
             requestmessage: formData.get("requestmessage"),
+
             districtID: formData.get("districtID"),
             upazilaID: formData.get("upazilaID"),
-            status: "pending", // Default status
-            requestTime: new Date().toISOString(), // Current timestamp
-            DonorEmail:'',
-            DonorName:'',
-            DonorId:'',
+
+            status: "pending",
+            requestTime: new Date().toISOString(),
+
+            DonorEmail: "",
+            DonorName: "",
+            DonorId: "",
         };
-    
-        // Send data to the backend
-        fetch("https://blood-donation-server-pied.vercel.app/donation-requests", {
+
+        fetch("http://localhost:5000/donation-requests", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(recipientData),
         })
             .then((res) => res.json())
             .then((result) => {
                 if (result?.insertedId) {
-                    Swal.fire("Success", "Donation request submitted successfully!", "success");
-                    e.target.reset(); // Reset the form after successful submission
+                    Swal.fire({
+                        icon: "success",
+                        title: "Success 🎉",
+                        text: "Donation request submitted successfully!",
+                    });
+                    e.target.reset();
+                    setUpazilas([]); // reset upazila
                 } else {
-                    throw new Error("Failed to submit the request.");
+                    throw new Error();
                 }
             })
-            .catch((error) => {
-                Swal.fire("Error", "An error occurred during submission.", "error");
-                console.error("Submission error:", error);
+            .catch(() => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Submission failed!",
+                });
             });
     };
 
@@ -102,193 +126,139 @@ const DonationRequest = () => {
     if (error) return <div className="text-red-500 text-center mt-4">{error}</div>;
 
     return (
-        <div className="hero  min-h-screen bg-white">
-              <Helmet>
-    <title>Blood Donation Application | Donation Request</title>
-</Helmet>
-            <div className="hero-content flex-col lg:flex-row-reverse">
-                <div className="card  w-full max-w-sm shadow-2xl">
-                    <div className="text-2xl font-semibold text-center  text-black p-4">Create Donation Request</div>
+        <div className="hero min-h-screen bg-white">
+            <Helmet>
+                <title>Blood Donation Application | Donation Request</title>
+            </Helmet>
+
+            <div className="hero-content flex-col">
+                <div className="card w-full max-w-sm shadow-2xl">
+                    <div className="text-2xl font-semibold text-center text-black p-4">
+                        Create Donation Request
+                    </div>
+
                     <form onSubmit={handleSubmit} className="card-body">
-                        {/* Requester Name */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Requester Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                readOnly
-                                value={user?.displayName || ""}
-                                className="input text-gray-500 input-bordered"
-                            />
-                        </div>
 
-                        {/* Requester Email */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Requester Email</span>
-                            </label>
-                            <input
-                                type="email"
-                                readOnly
-                                value={user?.email || ""}
-                                className="input text-gray-500 input-bordered"
-                            />
-                        </div>
+                        {/* Name */}
+                        <input
+                            type="text"
+                            readOnly
+                            value={user?.displayName || ""}
+                            className="input input-bordered text-gray-500 mb-3"
+                        />
 
-                        {/* Recipient Name */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Recipient Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="recipientname"
-                                placeholder="Recipient name"
-                                className="input input-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Email */}
+                        <input
+                            type="email"
+                            readOnly
+                            value={user?.email || ""}
+                            className="input input-bordered text-gray-500 mb-3"
+                        />
 
-                        {/* District Selector */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">District</span>
-                            </label>
-                            <select
-                                name="districtID"
-                                className="select input-bordered  text-gray-500 "
-                                onChange={handleDistrictChange}
-                                required
-                            >
-                                <option value="">Select a district</option>
-                                {districts.map((district) => (
-                                    <option key={district.id} value={district.id}>
-                                        {district.name} ({district.bn_name})
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        {/* ✅ Phone */}
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Phone Number (01XXXXXXXXX)"
+                            className="input input-bordered text-gray-500 mb-3"
+                            required
+                        />
 
-                        {/* Upazila Selector */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Upazila</span>
-                            </label>
-                            <select
-                                name="upazilaID"
-                                className="select input-bordered text-gray-500"
-                                disabled={!upazilas.length}
-                                required
-                            >
-                                <option value="">
-                                    {upazilas.length ? "Select an upazila" : "No upazilas available"}
+                        {/* Recipient */}
+                        <input
+                            type="text"
+                            name="recipientname"
+                            placeholder="Recipient Name"
+                            className="input input-bordered text-gray-500 mb-3"
+                            required
+                        />
+
+                        {/* District */}
+                        <select
+                            name="districtID"
+                            className="select input-bordered mb-3"
+                            onChange={handleDistrictChange}
+                            required
+                        >
+                            <option value="">Select District</option>
+                            {districts.map((d) => (
+                                <option key={d.id} value={d.id}>
+                                    {d.name} ({d.bn_name})
                                 </option>
-                                {upazilas.map((upazila) => (
-                                    <option key={upazila.id} value={upazila.id}>
-                                        {upazila.name} ({upazila.bn_name})
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                            ))}
+                        </select>
 
-                        {/* Hospital Name */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Hospital Name</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="hospitalname"
-                                placeholder="e.g., Dhaka Medical College Hospital"
-                                className="input input-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Upazila */}
+                        <select
+                            name="upazilaID"
+                            className="select input-bordered mb-3"
+                            disabled={!upazilas.length}
+                            required
+                        >
+                            <option value="">
+                                {upazilas.length ? "Select Upazila" : "No Upazila"}
+                            </option>
+                            {upazilas.map((u) => (
+                                <option key={u.id} value={u.id}>
+                                    {u.name} ({u.bn_name})
+                                </option>
+                            ))}
+                        </select>
 
-                        {/* Full Address */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Full Address</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="fulladdress"
-                                placeholder="e.g., Zahir Raihan Rd, Dhaka"
-                                className="input input-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Hospital */}
+                        <input
+                            type="text"
+                            name="hospitalname"
+                            placeholder="Hospital Name"
+                            className="input input-bordered mb-3"
+                            required
+                        />
 
-                        {/* Blood Group Selector */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Blood Group</span>
-                            </label>
-                            <select name="bloodgroup" className="select input-bordered text-gray-500" required>
-                                <option value="">Select a blood group</option>
-                                <option>A+</option>
-                                <option>A-</option>
-                                <option>B+</option>
-                                <option>B-</option>
-                                <option>AB+</option>
-                                <option>AB-</option>
-                                <option>O+</option>
-                                <option>O-</option>
-                            </select>
-                        </div>
+                        {/* Address */}
+                        <input
+                            type="text"
+                            name="fulladdress"
+                            placeholder="Full Address"
+                            className="input input-bordered mb-3"
+                            required
+                        />
 
-                        {/* Donation Date */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Donation Date</span>
-                            </label>
-                            <input
-                                type="date"
-                                name="donationdate"
-                                className="input input-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Blood */}
+                        <select name="bloodgroup" className="select input-bordered mb-3" required>
+                            <option value="">Blood Group</option>
+                            <option>A+</option>
+                            <option>A-</option>
+                            <option>B+</option>
+                            <option>B-</option>
+                            <option>AB+</option>
+                            <option>AB-</option>
+                            <option>O+</option>
+                            <option>O-</option>
+                        </select>
 
-                        {/* Donation Time */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Donation Time</span>
-                            </label>
-                            <input
-                                type="time"
-                                name="donationtime"
-                                className="input input-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Date */}
+                        <input type="date" name="donationdate" className="input input-bordered mb-3" required />
 
-                        {/* Request Message */}
-                        <div className="form-control mb-4">
-                            <label className="label">
-                                <span className="label-text text-black">Request Message</span>
-                            </label>
-                            <textarea
-                                name="requestmessage"
-                                placeholder="Explain why you need blood in detail"
-                                className="textarea textarea-bordered text-gray-500"
-                                required
-                            />
-                        </div>
+                        {/* Time */}
+                        <input type="time" name="donationtime" className="input input-bordered mb-3" required />
 
-                        {/* Submit Button */}
-                        <div className="form-control mt-6">
-                            {users?.[0]?.status === "blocked" ? (
-                                <button disabled className="btn btn-primary">
-                                    Submit Request
-                                </button>
-                            ) : (
-                                <button type="submit" className="btn btn-primary">
-                                    Submit Request
-                                </button>
-                            )}
-                        </div>
+                        {/* Message */}
+                        <textarea
+                            name="requestmessage"
+                            placeholder="Write message"
+                            className="textarea textarea-bordered mb-3"
+                            required
+                        />
+
+                        {/* Submit */}
+                        <button
+                            type="submit"
+                            className="btn btn-primary"
+                            disabled={users?.[0]?.status === "blocked"}
+                        >
+                            Submit Request
+                        </button>
+
                     </form>
                 </div>
             </div>

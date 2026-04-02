@@ -27,6 +27,7 @@ import Contact from "../Pages/Contact";
 import BlogDetails from "../Pages/BlogDetails";
 import BloodDonationRequestPending from "../Pages/BloodDonationRequestPending";
 import BloodDonationRequestPendingDetails from "../Pages/BloodDonationRequestPendingDetails";
+import BloodDonationDone from "../Pages/BloodDonationDone";
 import ProfileEdit from "../Pages/ProfileEdit";
 import SearchDonors from "../Pages/SearchDonor";
 import Funding from "../Pages/Funding/Funding";
@@ -85,6 +86,7 @@ import Statistics from "../Pages/Statistics";
             element:<PrivateRoute><BloodDonationRequestPendingDetails></BloodDonationRequestPendingDetails></PrivateRoute>
 
         },
+
         {
             path:'/funding',
             element:<PrivateRoute><Funding></Funding></PrivateRoute>
@@ -168,7 +170,15 @@ import Statistics from "../Pages/Statistics";
                 path:'/dashboard/statistics',
                 element:<Statistics></Statistics>
 
-            }
+            },
+
+            
+        {
+            path:'/dashboard/BloodDonationDone',
+            element:<PrivateRoute><BloodDonationDone></BloodDonationDone> </PrivateRoute>
+
+
+        },
 
             
 

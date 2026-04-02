@@ -20,7 +20,7 @@ const ProfileEdit = () => {
   
 
     useEffect(() => {
-        fetch("https://blood-donation-server-pied.vercel.app/districts")
+        fetch("http://localhost:5000/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
             .catch(() => Swal.fire("Error", "Failed to load districts.", "error"))
@@ -33,7 +33,7 @@ const ProfileEdit = () => {
         setValue("upazilaID", ""); // Reset upazila selection
         setUpazilas([]);
 
-        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
+        fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter(
@@ -96,7 +96,7 @@ const ProfileEdit = () => {
         try {
             await updateUserProfile({ displayName: formData.name, photoURL });
 
-            const res = await fetch(`https://blood-donation-server-pied.vercel.app/allusers/${id}/edit`, {
+            const res = await fetch(`http://localhost:5000/allusers/${id}/edit`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userData),

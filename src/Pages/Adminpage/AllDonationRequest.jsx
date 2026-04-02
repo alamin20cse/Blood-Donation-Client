@@ -38,7 +38,7 @@ const AllDonationRequest = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`, {
+        fetch(`http://localhost:5000/donation-requests/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

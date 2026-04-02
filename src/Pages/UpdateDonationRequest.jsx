@@ -21,7 +21,7 @@ const UpdateDonationRequest = () => {
     // Fetch donation request details
     useEffect(() => {
         setLoadingReqUser(true);
-        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests-logged-user/${id}`)
+        fetch(`http://localhost:5000/donation-requests-logged-user/${id}`)
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to fetch donation request details");
                 return res.json();
@@ -38,7 +38,7 @@ const UpdateDonationRequest = () => {
 
     // Fetch districts
     useEffect(() => {
-        fetch("https://blood-donation-server-pied.vercel.app/districts")
+        fetch("http://localhost:5000/districts")
             .then((res) => res.json())
             .then((data) => {
                 setDistricts(data[2]?.data || []);
@@ -56,7 +56,7 @@ const UpdateDonationRequest = () => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
 
-        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
+        fetch("http://localhost:5000/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter(
@@ -98,7 +98,7 @@ const UpdateDonationRequest = () => {
             requestTime: new Date().toISOString(),
         };
 
-        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`, {
+        fetch(`http://localhost:5000/donation-requests/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(recipientData),

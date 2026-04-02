@@ -11,7 +11,7 @@ const UserDetails = () => {
   
 
     useEffect(() => {
-        fetch(`https://blood-donation-server-pied.vercel.app/allusers/${id}`) // Use the dynamic `id`
+        fetch(`http://localhost:5000/allusers/${id}`) // Use the dynamic `id`
             .then(res => {
                 if (!res.ok) {
                     throw new Error("Failed to fetch user details");
