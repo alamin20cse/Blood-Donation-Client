@@ -53,7 +53,7 @@ const AddBlog = () => {
         status: "draft",
       };
 
-      const response = await fetch("http://localhost:5000/blog", {
+      const response = await fetch("https://blood-donation-server-pied.vercel.app/blog", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

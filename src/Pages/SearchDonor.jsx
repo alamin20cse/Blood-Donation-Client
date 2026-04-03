@@ -15,7 +15,7 @@ const SearchDonor = () => {
 
     // Fetch districts on component mount
     useEffect(() => {
-        fetch("http://localhost:5000/districts")
+        fetch("https://blood-donation-server-pied.vercel.app/districts")
             .then((res) => res.json())
             .then((data) => setDistricts(data[2]?.data || []))
             .catch((error) => {
@@ -31,7 +31,7 @@ const SearchDonor = () => {
         setUpazilas([]);
 
         // Fetch upazilas and filter by district
-        fetch("http://localhost:5000/upazilas")
+        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const filteredUpazilas = data[2]?.data.filter((upazila) => upazila.district_id === selectedDistrictID);

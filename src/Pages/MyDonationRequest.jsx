@@ -149,7 +149,7 @@ const MyDonationRequest = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="table-auto border-collapse border border-gray-400 w-full text-sm min-w-max">
+        <table className="ttable-auto border-collapse border border-gray-400 w-full text-sm">
           <thead>
             <tr className="bg-gray-200 text-center">
               <th className="border border-gray-400 px-2 py-2">
@@ -179,14 +179,10 @@ const MyDonationRequest = () => {
               <tr key={request._id} className="text-center">
                 <td className="border border-gray-400 px-2 py-2 break-words max-w-[120px]">
                   {["inprogress", "done", "canceled"].includes(request.status) ? (
-                    <div className="flex flex-col gap-1">
-                      <p className="bg-green-500 text-white px-1 py-1 rounded">
-                        {request.DonorEmail || "No Email"}
-                      </p>
-                      <p className="bg-green-500 text-white px-1 py-1 rounded">
-                        {request.DonorName || "No Name"}
-                      </p>
-                    </div>
+                   <div className="flex flex-col gap-1">
+                                        <p className="bg-green-500 text-white px-1 py-1 rounded">{request.DonorEmail || "No Email"}</p>
+                                        <p className="bg-green-500 text-white px-1 py-1 rounded">{request.DonorName || "No Name"}</p>
+                                    </div>
                   ) : (
                     <p className="bg-red-500 text-white px-2 py-1 rounded">
                       Not Donated to Anyone

@@ -8,7 +8,7 @@ const useBlog = () => {
     const { refetch, data: blogs = [], isLoading } = useQuery({
         queryKey: ["blogs"],
         queryFn: async () => {
-            const res = await axios.get("http://localhost:5000/blog");
+            const res = await axios.get("https://blood-donation-server-pied.vercel.app/blog");
             return res.data;
         },
         staleTime: 0, // Data is always stale after being fetched

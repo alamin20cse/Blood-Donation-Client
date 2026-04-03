@@ -16,7 +16,7 @@ const useAllRequest = () => {
     queryKey: ["allRequest"],
     queryFn: async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/donation-requests`, {
+        const res = await axios.get(`https://blood-donation-server-pied.vercel.app/donation-requests`, {
           withCredentials: true, // Send credentials (cookies/token)
         });
         return res.data; // Return data if the request succeeds

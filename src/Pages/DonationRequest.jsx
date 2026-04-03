@@ -14,7 +14,7 @@ const DonationRequest = () => {
 
     // ✅ Fetch districts
     useEffect(() => {
-        fetch("http://localhost:5000/districts")
+        fetch("https://blood-donation-server-pied.vercel.app/districts")
             .then((res) => res.json())
             .then((data) => {
                 // 🔥 safer way (fix your issue)
@@ -32,7 +32,7 @@ const DonationRequest = () => {
         const selectedDistrictID = e.target.value;
         setUpazilas([]);
 
-        fetch("http://localhost:5000/upazilas")
+        fetch("https://blood-donation-server-pied.vercel.app/upazilas")
             .then((res) => res.json())
             .then((data) => {
                 const upazilaData = data?.data || data[2]?.data || data || [];
@@ -94,7 +94,7 @@ const DonationRequest = () => {
             DonorId: "",
         };
 
-        fetch("http://localhost:5000/donation-requests", {
+        fetch("https://blood-donation-server-pied.vercel.app/donation-requests", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(recipientData),

@@ -17,7 +17,7 @@ const BloodDonationRequestPendingDetails = () => {
 
     // ✅ Fetch Data
     useEffect(() => {
-        fetch(`http://localhost:5000/donation-requests/${id}`)
+        fetch(`https://blood-donation-server-pied.vercel.app/donation-requests/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 setRequest(data);
@@ -51,7 +51,7 @@ const BloodDonationRequestPendingDetails = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/donation-requests/${id}`,
+                `https://blood-donation-server-pied.vercel.app/donation-requests/${id}`,
                 {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },

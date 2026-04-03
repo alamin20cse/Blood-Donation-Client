@@ -84,7 +84,7 @@ Volunteers can create and manage donation requests.
 3. **Set up environment variables**:
     Create a `.env` file in the root of the project and add the following variables:
     ```bash
-    REACT_APP_API_URL=http://localhost:5000/api
+    REACT_APP_API_URL=https://blood-donation-server-pied.vercel.app/api
     REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
     REACT_APP_STRIPE_PUBLIC_KEY=your-stripe-public-key
     ```

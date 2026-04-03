@@ -16,7 +16,7 @@ const usePayment = () => {
     queryKey: ['payment'],
     queryFn: async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/payments`, { withCredentials: true });
+        const res = await axios.get(`https://blood-donation-server-pied.vercel.app/payments`, { withCredentials: true });
         return res.data;
       } catch (error) {
         if (error.response?.status === 401 || error.response?.status === 403) {
