@@ -92,6 +92,9 @@ const DonationRequest = () => {
             DonorEmail: "",
             DonorName: "",
             DonorId: "",
+            DonorPhone:"",
+            donationConfirmTime:"",
+
         };
 
         fetch("https://blood-donation-server-pied.vercel.app/donation-requests", {

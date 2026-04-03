@@ -78,7 +78,7 @@ const LoggedUserGetRequest = () => {
                         <th className="border border-gray-400 px-2 py-2 hidden md:table-cell">Upazila</th>
                         <th className="border border-gray-400 px-2 py-2">Recipient Name</th>
                         <th className="border border-gray-400 px-2 py-2">Donation Date</th>
-                        <th className="border border-gray-400 px-2 py-2">Donation Time</th>
+                        <th className="border border-gray-400 px-2 py-2">Donr Phone</th>
                         <th className="border border-gray-400 px-2 py-2">Status</th>
                         <th className="border border-gray-400 px-2 py-2">Edit</th>
                         <th className="border border-gray-400 px-2 py-2">Delete</th>
@@ -132,7 +132,7 @@ const LoggedUserGetRequest = () => {
                             <td className="border border-gray-400 px-2 py-2 break-words max-w-[100px] hidden md:table-cell">{request.upazilaName}</td>
                             <td className="border border-gray-400 px-2 py-2 break-words max-w-[120px]">{request.recipientname}</td>
                             <td className="border border-gray-400 px-2 py-2">{request.donationdate}</td>
-                            <td className="border border-gray-400 px-2 py-2">{request.donationtime}</td>
+                            <td className="border border-gray-400 px-2 py-2">{request.donorPhone || "Not donated yet"}</td>
 
                             {/* Status */}
                             <td className="border border-gray-400 px-2 py-2">

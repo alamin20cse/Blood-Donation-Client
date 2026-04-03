@@ -45,17 +45,19 @@ const MyDonationRequestDetails = () => {
                     </p>
                
                     <p className="text-gray-700 mt-3"><span className="font-semibold">Message:</span> {reqDetails.requestmessage}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Donor Email:</span> {reqDetails.donorEmail}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Email:</span> {reqDetails.DonorEmail}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Name:</span> {reqDetails.DonorName}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Phone :</span> {reqDetails.DonorPhone}</p>
               
                 </div>
 
                 
 
-                <div className="mt-4 text-center">
+                {/* <div className="mt-4 text-center">
                     <button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
                         Cancel Request
                     </button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

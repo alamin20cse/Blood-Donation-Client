@@ -32,7 +32,7 @@ const MyDonationRequest = () => {
     indexOfFirstRequest,
     indexOfLastRequest
   );
-
+console.log(currentRequests);
   const totalPages = Math.ceil(filteredRequests.length / rowsPerPage);
 
   const handlePageChange = (pageNumber) => {
@@ -165,7 +165,7 @@ const MyDonationRequest = () => {
               </th>
               <th className="border border-gray-400 px-2 py-2">Recipient Name</th>
               <th className="border border-gray-400 px-2 py-2">Donation Date</th>
-              <th className="border border-gray-400 px-2 py-2">Donation Time</th>
+              <th className="border border-gray-400 px-2 py-2">Donar Phone</th>
               <th className="border border-gray-400 px-2 py-2">Status</th>
               <th className="border border-gray-400 px-2 py-2">Edit</th>
               <th className="border border-gray-400 px-2 py-2">Delete</th>
@@ -222,7 +222,7 @@ const MyDonationRequest = () => {
                   {request.recipientname}
                 </td>
                 <td className="border border-gray-400 px-2 py-2">{request.donationdate}</td>
-                <td className="border border-gray-400 px-2 py-2">{request.donationtime}</td>
+                <td className="border border-gray-400 px-2 py-2">{request.DonorPhone|| "Not donated yet"}</td>
                 <td className="border border-gray-400 px-2 py-2">
                   <span
                     className={`px-2 py-1 rounded text-white ${
