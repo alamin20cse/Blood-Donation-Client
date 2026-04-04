@@ -152,24 +152,24 @@ console.log(currentRequests);
         <table className="ttable-auto border-collapse border border-gray-400 w-full text-sm">
           <thead>
             <tr className="bg-gray-200 text-center">
-              <th className="border border-gray-400 px-2 py-2">
+              <th className="border border-gray-400 px-0 py-2">
                 Donor Email & Name
               </th>
-              <th className="border border-gray-400 px-2 py-2">Action</th>
-              <th className="border border-gray-400 px-2 py-2">Blood Group</th>
-              <th className="border border-gray-400 px-2 py-2 hidden md:table-cell">
+              <th className="border border-gray-400 px-0 py-2">Action</th>
+              <th className="border border-gray-400 px-0 py-2">Blood Group</th>
+              <th className="border border-gray-400 px-0 py-2 hidden md:table-cell">
                 District
               </th>
-              <th className="border border-gray-400 px-2 py-2 hidden md:table-cell">
+              {/* <th className="border border-gray-400 px-0 py-2 hidden md:table-cell">
                 Upazila
-              </th>
-              <th className="border border-gray-400 px-2 py-2">Recipient Name</th>
-              <th className="border border-gray-400 px-2 py-2">Donation Date</th>
-              <th className="border border-gray-400 px-2 py-2">Donar Phone</th>
-              <th className="border border-gray-400 px-2 py-2">Status</th>
-              <th className="border border-gray-400 px-2 py-2">Edit</th>
-              <th className="border border-gray-400 px-2 py-2">Delete</th>
-              <th className="border border-gray-400 px-2 py-2 hidden sm:table-cell">
+              </th> */}
+              <th className="border border-gray-400 px-0 py-2">Recipient Name</th>
+              <th className="border border-gray-400 px-0 py-2">Donation Date</th>
+              <th className="border border-gray-400 px-0 py-2">Donar Phone</th>
+              <th className="border border-gray-400 px-0 py-2">Status</th>
+              <th className="border border-gray-400 px-0 py-2">Edit</th>
+              <th className="border border-gray-400 px-0 py-2">Delete</th>
+              <th className="border border-gray-400 px-0 py-2  sm:table-cell">
                 Details
               </th>
             </tr>
@@ -177,62 +177,69 @@ console.log(currentRequests);
           <tbody className="bg-gray-200">
             {currentRequests.map((request) => (
               <tr key={request._id} className="text-center">
-                <td className="border border-gray-400 px-2 py-2 break-words max-w-[120px]">
+                <td className="border border-gray-400 px-0 py-2 break-words max-w-[120px]">
                   {["inprogress", "done", "canceled"].includes(request.status) ? (
                    <div className="flex flex-col gap-1">
                                         <p className="bg-green-500 text-white px-1 py-1 rounded">{request.DonorEmail || "No Email"}</p>
                                         <p className="bg-green-500 text-white px-1 py-1 rounded">{request.DonorName || "No Name"}</p>
                                     </div>
                   ) : (
-                    <p className="bg-red-500 text-white px-2 py-1 rounded">
+                    <p className="bg-red-500 text-white px-0 py-1 rounded">
                       Not Donated to Anyone
                     </p>
                   )}
                 </td>
 
-                <td className="border border-gray-400 px-2 py-2">
-                  {request.status === "inprogress" && (
-                    <>
-                      <button
-                        onClick={() => handleStatusUpdate(request._id, "done")}
-                        className="bg-green-500 text-white px-2 py-1 rounded mr-1"
-                      >
-                        Done
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleStatusUpdate(request._id, "canceled")
-                        }
-                        className="bg-red-500 text-white px-2 py-1 rounded"
-                      >
-                        Cancel
-                      </button>
-                    </>
-                  )}
-                </td>
+               <td className="border border-gray-400 px-0 py-2">
+  {request.status === "pending" && (
+    <span className="text-gray-500">Not donated yet</span>
+  )}
+  {request.status === "done" && (
+    <span className="text-gray-500">No Action</span>
+  )}
 
-                <td className="border border-gray-400 px-2 py-2">{request.bloodgroup}</td>
-                <td className="border border-gray-400 px-2 py-2 break-words max-w-[100px] hidden md:table-cell">
+  {request.status === "inprogress" && (
+    <>
+      <button
+        onClick={() => handleStatusUpdate(request._id, "done")}
+        className="bg-green-500 text-white px-0 py-1 rounded mr-1"
+      >
+        Done
+      </button>
+      <button
+        onClick={() =>
+          handleStatusUpdate(request._id, "canceled")
+        }
+        className="bg-red-500 text-white px-0 py-1 rounded"
+      >
+        Cancel
+      </button>
+    </>
+  )}
+</td>
+
+                <td className="border border-gray-400 px-0 py-2">{request.bloodgroup}</td>
+                <td className="border border-gray-400 px-0 py-2 break-words max-w-[100px] hidden md:table-cell">
                   {request.districtName}
                 </td>
-                <td className="border border-gray-400 px-2 py-2 break-words max-w-[100px] hidden md:table-cell">
+                {/* <td className="border border-gray-400 px-0 py-2 break-words max-w-[100px] hidden md:table-cell">
                   {request.upazilaName}
-                </td>
-                <td className="border border-gray-400 px-2 py-2 break-words max-w-[120px]">
+                </td> */}
+                <td className="border border-gray-400 px-0 py-2 break-words max-w-[120px]">
                   {request.recipientname}
                 </td>
-                <td className="border border-gray-400 px-2 py-2">{request.donationdate}</td>
-                <td className="border border-gray-400 px-2 py-2">{request.DonorPhone|| "Not donated yet"}</td>
-                <td className="border border-gray-400 px-2 py-2">
+                <td className="border border-gray-400 px-0 py-2">{request.donationdate}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.DonorPhone|| "Not donated yet"}</td>
+                <td className="border border-gray-400 px-0 py-2">
                   <span
-                    className={`px-2 py-1 rounded text-white ${
+                    className={`px-0 py-1 rounded text-white ${
                       request.status === "pending" ? "bg-red-500" : "bg-green-500"
                     }`}
                   >
                     {request.status}
                   </span>
                 </td>
-                <td className="border border-gray-400 px-2 py-2">
+                <td className="border border-gray-400 px-0 py-2">
                   {request.status !== "done" && request.status !== "canceled" ? (
                     <Link to={`/dashboard/updatedonationrequest/${request._id}`}>
                       <button className="btn btn-primary mr-1">
@@ -245,7 +252,7 @@ console.log(currentRequests);
                     </button>
                   )}
                 </td>
-                <td className="border border-gray-400 px-2 py-2">
+                <td className="border border-gray-400 px-0 py-2"> 
                   <button
                     onClick={() => handleDelete(request._id)}
                     className="btn btn-secondary"
@@ -253,7 +260,7 @@ console.log(currentRequests);
                     <MdDeleteForever className="text-2xl" />
                   </button>
                 </td>
-                <td className="border border-gray-400 px-2 py-2 hidden sm:table-cell">
+                <td className="border border-gray-400 px-0 py-2  sm:table-cell">
                   <Link to={`/dashboard/mydonationrequestdetails/${request._id}`}>
                     <button className="btn btn-primary mr-2">See Details</button>
                   </Link>

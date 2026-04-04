@@ -45,9 +45,9 @@ const MyDonationRequestDetails = () => {
                     </p>
                
                     <p className="text-gray-700 mt-3"><span className="font-semibold">Message:</span> {reqDetails.requestmessage}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Donor Email:</span> {reqDetails.DonorEmail}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Donor Name:</span> {reqDetails.DonorName}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Donor Phone :</span> {reqDetails.DonorPhone}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Email:</span> {reqDetails.DonorEmail ||"Not Donated anyone Yet"}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Name:</span> {reqDetails.DonorName ||"Not Donated anyone Yet"}</p>
+                    <p className="text-gray-700"><span className="font-semibold">Donor Phone :</span> {reqDetails.DonorPhone ||"Not Donated anyone Yet"}</p>
               
                 </div>
 

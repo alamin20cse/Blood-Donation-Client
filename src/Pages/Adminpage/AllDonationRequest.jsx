@@ -77,30 +77,30 @@ const AllDonationRequest = () => {
         <table className="table-auto border-collapse border border-gray-400 w-full">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-400 px-4 py-2">Email</th>
-              <th className="border border-gray-400 px-4 py-2">Blood Group</th>
-              <th className="border border-gray-400 px-4 py-2">District</th>
-              <th className="border border-gray-400 px-4 py-2">Upazila</th>
-              <th className="border border-gray-400 px-4 py-2">Recipient Name</th>
-              <th className="border border-gray-400 px-4 py-2">Donation Date</th>
-              <th className="border border-gray-400 px-4 py-2">Donation Time</th>
-              <th className="border border-gray-400 px-4 py-2">Status</th>
-              <th className="border border-gray-400 px-4 py-2">Edit</th>
-              <th className="border border-gray-400 px-4 py-2">Delete</th>
-              <th className="border border-gray-400 px-4 py-2">Details</th>
+              <th className="border border-gray-400 px-0 py-2">Email</th>
+              <th className="border border-gray-400 px-0 py-2">Blood Group</th>
+              <th className="border border-gray-400 px-0 py-2">District</th>
+              <th className="border border-gray-400 px-0 py-2">Upazila</th>
+              <th className="border border-gray-400 px-0 py-2">Recipient Name</th>
+              <th className="border border-gray-400 px-0 py-2">Donation Date</th>
+              <th className="border border-gray-400 px-0 py-2">Donation Time</th>
+              <th className="border border-gray-400 px-0 py-2">Status</th>
+              <th className="border border-gray-400 px-0 py-2">Edit</th>
+              <th className="border border-gray-400 px-0 py-2">Delete</th>
+              <th className="border border-gray-400 px-0 py-2">Details</th>
             </tr>
           </thead>
           <tbody>
             {currentData.map((request) => (
               <tr key={request._id} className="text-center">
-                <td className="border border-gray-400 px-4 py-2">{request.email}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.bloodgroup}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.districtName}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.upazilaName}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.recipientname}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.donationdate}</td>
-                <td className="border border-gray-400 px-4 py-2">{request.donationtime}</td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 px-0 py-2">{request.email}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.bloodgroup}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.districtName}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.upazilaName}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.recipientname}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.donationdate}</td>
+                <td className="border border-gray-400 px-0 py-2">{request.donationtime}</td>
+                <td className="border border-gray-400 px-0 py-2">
                   <span
                     className={`px-2 py-1 rounded text-white ${
                       request.status === "pending" ? "bg-red-500" : "bg-green-500"
@@ -109,14 +109,14 @@ const AllDonationRequest = () => {
                     {request.status}
                   </span>
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 px-0 py-2">
                   <Link to={`/dashboard/updatedonationrequest/${request._id}`}>
                     <button className="btn btn-primary">
                       <FaRegEdit />
                     </button>
                   </Link>
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 px-0 py-2">
                   <button
                     onClick={() => handleDelete(request._id)}
                     className="btn btn-secondary"
@@ -124,7 +124,7 @@ const AllDonationRequest = () => {
                     <MdDeleteForever />
                   </button>
                 </td>
-                <td className="border border-gray-400 px-4 py-2">
+                <td className="border border-gray-400 px-0 py-2">
                   <Link to={`/dashboard/mydonationrequestdetails/${request._id}`}>
                     <button className="btn btn-primary">See Details</button>
                   </Link>

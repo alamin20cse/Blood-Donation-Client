@@ -57,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className='hero min-h-screen flex flex-col lg:flex-row-reverse20'>
+    <div className='flex flex-col lg:flex-row-reverse pt-20'>
       <Helmet>
         <title>Blood Donation Application | Home</title>
       </Helmet>
@@ -110,7 +110,7 @@ const Login = () => {
                 </div>
               </form>
 
-              <p>Are you New? <Link className='text-red-400' to='/signup'>Sign up</Link></p>
+              <p className='px-4'>Are you New? <Link className='text-red-400' to='/signup'>Sign up</Link></p>
               {/* Admin Login Button */}
               <button onClick={adminLogin} className='btn mt-3'>Admin Login</button>
             </div>
